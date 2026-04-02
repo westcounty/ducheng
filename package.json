@@ -1,0 +1,12 @@
+{
+  "name": "seventh-cipher",
+  "version": "0.1.0",
+  "private": true,
+  "description": "「第七封密电」上海实景解谜游戏",
+  "workspaces": ["app", "props"],
+  "scripts": {
+    "dev": "cd app && npm run dev",
+    "build": "cd app && npm run build",
+    "props": "cd props && node generate-pdfs.js"
+  }
+}

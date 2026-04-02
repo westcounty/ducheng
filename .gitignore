@@ -1,0 +1,6 @@
+node_modules/
+dist/
+props/output/*.pdf
+.DS_Store
+*.log
+fieldwork/data.json
