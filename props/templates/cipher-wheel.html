@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密码转盘 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .wheel-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .wheel-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .disk-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4a3020;
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .disk-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    svg text {
+      font-family: 'Noto Serif SC', 'Arial', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page wheel-page">
+
+  <!-- SVG grain filter (invisible) -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <filter id="paper-grain" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch" result="noise"/>
+        <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+        <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="blended"/>
+        <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="title">密码转盘</div>
+  <div class="subtitle">CIPHER WHEEL — 第七封密电 道具卡</div>
+
+  <div class="instruction-box no-print" style="max-width:160mm;">
+    <strong>制作说明：</strong>沿虚线剪下两张转盘。将内盘叠放于外盘之上，用牙签穿过两盘中心圆孔固定。旋转内盘，使内盘箭头指向外盘上的偏移数字，即可进行字母替换加解密。
+  </div>
+
+  <div class="wheel-container">
+
+    <!-- ════ OUTER DISK (170mm diameter) ════ -->
+    <div class="disk-wrapper">
+      <div class="disk-label">【外盘】沿虚线剪下</div>
+      <svg width="180mm" height="180mm" viewBox="0 0 520 520"
+           xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Outer dashed cut circle -->
+        <circle cx="260" cy="260" r="255"
+                fill="none" stroke="#888" stroke-width="1.5"
+                stroke-dasharray="6,4"/>
+
+        <!-- Outer disk background (aged paper) -->
+        <circle cx="260" cy="260" r="248"
+                fill="#f0e8d5" stroke="#8b6540" stroke-width="2"/>
+
+        <!-- Decorative ring lines -->
+        <circle cx="260" cy="260" r="235" fill="none" stroke="#a08060" stroke-width="1" opacity="0.5"/>
+        <circle cx="260" cy="260" r="180" fill="none" stroke="#8b6540" stroke-width="1.5"/>
+        <circle cx="260" cy="260" r="140" fill="none" stroke="#a08060" stroke-width="1" opacity="0.6"/>
+        <circle cx="260" cy="260" r="105" fill="none" stroke="#8b6540" stroke-width="1.5"/>
+
+        <!-- Inner filled area (lighter) -->
+        <circle cx="260" cy="260" r="104" fill="#ede3cc"/>
+
+        <!-- Title in center -->
+        <text x="260" y="248" text-anchor="middle"
+              font-family="'Noto Serif SC', serif" font-size="14" fill="#4a3020" font-weight="700"
+              letter-spacing="3">外盘</text>
+        <text x="260" y="268" text-anchor="middle"
+              font-family="'Noto Serif SC', serif" font-size="10" fill="#6b4c2a">OUTER DISK</text>
+
+        <!-- Center hole indicator -->
+        <circle cx="260" cy="260" r="6" fill="none" stroke="#8b6540" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <circle cx="260" cy="260" r="2" fill="#8b6540"/>
+        <text x="260" y="290" text-anchor="middle"
+              font-family="'Noto Serif SC', serif" font-size="8" fill="#8b6540">⊙ 中心孔</text>
+
+        <!--
+          A-Z letters on outer ring (radius ~218), numbers 1-26 on inner ring (radius ~160)
+          Letters placed at angles: letter i (0-indexed) at angle = -90 + i*(360/26) degrees
+          A=0° from top, then clockwise
+        -->
+
+        <!-- A -->
+        <text transform="rotate(-90,260,260) translate(260,260) rotate(90) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">A</text>
+        <text transform="rotate(-90,260,260) translate(260,260) rotate(90) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">1</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(0,260,260)"/>
+
+        <!-- B -->
+        <text transform="rotate(-76.15,260,260) translate(260,260) rotate(76.15) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">B</text>
+        <text transform="rotate(-76.15,260,260) translate(260,260) rotate(76.15) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">2</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(13.85,260,260)"/>
+
+        <!-- C -->
+        <text transform="rotate(-62.31,260,260) translate(260,260) rotate(62.31) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">C</text>
+        <text transform="rotate(-62.31,260,260) translate(260,260) rotate(62.31) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">3</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(27.69,260,260)"/>
+
+        <!-- D -->
+        <text transform="rotate(-48.46,260,260) translate(260,260) rotate(48.46) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">D</text>
+        <text transform="rotate(-48.46,260,260) translate(260,260) rotate(48.46) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">4</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(41.54,260,260)"/>
+
+        <!-- E -->
+        <text transform="rotate(-34.62,260,260) translate(260,260) rotate(34.62) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">E</text>
+        <text transform="rotate(-34.62,260,260) translate(260,260) rotate(34.62) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">5</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(55.38,260,260)"/>
+
+        <!-- F -->
+        <text transform="rotate(-20.77,260,260) translate(260,260) rotate(20.77) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">F</text>
+        <text transform="rotate(-20.77,260,260) translate(260,260) rotate(20.77) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">6</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(69.23,260,260)"/>
+
+        <!-- G -->
+        <text transform="rotate(-6.92,260,260) translate(260,260) rotate(6.92) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">G</text>
+        <text transform="rotate(-6.92,260,260) translate(260,260) rotate(6.92) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">7</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(83.08,260,260)"/>
+
+        <!-- H -->
+        <text transform="rotate(6.92,260,260) translate(260,260) rotate(-6.92) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">H</text>
+        <text transform="rotate(6.92,260,260) translate(260,260) rotate(-6.92) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">8</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(96.92,260,260)"/>
+
+        <!-- I -->
+        <text transform="rotate(20.77,260,260) translate(260,260) rotate(-20.77) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">I</text>
+        <text transform="rotate(20.77,260,260) translate(260,260) rotate(-20.77) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">9</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(110.77,260,260)"/>
+
+        <!-- J -->
+        <text transform="rotate(34.62,260,260) translate(260,260) rotate(-34.62) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">J</text>
+        <text transform="rotate(34.62,260,260) translate(260,260) rotate(-34.62) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">10</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(124.62,260,260)"/>
+
+        <!-- K -->
+        <text transform="rotate(48.46,260,260) translate(260,260) rotate(-48.46) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">K</text>
+        <text transform="rotate(48.46,260,260) translate(260,260) rotate(-48.46) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">11</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(138.46,260,260)"/>
+
+        <!-- L -->
+        <text transform="rotate(62.31,260,260) translate(260,260) rotate(-62.31) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">L</text>
+        <text transform="rotate(62.31,260,260) translate(260,260) rotate(-62.31) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">12</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(152.31,260,260)"/>
+
+        <!-- M -->
+        <text transform="rotate(76.15,260,260) translate(260,260) rotate(-76.15) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">M</text>
+        <text transform="rotate(76.15,260,260) translate(260,260) rotate(-76.15) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">13</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(166.15,260,260)"/>
+
+        <!-- N -->
+        <text transform="rotate(90,260,260) translate(260,260) rotate(-90) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">N</text>
+        <text transform="rotate(90,260,260) translate(260,260) rotate(-90) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">14</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(180,260,260)"/>
+
+        <!-- O -->
+        <text transform="rotate(103.85,260,260) translate(260,260) rotate(-103.85) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">O</text>
+        <text transform="rotate(103.85,260,260) translate(260,260) rotate(-103.85) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">15</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(193.85,260,260)"/>
+
+        <!-- P -->
+        <text transform="rotate(117.69,260,260) translate(260,260) rotate(-117.69) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">P</text>
+        <text transform="rotate(117.69,260,260) translate(260,260) rotate(-117.69) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">16</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(207.69,260,260)"/>
+
+        <!-- Q -->
+        <text transform="rotate(131.54,260,260) translate(260,260) rotate(-131.54) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">Q</text>
+        <text transform="rotate(131.54,260,260) translate(260,260) rotate(-131.54) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">17</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(221.54,260,260)"/>
+
+        <!-- R -->
+        <text transform="rotate(145.38,260,260) translate(260,260) rotate(-145.38) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">R</text>
+        <text transform="rotate(145.38,260,260) translate(260,260) rotate(-145.38) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">18</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(235.38,260,260)"/>
+
+        <!-- S -->
+        <text transform="rotate(159.23,260,260) translate(260,260) rotate(-159.23) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">S</text>
+        <text transform="rotate(159.23,260,260) translate(260,260) rotate(-159.23) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">19</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(249.23,260,260)"/>
+
+        <!-- T -->
+        <text transform="rotate(173.08,260,260) translate(260,260) rotate(-173.08) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">T</text>
+        <text transform="rotate(173.08,260,260) translate(260,260) rotate(-173.08) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">20</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(263.08,260,260)"/>
+
+        <!-- U -->
+        <text transform="rotate(-173.08,260,260) translate(260,260) rotate(173.08) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">U</text>
+        <text transform="rotate(-173.08,260,260) translate(260,260) rotate(173.08) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">21</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(276.92,260,260)"/>
+
+        <!-- V -->
+        <text transform="rotate(-159.23,260,260) translate(260,260) rotate(159.23) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">V</text>
+        <text transform="rotate(-159.23,260,260) translate(260,260) rotate(159.23) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">22</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(290.77,260,260)"/>
+
+        <!-- W -->
+        <text transform="rotate(-145.38,260,260) translate(260,260) rotate(145.38) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">W</text>
+        <text transform="rotate(-145.38,260,260) translate(260,260) rotate(145.38) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">23</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(304.62,260,260)"/>
+
+        <!-- X -->
+        <text transform="rotate(-131.54,260,260) translate(260,260) rotate(131.54) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">X</text>
+        <text transform="rotate(-131.54,260,260) translate(260,260) rotate(131.54) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">24</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(318.46,260,260)"/>
+
+        <!-- Y -->
+        <text transform="rotate(-117.69,260,260) translate(260,260) rotate(117.69) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">Y</text>
+        <text transform="rotate(-117.69,260,260) translate(260,260) rotate(117.69) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">25</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(332.31,260,260)"/>
+
+        <!-- Z -->
+        <text transform="rotate(-103.85,260,260) translate(260,260) rotate(103.85) translate(0,-218)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#1a0c05">Z</text>
+        <text transform="rotate(-103.85,260,260) translate(260,260) rotate(103.85) translate(0,-160)"
+              text-anchor="middle" dominant-baseline="middle"
+              font-family="Arial,sans-serif" font-size="11" fill="#4a3020">26</text>
+        <line x1="260" y1="12" x2="260" y2="32" stroke="#8b6540" stroke-width="1" opacity="0.5"
+              transform="rotate(346.15,260,260)"/>
+
+        <!-- Tick marks at top of outer ring for alignment reference -->
+        <rect x="255" y="8" width="10" height="18" rx="2" fill="#8b2020" opacity="0.8"/>
+        <text x="260" y="21" text-anchor="middle"
+              font-family="Arial,sans-serif" font-size="9" fill="white" font-weight="700">▲</text>
+
+      </svg>
+    </div><!-- /disk-wrapper outer -->
+
+  </div><!-- /wheel-container -->
+
+  <!-- Instructions -->
+  <div class="border-frame" style="max-width:160mm;margin-top:8px;">
+    <div class="handwriting" style="font-size:12px;line-height:1.8;">
+      <strong>使用方法：</strong><br>
+      ① 沿虚线剪下外盘，用锥子在中心小圆处戳穿<br>
+      ② 将内盘（下一页）同样剪下并戳穿中心<br>
+      ③ 内盘叠于外盘上方，用牙签穿过两孔固定<br>
+      ④ 旋转内盘，使内盘箭头（▲）对准外盘上的偏移数字<br>
+      ⑤ 内盘字母 = 明文，对应外盘字母 = 密文
+    </div>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════ PAGE 2: INNER DISK ════ -->
+<div class="page wheel-page">
+
+  <div class="title">密码转盘</div>
+  <div class="subtitle">内盘 INNER DISK</div>
+
+  <div class="disk-wrapper">
+    <div class="disk-label">【内盘】沿虚线剪下，叠于外盘之上</div>
+    <svg width="140mm" height="140mm" viewBox="0 0 400 400"
+         xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Dashed cut circle -->
+      <circle cx="200" cy="200" r="195"
+              fill="none" stroke="#888" stroke-width="1.5"
+              stroke-dasharray="6,4"/>
+
+      <!-- Inner disk background -->
+      <circle cx="200" cy="200" r="188"
+              fill="#e8dfc8" stroke="#6b4c2a" stroke-width="2"/>
+
+      <!-- Decorative rings -->
+      <circle cx="200" cy="200" r="175" fill="none" stroke="#8b6540" stroke-width="1.5"/>
+      <circle cx="200" cy="200" r="130" fill="none" stroke="#a08060" stroke-width="1" opacity="0.6"/>
+      <circle cx="200" cy="200" r="80"  fill="none" stroke="#8b6540" stroke-width="1.5"/>
+      <circle cx="200" cy="200" r="79"  fill="#d4c9a8"/>
+
+      <!-- Center label -->
+      <text x="200" y="194" text-anchor="middle"
+            font-family="'Noto Serif SC',serif" font-size="14" fill="#4a3020" font-weight="700"
+            letter-spacing="3">内盘</text>
+      <text x="200" y="212" text-anchor="middle"
+            font-family="'Noto Serif SC',serif" font-size="10" fill="#6b4c2a">INNER DISK</text>
+
+      <!-- Center hole -->
+      <circle cx="200" cy="200" r="6" fill="none" stroke="#8b6540" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <circle cx="200" cy="200" r="2" fill="#8b6540"/>
+
+      <!--
+        A-Z on inner disk, radius ~152 from center, angle step = 360/26 ≈ 13.846°
+        Starting at top (-90°), clockwise
+        Each letter: rotate by angle, translate to position, counter-rotate for upright text
+      -->
+
+      <!-- A — top (arrow position) -->
+      <text transform="rotate(-90,200,200) translate(200,200) rotate(90) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">A</text>
+
+      <!-- B -->
+      <text transform="rotate(-76.15,200,200) translate(200,200) rotate(76.15) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">B</text>
+
+      <!-- C -->
+      <text transform="rotate(-62.31,200,200) translate(200,200) rotate(62.31) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">C</text>
+
+      <!-- D -->
+      <text transform="rotate(-48.46,200,200) translate(200,200) rotate(48.46) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">D</text>
+
+      <!-- E -->
+      <text transform="rotate(-34.62,200,200) translate(200,200) rotate(34.62) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">E</text>
+
+      <!-- F -->
+      <text transform="rotate(-20.77,200,200) translate(200,200) rotate(20.77) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">F</text>
+
+      <!-- G -->
+      <text transform="rotate(-6.92,200,200) translate(200,200) rotate(6.92) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">G</text>
+
+      <!-- H -->
+      <text transform="rotate(6.92,200,200) translate(200,200) rotate(-6.92) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">H</text>
+
+      <!-- I -->
+      <text transform="rotate(20.77,200,200) translate(200,200) rotate(-20.77) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">I</text>
+
+      <!-- J -->
+      <text transform="rotate(34.62,200,200) translate(200,200) rotate(-34.62) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">J</text>
+
+      <!-- K -->
+      <text transform="rotate(48.46,200,200) translate(200,200) rotate(-48.46) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">K</text>
+
+      <!-- L -->
+      <text transform="rotate(62.31,200,200) translate(200,200) rotate(-62.31) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">L</text>
+
+      <!-- M -->
+      <text transform="rotate(76.15,200,200) translate(200,200) rotate(-76.15) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">M</text>
+
+      <!-- N -->
+      <text transform="rotate(90,200,200) translate(200,200) rotate(-90) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">N</text>
+
+      <!-- O -->
+      <text transform="rotate(103.85,200,200) translate(200,200) rotate(-103.85) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">O</text>
+
+      <!-- P -->
+      <text transform="rotate(117.69,200,200) translate(200,200) rotate(-117.69) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">P</text>
+
+      <!-- Q -->
+      <text transform="rotate(131.54,200,200) translate(200,200) rotate(-131.54) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">Q</text>
+
+      <!-- R -->
+      <text transform="rotate(145.38,200,200) translate(200,200) rotate(-145.38) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">R</text>
+
+      <!-- S -->
+      <text transform="rotate(159.23,200,200) translate(200,200) rotate(-159.23) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">S</text>
+
+      <!-- T -->
+      <text transform="rotate(173.08,200,200) translate(200,200) rotate(-173.08) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">T</text>
+
+      <!-- U -->
+      <text transform="rotate(-173.08,200,200) translate(200,200) rotate(173.08) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">U</text>
+
+      <!-- V -->
+      <text transform="rotate(-159.23,200,200) translate(200,200) rotate(159.23) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">V</text>
+
+      <!-- W -->
+      <text transform="rotate(-145.38,200,200) translate(200,200) rotate(145.38) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">W</text>
+
+      <!-- X -->
+      <text transform="rotate(-131.54,200,200) translate(200,200) rotate(131.54) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">X</text>
+
+      <!-- Y -->
+      <text transform="rotate(-117.69,200,200) translate(200,200) rotate(117.69) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">Y</text>
+
+      <!-- Z -->
+      <text transform="rotate(-103.85,200,200) translate(200,200) rotate(103.85) translate(0,-152)"
+            text-anchor="middle" dominant-baseline="middle"
+            font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1a0c05">Z</text>
+
+      <!-- Arrow indicator at top (pointing up = A position) -->
+      <polygon points="200,18 192,40 208,40" fill="#8b2020" opacity="0.9"/>
+      <text x="200" y="56" text-anchor="middle"
+            font-family="Arial,sans-serif" font-size="9" fill="#8b2020" font-weight="700">▲</text>
+
+      <!-- Tick marks every 13.846° -->
+      <line x1="200" y1="13" x2="200" y2="26" stroke="#6b4c2a" stroke-width="1.5"
+            transform="rotate(0,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(13.85,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(27.69,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(41.54,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(55.38,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(69.23,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(83.08,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="26" stroke="#6b4c2a" stroke-width="1.5"
+            transform="rotate(90,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(96.92,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(110.77,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(124.62,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(138.46,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(152.31,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="22" stroke="#6b4c2a" stroke-width="1"
+            transform="rotate(166.15,200,200)"/>
+      <line x1="200" y1="13" x2="200" y2="26" stroke="#6b4c2a" stroke-width="1.5"
+            transform="rotate(180,200,200)"/>
+
+    </svg>
+  </div>
+
+  <div class="border-frame" style="max-width:130mm;">
+    <div class="handwriting" style="font-size:12px;line-height:1.9;text-align:center;">
+      内盘箭头（▲）对准外盘数字 = 偏移量<br>
+      明文字母在内盘，密文字母在外盘<br>
+      <span style="color:#8b2020;">中心孔用牙签固定</span>
+    </div>
+  </div>
+
+</div><!-- /page 2 -->
+
+</body>
+</html>
