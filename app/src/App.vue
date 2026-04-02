@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" :class="themeClass">
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" />
@@ -7,6 +7,21 @@
     </router-view>
   </div>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { getCity } from './data/cities/index.js'
+
+const route = useRoute()
+
+const themeClass = computed(() => {
+  const cityId = route.params.cityId
+  if (!cityId) return 'theme-default'
+  const city = getCity(cityId)
+  return city ? city.themeClass : 'theme-default'
+})
+</script>
 
 <style>
 * {
@@ -16,7 +31,7 @@
 }
 
 body {
-  background-color: #2c2c2c;
+  background-color: #1a1a1a;
   display: flex;
   justify-content: center;
   min-height: 100vh;

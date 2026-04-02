@@ -363,3 +363,91 @@ body {
 .animate-stamp {
   animation: stamp-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* ============================================
+   City Theme Overrides
+   ============================================ */
+
+.theme-shanghai {
+  --bg-primary: #f5f0e8;
+  --bg-secondary: #ebe4d4;
+  --text-primary: #2c1810;
+  --text-secondary: #5c4a3a;
+  --accent: #8b4513;
+  --border: #c4b59a;
+  --success: #4a7c59;
+  --error: #8b2500;
+  --paper-texture:
+    radial-gradient(ellipse at 20% 30%, rgba(139, 69, 19, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, rgba(92, 74, 58, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 10%, rgba(196, 181, 154, 0.06) 0%, transparent 70%);
+  --shadow-sm: 0 1px 3px rgba(44, 24, 16, 0.12);
+  --shadow-md: 0 4px 12px rgba(44, 24, 16, 0.15);
+  --shadow-lg: 0 8px 24px rgba(44, 24, 16, 0.2);
+}
+
+.theme-nanjing {
+  --bg-primary: #2a2218;
+  --bg-secondary: #3d3226;
+  --text-primary: #e8dcc8;
+  --text-secondary: #a89878;
+  --accent: #8b1a1a;
+  --border: #5a4a3a;
+  --success: #5a8a4a;
+  --error: #cc3333;
+  --paper-texture:
+    radial-gradient(ellipse at 30% 40%, rgba(139, 26, 26, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(90, 74, 58, 0.05) 0%, transparent 50%);
+  --shadow-sm: 0 1px 3px rgba(42, 34, 24, 0.2);
+  --shadow-md: 0 4px 12px rgba(42, 34, 24, 0.25);
+  --shadow-lg: 0 8px 24px rgba(42, 34, 24, 0.3);
+}
+
+.theme-hangzhou {
+  --bg-primary: #f5f0eb;
+  --bg-secondary: #e8e2d8;
+  --text-primary: #2c3e2c;
+  --text-secondary: #5a6a5a;
+  --accent: #7a9e7e;
+  --border: #c8c0b4;
+  --success: #5a8a5a;
+  --error: #8b3a3a;
+  --paper-texture:
+    radial-gradient(ellipse at 40% 30%, rgba(122, 158, 126, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 60% 70%, rgba(200, 192, 180, 0.06) 0%, transparent 50%);
+  --shadow-sm: 0 1px 3px rgba(44, 62, 44, 0.1);
+  --shadow-md: 0 4px 12px rgba(44, 62, 44, 0.12);
+  --shadow-lg: 0 8px 24px rgba(44, 62, 44, 0.15);
+}
+
+.theme-xian {
+  --bg-primary: #1e1210;
+  --bg-secondary: #2e1e18;
+  --text-primary: #f0e0c8;
+  --text-secondary: #b0956a;
+  --accent: #d4a020;
+  --border: #5a3a2a;
+  --success: #6a8a4a;
+  --error: #cc4444;
+  --paper-texture:
+    radial-gradient(ellipse at 25% 35%, rgba(212, 160, 32, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 75% 65%, rgba(90, 58, 42, 0.05) 0%, transparent 50%);
+  --shadow-sm: 0 1px 3px rgba(30, 18, 16, 0.25);
+  --shadow-md: 0 4px 12px rgba(30, 18, 16, 0.3);
+  --shadow-lg: 0 8px 24px rgba(30, 18, 16, 0.35);
+}
+
+.theme-default {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2c2c2c;
+  --text-primary: #e8e0d4;
+  --text-secondary: #8a7e6e;
+  --accent: #c4b59a;
+  --border: #3a3a3a;
+  --success: #4a7c59;
+  --error: #8b2500;
+  --paper-texture: none;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
