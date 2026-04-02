@@ -20,7 +20,7 @@
         <!-- Entry header -->
         <div class="entry-header">
           <span class="entry-num text-accent">第 {{ pair.stage }} 站</span>
-          <span class="entry-location">{{ stageTitle(pair.stage) }}</span>
+          <span class="entry-location">{{ STAGE_LOCATIONS[pair.stage - 1] }}</span>
         </div>
 
         <!-- Photo -->
@@ -37,10 +37,25 @@
           </div>
         </div>
 
+        <!-- Diary excerpt (collapsible) -->
+        <div class="diary-excerpt-block">
+          <button
+            class="excerpt-toggle text-accent"
+            @click="toggleExcerpt(pair.stage)"
+          >
+            {{ openExcerpts[pair.stage] ? '收起' : '展开日记' }}
+          </button>
+          <transition name="excerpt-slide">
+            <p v-if="openExcerpts[pair.stage]" class="excerpt-text text-handwriting">
+              {{ pair.diaryExcerpt }}
+            </p>
+          </transition>
+        </div>
+
         <!-- Wish text (checklist item) -->
         <div class="entry-wish">
           <span class="wish-label text-accent">心愿存档</span>
-          <p class="wish-text"><s>{{ CHECKLIST[pair.stage - 1] }}</s></p>
+          <p class="wish-text"><s>{{ HEYING_CHECKLIST[pair.stage - 1] }}</s></p>
         </div>
 
         <!-- Diary quote -->
@@ -60,6 +75,20 @@
       <p class="footer-phrase text-handwriting text-accent">
         「你走过的每一步」
       </p>
+
+      <!-- Timing section -->
+      <template v-if="timing">
+        <hr class="divider" />
+        <p class="footer-timing text-secondary">
+          总用时：{{ timing.total }}
+        </p>
+        <p class="footer-stage-times text-secondary">
+          <span v-for="(t, i) in timing.stages" :key="i" class="stage-time-chip">
+            第{{ i + 1 }}站 {{ t }}
+          </span>
+        </p>
+      </template>
+
       <hr class="divider" />
       <p class="footer-date text-secondary">
         档案封存日期：{{ today }}
@@ -69,22 +98,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { PHOTO_DIARY_PAIRS } from '../data/narrative.js'
-import { getStage } from '../data/puzzles.js'
+import { ref, reactive, computed, onMounted } from 'vue'
+import { PHOTO_DIARY_PAIRS, HEYING_CHECKLIST, STAGE_LOCATIONS } from '../data/narrative.js'
 import { getPhoto } from '../utils/photo-store.js'
+import { useGameStore } from '../stores/game.js'
 
 const photos = ref({})
-
-const CHECKLIST = [
-  '绿塔在光线里的样子',
-  '钟的脸',
-  '那头不说话的狮子',
-  '桥上回头看到的水面',
-  '石头门楣上那张脸',
-  '梧桐的影子',
-  '那艘船的船头'
-]
+const openExcerpts = reactive({})
+const game = useGameStore()
 
 const today = new Date().toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -92,10 +113,59 @@ const today = new Date().toLocaleDateString('zh-CN', {
   day: 'numeric'
 })
 
-function stageTitle(stageId) {
-  const stage = getStage(stageId)
-  return stage ? stage.title : ''
+function toggleExcerpt(stageId) {
+  openExcerpts[stageId] = !openExcerpts[stageId]
 }
+
+/** Format milliseconds as "X小时Y分" or "Y分" */
+function formatMs(ms) {
+  if (!ms || ms < 0) return null
+  const totalMin = Math.round(ms / 60000)
+  const h = Math.floor(totalMin / 60)
+  const m = totalMin % 60
+  if (h > 0) return `${h}小时${m}分`
+  return `${m}分`
+}
+
+/** Compute timing info from game store. Returns null if data is insufficient. */
+const timing = computed(() => {
+  const { startTime, stageStartTimes, stageClearTimes } = game
+
+  // Need at least startTime and the last stage clear time
+  if (!startTime) return null
+
+  // Find the last clear time across stages 1-7
+  let lastClear = null
+  for (let i = 1; i <= 7; i++) {
+    const t = stageClearTimes[i]
+    if (t && (!lastClear || t > lastClear)) lastClear = t
+  }
+  if (!lastClear) return null
+
+  const totalMs = new Date(lastClear) - new Date(startTime)
+  const totalStr = formatMs(totalMs)
+  if (!totalStr) return null
+
+  // Per-stage times (only include stages where both start and clear are known)
+  const stages = []
+  for (let i = 1; i <= 7; i++) {
+    const s = stageStartTimes[i]
+    const c = stageClearTimes[i]
+    if (s && c) {
+      stages.push(formatMs(new Date(c) - new Date(s)) ?? '—')
+    } else {
+      stages.push(null)
+    }
+  }
+
+  // Only show per-stage row if we have at least some data
+  const hasStageData = stages.some(Boolean)
+
+  return {
+    total: totalStr,
+    stages: hasStageData ? stages.map((t) => t ?? '—') : []
+  }
+})
 
 onMounted(async () => {
   for (const pair of PHOTO_DIARY_PAIRS) {
@@ -192,6 +262,43 @@ onMounted(async () => {
   font-size: 0.85rem;
 }
 
+/* ── Diary excerpt ── */
+.diary-excerpt-block {
+  margin-bottom: var(--spacing-md);
+}
+
+.excerpt-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.excerpt-text {
+  margin: var(--spacing-sm) 0 0;
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  border-left: 2px solid var(--border);
+  padding-left: var(--spacing-md);
+}
+
+.excerpt-slide-enter-active,
+.excerpt-slide-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.excerpt-slide-enter-from,
+.excerpt-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+/* ── Wish ── */
 .entry-wish {
   margin-bottom: var(--spacing-md);
 }
@@ -239,6 +346,28 @@ onMounted(async () => {
   font-size: 1.4rem;
   letter-spacing: 0.2em;
   margin-bottom: var(--spacing-md);
+}
+
+.footer-timing {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.footer-stage-times {
+  font-size: 0.8rem;
+  line-height: 2;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stage-time-chip {
+  display: inline-block;
+  margin: 0 var(--spacing-xs);
+}
+
+.stage-time-chip:not(:last-child)::after {
+  content: ' ·';
 }
 
 .footer-date {
