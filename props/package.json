@@ -1,0 +1,12 @@
+{
+  "name": "seventh-cipher-props",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-pdfs.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.0.0"
+  }
+}
