@@ -1,5 +1,9 @@
 <template>
   <div class="archive page-padding">
+    <template v-if="loading">
+      <p class="text-secondary">载入中...</p>
+    </template>
+    <template v-else>
     <header class="archive-header">
       <div class="stamp stamp--accent animate-stamp">永久封存</div>
       <h1 class="archive-title">鹤影档案</h1>
@@ -94,18 +98,26 @@
         档案封存日期：{{ today }}
       </p>
     </footer>
+    </template>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
-import { PHOTO_DIARY_PAIRS, HEYING_CHECKLIST, STAGE_LOCATIONS } from '../data/narrative.js'
+import { useCityData } from '../data/cities/useCityData.js'
 import { getPhoto } from '../utils/photo-store.js'
 import { useGameStore } from '../stores/game.js'
 
+const props = defineProps({ cityId: { type: String, required: true } })
+
 const photos = ref({})
 const openExcerpts = reactive({})
-const game = useGameStore()
+const game = useGameStore(props.cityId)
+const { cityData, loading } = useCityData(computed(() => props.cityId))
+
+const PHOTO_DIARY_PAIRS = computed(() => cityData.value?.photoDiaryPairs ?? [])
+const HEYING_CHECKLIST = computed(() => cityData.value?.heyingChecklist ?? [])
+const STAGE_LOCATIONS = computed(() => cityData.value?.stageLocations ?? [])
 
 const today = new Date().toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -168,9 +180,9 @@ const timing = computed(() => {
 })
 
 onMounted(async () => {
-  for (const pair of PHOTO_DIARY_PAIRS) {
+  for (const pair of PHOTO_DIARY_PAIRS.value) {
     try {
-      const blob = await getPhoto(pair.stage)
+      const blob = await getPhoto(props.cityId, pair.stage)
       if (blob) {
         photos.value[pair.stage] = URL.createObjectURL(blob)
       }

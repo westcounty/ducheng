@@ -11,8 +11,13 @@
 
     <hr class="divider" />
 
+    <!-- Loading city data -->
+    <template v-if="loading">
+      <p class="text-secondary">载入中...</p>
+    </template>
+
     <!-- Not started: show intro story then action button -->
-    <template v-if="!game.isStarted">
+    <template v-else-if="!game.isStarted">
       <div class="intro-area">
         <NarrativeText
           :text="INTRO_STORY"
@@ -31,7 +36,7 @@
     </template>
 
     <!-- Already started: show progress and resume -->
-    <template v-else>
+    <template v-else-if="game.isStarted">
       <div class="progress-area cipher-card">
         <p class="progress-label">任务进行中</p>
         <div class="progress-stats">
@@ -74,32 +79,36 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGameStore } from '../stores/game.js'
-import { INTRO_STORY } from '../data/narrative.js'
+import { useCityData } from '../data/cities/useCityData.js'
 import NarrativeText from '../components/NarrativeText.vue'
 
-const game = useGameStore()
+const props = defineProps({ cityId: { type: String, required: true } })
+
+const game = useGameStore(props.cityId)
 const router = useRouter()
+const { cityData, loading } = useCityData(computed(() => props.cityId))
+const INTRO_STORY = computed(() => cityData.value?.introStory ?? '')
 
 const introComplete = ref(false)
 
 function acceptMission() {
   game.startGame()
-  router.push('/stage/1')
+  router.push(`/city/${props.cityId}/stage/1`)
 }
 
 function continueGame() {
   if (game.currentStage >= 8) {
-    router.push('/finale')
+    router.push(`/city/${props.cityId}/finale`)
   } else {
-    router.push(`/stage/${game.currentStage}`)
+    router.push(`/city/${props.cityId}/stage/${game.currentStage}`)
   }
 }
 
 function goToArchive() {
-  router.push('/archive')
+  router.push(`/city/${props.cityId}/archive`)
 }
 
 function confirmReset() {

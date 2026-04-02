@@ -68,28 +68,24 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGameStore } from '../stores/game.js'
-import { getStage } from '../data/puzzles.js'
+import { useCityData } from '../data/cities/useCityData.js'
 
 const props = defineProps({
-  from: {
-    type: String,
-    required: true
-  },
-  to: {
-    type: String,
-    required: true
-  }
+  cityId: { type: String, required: true },
+  from: { type: String, required: true },
+  to: { type: String, required: true }
 })
 
 const router = useRouter()
-const game = useGameStore()
+const game = useGameStore(props.cityId)
+const { cityData } = useCityData(computed(() => props.cityId))
 
-const fromStage = computed(() => getStage(Number(props.from)))
-const toStage = computed(() => getStage(Number(props.to)))
+const fromStage = computed(() => cityData.value?.getStage(Number(props.from)))
+const toStage = computed(() => cityData.value?.getStage(Number(props.to)))
 
 function arrived() {
   game.goToNextStage()
-  router.push(`/stage/${props.to}`)
+  router.push(`/city/${props.cityId}/stage/${props.to}`)
 }
 </script>
 

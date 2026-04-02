@@ -34,6 +34,10 @@ const props = defineProps({
     type: Array,
     required: true
   },
+  cityId: {
+    type: String,
+    required: true
+  },
   stageId: {
     type: [Number, String],
     required: true
@@ -44,7 +48,7 @@ const props = defineProps({
   }
 })
 
-const game = useGameStore()
+const game = useGameStore(props.cityId)
 
 const currentLevel = ref(0)
 const revealedHints = ref([])

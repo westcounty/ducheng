@@ -46,6 +46,7 @@
           <HintSystem
             :key="`hints-${currentStep}`"
             :hints="currentStepData.hints"
+            :city-id="props.cityId"
             :stage-id="stage.id"
             :step-id="currentStepData.id"
           />
@@ -68,6 +69,7 @@
         </div>
 
         <PhotoCapture
+          :city-id="props.cityId"
           :stage-id="stage.id"
           :prompt="stage.photoPrompt"
           @done="onPhotoDone"
@@ -134,24 +136,26 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGameStore } from '../stores/game.js'
-import { getStage } from '../data/puzzles.js'
+import { useCityData } from '../data/cities/useCityData.js'
 import NarrativeText from '../components/NarrativeText.vue'
 import AnswerInput from '../components/AnswerInput.vue'
 import HintSystem from '../components/HintSystem.vue'
 import PhotoCapture from '../components/PhotoCapture.vue'
 
 const props = defineProps({
-  id: {
-    type: String,
-    required: true
-  }
+  cityId: { type: String, required: true },
+  id: { type: String, required: true }
 })
 
 const router = useRouter()
-const game = useGameStore()
+const game = useGameStore(props.cityId)
+const { cityData, loading } = useCityData(computed(() => props.cityId))
 
 const stageId = computed(() => Number(props.id))
-const stage = computed(() => getStage(stageId.value))
+const stage = computed(() => {
+  if (!cityData.value) return null
+  return cityData.value.getStage(stageId.value)
+})
 
 // phase: 'steps' | 'fragment' | 'transition' | 'finale'
 const phase = ref('steps')
@@ -189,12 +193,12 @@ function onPhotoDone() {
 
 function goToTransit() {
   const nextId = stageId.value + 1
-  router.push(`/transit/${stageId.value}/${nextId}`)
+  router.push(`/city/${props.cityId}/transit/${stageId.value}/${nextId}`)
 }
 
 function goToFinale() {
   game.enterFinale()
-  router.push('/finale')
+  router.push(`/city/${props.cityId}/finale`)
 }
 </script>
 

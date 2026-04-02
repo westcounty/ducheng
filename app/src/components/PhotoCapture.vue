@@ -37,6 +37,10 @@ import { savePhoto } from '../utils/photo-store.js'
 import { useGameStore } from '../stores/game.js'
 
 const props = defineProps({
+  cityId: {
+    type: String,
+    required: true
+  },
   stageId: {
     type: Number,
     required: true
@@ -49,7 +53,7 @@ const props = defineProps({
 
 const emit = defineEmits(['done'])
 
-const game = useGameStore()
+const game = useGameStore(props.cityId)
 const fileInput = ref(null)
 const previewUrl = ref(null)
 
@@ -62,7 +66,7 @@ async function handleCapture(event) {
 
   // Save to IndexedDB
   try {
-    await savePhoto(props.stageId, file)
+    await savePhoto(props.cityId, props.stageId, file)
     game.recordPhoto(props.stageId)
   } catch (err) {
     console.error('Failed to save photo:', err)
