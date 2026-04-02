@@ -2,6 +2,7 @@
 
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useGameStore } from './stores/game.js'
+import { usePlatformStore } from './stores/platform.js'
 import { CITY_IDS } from './data/cities/index.js'
 
 const routes = [
@@ -40,6 +41,11 @@ const routes = [
     component: () => import('./pages/Archive.vue'),
     props: true
   },
+  {
+    path: '/cross-city-reveal',
+    name: 'CrossCityReveal',
+    component: () => import('./pages/CrossCityReveal.vue')
+  },
   // Backward compatibility redirects (old Shanghai URLs)
   {
     path: '/stage/:id',
@@ -66,6 +72,12 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   if (to.path === '/') return true
+
+  if (to.name === 'CrossCityReveal') {
+    const platform = usePlatformStore()
+    if (!platform.allCitiesCompleted) return '/'
+    return true
+  }
 
   const cityId = to.params.cityId
   if (!cityId) return true
