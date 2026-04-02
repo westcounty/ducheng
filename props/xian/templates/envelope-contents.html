@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信封内容 — 长安译</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .letter-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #c41e1e;
+    }
+
+    .letter-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: #c41e1e;
+      margin-bottom: 6px;
+    }
+
+    .letter-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8a5a1a;
+      letter-spacing: 0.15em;
+      font-style: italic;
+    }
+
+    .letter-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 16px;
+      line-height: 2.4;
+      color: #1e1210;
+      letter-spacing: 0.08em;
+      flex: 1;
+      padding: 8px 4px;
+    }
+
+    .letter-body p {
+      margin-bottom: 0.6em;
+      text-indent: 2em;
+    }
+
+    .letter-signature {
+      margin-top: 24px;
+      text-align: right;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 15px;
+      color: #1e1210;
+      line-height: 2;
+    }
+
+    /* Menu page */
+    .menu-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      color: #5a2a10;
+      border: 1px solid #c41e1e;
+      padding: 8px 14px;
+      margin-bottom: 20px;
+      background: rgba(196,30,30,0.04);
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+
+    .menu-bold {
+      font-weight: 700;
+      color: #c41e1e;
+    }
+
+    .menu-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+    }
+
+    .menu-table th {
+      border: 1.5px solid #c41e1e;
+      padding: 8px 10px;
+      background: rgba(196,30,30,0.08);
+      color: #1e1210;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .menu-table td {
+      border: 1px solid #d4a020;
+      padding: 10px 12px;
+      color: #1e1210;
+      line-height: 1.8;
+      vertical-align: top;
+    }
+
+    .menu-table tr:nth-child(even) td {
+      background: rgba(212,160,32,0.04);
+    }
+
+    .num-cell {
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: #c41e1e;
+      width: 28px;
+    }
+
+    .menu-note {
+      margin-top: 20px;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #5a2a10;
+      text-align: center;
+      font-style: italic;
+      letter-spacing: 0.1em;
+      line-height: 2;
+    }
+
+    /* Invitation page */
+    .invitation-scripts {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .script-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border: 1px solid rgba(196,30,30,0.3);
+      padding: 10px 14px;
+      background: rgba(212,160,32,0.04);
+    }
+
+    .script-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8a5a1a;
+      min-width: 60px;
+      letter-spacing: 0.1em;
+      padding-top: 2px;
+    }
+
+    .script-text {
+      font-size: 18px;
+      color: #1e1210;
+      letter-spacing: 0.15em;
+      line-height: 1.8;
+    }
+
+    .invitation-translation {
+      margin-top: 20px;
+      padding: 14px 18px;
+      border: 2px solid #c41e1e;
+      background: rgba(196,30,30,0.04);
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 15px;
+      line-height: 2.2;
+      color: #1e1210;
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     Page 1 — 康安最后一页旅记
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">通关后<br>拆封</div>
+  </div>
+
+  <div class="letter-header">
+    <div class="letter-title">康安最后一页旅记</div>
+    <div class="letter-note">通关后拆开的信封内第一张纸 · 仿手写体 · 丝绸质感纸张</div>
+  </div>
+
+  <div class="letter-body">
+    <p>如果你正在读这一页，说明有人找到了全部七份请帖。</p>
+    <p>我必须对你坦白——请帖很早就发出去了。般若、阿史那、约翰、张怀远、阿倍、伊本、胡禄，他们都答应来了。</p>
+    <p>但安史之乱来了。长安陷落了。般若逃回了天竺，阿史那回了草原，约翰不知所踪，张怀远殉了城，阿倍在海上漂了三年，伊本回了巴格达，胡禄的火灭了。</p>
+    <p>我把请帖重新刻在了他们最常去的七个地方。请帖还在，就说明这场晚宴还没有取消。</p>
+    <p>等了一千三百年。你来了。</p>
+  </div>
+
+  <div class="letter-signature">
+    ——康安<br>
+    天宝十四载，长安
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     Page 2 — 七道菜菜单
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="letter-header">
+    <div class="letter-title">康安的晚宴菜单</div>
+    <div class="letter-note">信封内第二张纸 · 七道友人之味</div>
+  </div>
+
+  <div class="menu-intro">
+    <span class="menu-bold">这是一顿没有吃成的晚宴。七道菜，七个故事。</span>
+  </div>
+
+  <table class="menu-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>菜名</th>
+        <th>来由</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num-cell">一</td>
+        <td>天竺素斋</td>
+        <td>般若教的：荐福寺的做法，不加葱蒜</td>
+      </tr>
+      <tr>
+        <td class="num-cell">二</td>
+        <td>草原炙肉</td>
+        <td>阿史那教的：要用最粗的盐，火要旺</td>
+      </tr>
+      <tr>
+        <td class="num-cell">三</td>
+        <td>叙利亚橄榄饼</td>
+        <td>约翰教的：他说这是他母亲的配方</td>
+      </tr>
+      <tr>
+        <td class="num-cell">四</td>
+        <td>关中凉皮</td>
+        <td>张怀远教的：他说好吃的东西不需要复杂</td>
+      </tr>
+      <tr>
+        <td class="num-cell">五</td>
+        <td>海鱼刺身</td>
+        <td>阿倍教的：他说奈良的海鱼比长安的新鲜一千倍，但他已经吃不到了</td>
+      </tr>
+      <tr>
+        <td class="num-cell">六</td>
+        <td>孜然烤羊肉</td>
+        <td>伊本教的：孜然要最后放，放早了就苦</td>
+      </tr>
+      <tr>
+        <td class="num-cell">七</td>
+        <td>波斯石榴鸡</td>
+        <td>胡禄教的：他说石榴是火的果实</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="menu-note">
+    七道菜比七种文字更让人心碎。因为菜是要一起吃的。
+  </div>
+
+</div><!-- /page 2 -->
+
+<!-- ════════════════════════════════════════════════════════
+     Page 3 — 请帖全文（七种文字）
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="letter-header">
+    <div class="letter-title">请帖全文</div>
+    <div class="letter-note">信封内第三张纸 · 七种文字书写 · 下方统一汉译</div>
+  </div>
+
+  <div class="invitation-scripts">
+
+    <div class="script-block">
+      <div class="script-label">悉昙文<br>Siddham<br>般若</div>
+      <div class="script-text">𑖀𑖦𑖿 𑖮𑖿𑖲𑖽 𑖢𑖿𑖨𑖯𑖨𑖿𑖘𑖿𑖧𑖯 𑖨𑖯𑖕𑖿𑖧𑖽</div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">突厥卢尼文<br>Old Turkic<br>阿史那</div>
+      <div class="script-text">𐰓𐰃𐰤 𐰏𐰠 𐰉𐰀𐰑𐰀 𐰓𐰃𐰤 𐰤𐰏𐰠𐰚</div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">叙利亚文<br>Syriac<br>约翰</div>
+      <div class="script-text">ܫܠܡܐ ܠܟ · ܬܐ ܠܘܬܢ · ܢܐܟܘܠ ܚܕܝܐܝܬ</div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">汉字楷书<br>Chinese<br>张怀远</div>
+      <div class="script-text">请君入席，共此一宴，不醉不归。</div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">万叶假名<br>Man'yōgana<br>阿倍</div>
+      <div class="script-text">宴 尓 来 牟 · 吾 等 待 津 · 月 照 席 上</div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">阿拉伯文<br>Arabic<br>伊本</div>
+      <div class="script-text">تَعَالَ إِلَى الْوَلِيمَةِ · نَحْنُ بِانْتِظَارِكَ</div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">巴列维文<br>Pahlavi<br>胡禄</div>
+      <div class="script-text">𐭠𐭥𐭩 𐭯𐭠𐭲𐭩 𐭠𐭩𐭩𐭠𐭤 𐭮𐭥𐭩</div>
+    </div>
+
+  </div>
+
+  <div class="invitation-translation">
+    如果你读到了全部七种文字，请来赴宴。<br>
+    我已经备好了酒。<br>
+    等了一千三百年，终于凑齐一桌人。
+  </div>
+
+  <div class="letter-signature" style="margin-top:16px;">
+    ——康安<br>
+    天宝年间，长安
+  </div>
+
+</div><!-- /page 3 -->
+
+</body>
+</html>

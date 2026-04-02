@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>丝路食物地图 — 长安译</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .map-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #5a2a10;
+      line-height: 1.9;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-left: 3px solid #d4a020;
+      background: rgba(212,160,32,0.06);
+    }
+
+    .map-container {
+      width: 100%;
+      flex: 1;
+      position: relative;
+    }
+
+    .food-legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .food-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid rgba(196,30,30,0.25);
+      background: rgba(212,160,32,0.04);
+    }
+
+    .food-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c41e1e;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .food-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #1e1210;
+      line-height: 1.7;
+    }
+
+    .food-name {
+      font-weight: 700;
+      color: #c41e1e;
+    }
+
+    .food-origin {
+      color: #8a5a1a;
+    }
+
+    .ibn-note {
+      margin-top: 12px;
+      border: 1px solid #d4a020;
+      padding: 8px 12px;
+      background: rgba(212,160,32,0.06);
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: #1e1210;
+      line-height: 2;
+      letter-spacing: 0.05em;
+    }
+
+    .map-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8a5a1a;
+      text-align: center;
+      margin-top: 6px;
+      letter-spacing: 0.08em;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page map-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">丝路食物<br>SILK ROAD</div>
+  </div>
+
+  <div class="title">丝路食物地图</div>
+  <div class="subtitle">SILK ROAD FOOD ORIGINS MAP · 伊本的货单 · 回民街</div>
+
+  <hr class="divider">
+
+  <div class="map-intro">
+    伊本说："你们汉人什么都好，就是不会用香料。"他的船每次到长安，都带来三大箱香料和种子。这张地图是他货物的来处。
+  </div>
+
+  <div class="map-container">
+    <svg viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;height:auto;font-family:'Noto Serif SC',serif;">
+
+      <!-- Background: sea/land simplified -->
+      <!-- Light sea background -->
+      <rect x="0" y="0" width="520" height="240" fill="#d8e8f0" opacity="0.4"/>
+
+      <!-- Land masses (simplified shapes) -->
+      <!-- China/East Asia -->
+      <path d="M380,20 L480,30 L510,80 L500,140 L460,170 L420,160 L390,120 L370,80 Z"
+            fill="#d4a040" opacity="0.55" stroke="#c41e1e" stroke-width="1"/>
+      <!-- Central Asia / Persia / India -->
+      <path d="M200,30 L340,20 L380,80 L370,120 L340,150 L300,160 L240,150 L180,120 L160,80 Z"
+            fill="#c8a060" opacity="0.50" stroke="#8a5a1a" stroke-width="1"/>
+      <!-- Mediterranean / Europe -->
+      <path d="M20,40 L140,30 L180,80 L160,120 L120,140 L60,130 L20,100 Z"
+            fill="#d4b070" opacity="0.50" stroke="#8a5a1a" stroke-width="1"/>
+      <!-- Arabian Peninsula -->
+      <path d="M160,120 L240,100 L260,140 L240,175 L200,185 L170,165 L155,140 Z"
+            fill="#c8a060" opacity="0.45" stroke="#8a5a1a" stroke-width="1"/>
+      <!-- Indian subcontinent -->
+      <path d="M300,120 L360,110 L380,160 L360,210 L320,220 L290,190 L280,155 Z"
+            fill="#c0a850" opacity="0.45" stroke="#8a5a1a" stroke-width="1"/>
+
+      <!-- Silk Road main path -->
+      <path d="M440,90 Q380,85 330,95 Q270,105 220,100 Q170,95 130,110 Q90,125 55,115"
+            fill="none" stroke="#c41e1e" stroke-width="2.5" stroke-dasharray="8,4"
+            opacity="0.85"/>
+
+      <!-- Southern sea route -->
+      <path d="M440,130 Q400,165 350,190 Q290,210 240,200 Q190,190 155,170 Q110,145 75,150"
+            fill="none" stroke="#d4a020" stroke-width="1.5" stroke-dasharray="5,5"
+            opacity="0.7"/>
+
+      <!-- City/Origin dots and labels -->
+
+      <!-- Chang'an (Xi'an) - East end -->
+      <circle cx="440" cy="90" r="8" fill="#c41e1e" opacity="0.9"/>
+      <circle cx="440" cy="90" r="12" fill="none" stroke="#c41e1e" stroke-width="1.5" opacity="0.4"/>
+      <text x="440" y="73" text-anchor="middle" font-size="11" fill="#c41e1e" font-weight="bold">长安</text>
+      <text x="440" y="85" text-anchor="middle" font-size="7" fill="#8a5a1a">Chang'an</text>
+
+      <!-- India - Pepper origin -->
+      <circle cx="330" cy="175" r="6" fill="#d4a020" opacity="0.85"/>
+      <text x="330" y="165" text-anchor="middle" font-size="9" fill="#5a2a10" font-weight="bold">天竺</text>
+      <text x="330" y="197" text-anchor="middle" font-size="8" fill="#c41e1e">胡椒</text>
+      <text x="330" y="207" text-anchor="middle" font-size="7" fill="#8a5a1a">Black Pepper</text>
+      <line x1="330" y1="170" x2="330" y2="182" stroke="#d4a020" stroke-width="1" stroke-dasharray="2,2"/>
+
+      <!-- Persia - Walnut origin -->
+      <circle cx="215" cy="115" r="6" fill="#d4a020" opacity="0.85"/>
+      <text x="215" y="105" text-anchor="middle" font-size="9" fill="#5a2a10" font-weight="bold">波斯</text>
+      <text x="215" y="137" text-anchor="middle" font-size="8" fill="#c41e1e">胡桃</text>
+      <text x="215" y="147" text-anchor="middle" font-size="7" fill="#8a5a1a">Walnut</text>
+      <line x1="215" y1="110" x2="215" y2="122" stroke="#d4a020" stroke-width="1" stroke-dasharray="2,2"/>
+
+      <!-- Central Asia - Sesame origin -->
+      <circle cx="285" cy="80" r="6" fill="#d4a020" opacity="0.85"/>
+      <text x="285" y="68" text-anchor="middle" font-size="9" fill="#5a2a10" font-weight="bold">中亚</text>
+      <text x="285" y="100" text-anchor="middle" font-size="8" fill="#c41e1e">胡麻</text>
+      <text x="285" y="110" text-anchor="middle" font-size="7" fill="#8a5a1a">Sesame</text>
+      <line x1="285" y1="73" x2="285" y2="85" stroke="#d4a020" stroke-width="1" stroke-dasharray="2,2"/>
+
+      <!-- Afghanistan - Carrot origin -->
+      <circle cx="255" cy="60" r="6" fill="#d4a020" opacity="0.85"/>
+      <text x="255" y="48" text-anchor="middle" font-size="9" fill="#5a2a10" font-weight="bold">阿富汗</text>
+      <text x="255" y="35" text-anchor="middle" font-size="8" fill="#c41e1e">胡萝卜</text>
+      <text x="255" y="25" text-anchor="middle" font-size="7" fill="#8a5a1a">Carrot</text>
+      <line x1="255" y1="48" x2="255" y2="62" stroke="#d4a020" stroke-width="1" stroke-dasharray="2,2"/>
+
+      <!-- Cumin/孜然 origin (Middle East) -->
+      <circle cx="170" cy="145" r="5" fill="#d4a020" opacity="0.80"/>
+      <text x="170" y="133" text-anchor="middle" font-size="9" fill="#5a2a10" font-weight="bold">大食</text>
+      <text x="170" y="163" text-anchor="middle" font-size="8" fill="#c41e1e">孜然</text>
+      <text x="170" y="173" text-anchor="middle" font-size="7" fill="#8a5a1a">Cumin</text>
+      <line x1="170" y1="138" x2="170" y2="150" stroke="#d4a020" stroke-width="1" stroke-dasharray="2,2"/>
+
+      <!-- Mediterranean -->
+      <circle cx="70" cy="95" r="5" fill="#8a5a1a" opacity="0.75"/>
+      <text x="70" y="83" text-anchor="middle" font-size="9" fill="#5a2a10" font-weight="bold">地中海</text>
+      <text x="70" y="113" text-anchor="middle" font-size="7" fill="#8a5a1a">Mediterranean</text>
+
+      <!-- Ibn's ship route annotation -->
+      <text x="200" y="225" text-anchor="middle" font-size="7.5" fill="#8a5a1a" font-style="italic">— 伊本的海路 · Ibn's Sea Route —</text>
+      <text x="270" y="54" text-anchor="middle" font-size="7" fill="#c41e1e" font-style="italic">— 丝绸之路 · Silk Road —</text>
+
+      <!-- Scale note -->
+      <text x="10" y="235" font-size="7" fill="#8a5a1a">（示意地图，非精确比例）</text>
+
+      <!-- Compass rose simplified -->
+      <text x="490" y="230" font-size="14" fill="#8a5a1a" opacity="0.6">✦</text>
+      <text x="490" y="220" text-anchor="middle" font-size="7" fill="#8a5a1a">N</text>
+
+    </svg>
+  </div>
+
+  <div class="food-legend">
+    <div class="food-item">
+      <div class="food-dot"></div>
+      <div class="food-text">
+        <span class="food-name">胡椒</span> <span class="food-origin">（天竺·印度）</span><br>
+        Black Pepper — 伊本最贵的货，用于换长安的丝绸
+      </div>
+    </div>
+    <div class="food-item">
+      <div class="food-dot" style="background:#d4a020;"></div>
+      <div class="food-text">
+        <span class="food-name">胡桃</span> <span class="food-origin">（波斯·伊朗）</span><br>
+        Walnut — 胡禄带来的，说波斯人叫它"石榴的兄弟"
+      </div>
+    </div>
+    <div class="food-item">
+      <div class="food-dot" style="background:#8a5a1a;"></div>
+      <div class="food-text">
+        <span class="food-name">胡麻</span> <span class="food-origin">（中亚）</span><br>
+        Sesame — 芝麻，般若说天竺的素斋靠它提香
+      </div>
+    </div>
+    <div class="food-item">
+      <div class="food-dot" style="background:#5a2a10;"></div>
+      <div class="food-text">
+        <span class="food-name">胡萝卜</span> <span class="food-origin">（阿富汗）</span><br>
+        Carrot — 天宝年间刚传入长安，回民街已有售卖
+      </div>
+    </div>
+  </div>
+
+  <div class="ibn-note">
+    "孜然要最后放，放早了就苦。盐要从高处撒，让盐自己选择落在哪里。做菜就是最大的道理。"<br>
+    <span style="font-size:10px;color:#8a5a1a;">——伊本，回民街，天宝年间</span>
+  </div>
+
+  <div class="map-note">
+    图中标注均为唐代称呼。胡椒·胡桃·胡麻·胡萝卜，"胡"字说明来自西域。
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

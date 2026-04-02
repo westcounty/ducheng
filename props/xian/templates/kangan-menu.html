@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>康安的菜单 — 长安译</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .menu-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .recipe-header {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #c41e1e;
+    }
+
+    .recipe-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5em;
+      color: #c41e1e;
+      margin-bottom: 4px;
+    }
+
+    .recipe-subtitle {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #8a5a1a;
+      letter-spacing: 0.15em;
+    }
+
+    .recipe-origin {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #5a2a10;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .ingredients-section {
+      margin-bottom: 14px;
+    }
+
+    .section-header {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #c41e1e;
+      letter-spacing: 0.25em;
+      border-left: 3px solid #d4a020;
+      padding-left: 8px;
+      margin-bottom: 8px;
+    }
+
+    .ingredients-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+    }
+
+    .ingredients-table th {
+      border: 1.5px solid #c41e1e;
+      padding: 6px 10px;
+      background: rgba(196,30,30,0.07);
+      color: #1e1210;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .ingredients-table td {
+      border: 1px solid rgba(196,30,30,0.3);
+      padding: 8px 10px;
+      color: #1e1210;
+      line-height: 1.7;
+      vertical-align: middle;
+    }
+
+    .ingredients-table tr:nth-child(even) td {
+      background: rgba(212,160,32,0.04);
+    }
+
+    .qty-cell {
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: #c41e1e;
+      width: 40px;
+      letter-spacing: 0;
+    }
+
+    .unit-cell {
+      width: 50px;
+      text-align: center;
+      color: #8a5a1a;
+      font-size: 11px;
+    }
+
+    .name-cell {
+      font-weight: 700;
+    }
+
+    .note-cell {
+      font-size: 10px;
+      color: #5a2a10;
+      font-style: italic;
+    }
+
+    .code-cell {
+      text-align: center;
+      width: 28px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(196,30,30,0.4);
+    }
+
+    .steps-section {
+      margin-bottom: 14px;
+    }
+
+    .step-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #1e1210;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+    }
+
+    .step-number {
+      font-weight: 700;
+      color: #c41e1e;
+      min-width: 20px;
+      flex-shrink: 0;
+    }
+
+    .annotation-box {
+      border: 2px solid #d4a020;
+      padding: 10px 14px;
+      background: rgba(212,160,32,0.08);
+      margin-top: 12px;
+      position: relative;
+    }
+
+    .annotation-box::before {
+      content: '康安手注';
+      position: absolute;
+      top: -9px;
+      left: 12px;
+      background: #f5e8d0;
+      padding: 0 6px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #d4a020;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+    }
+
+    .annotation-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 13px;
+      color: #1e1210;
+      line-height: 2.1;
+      letter-spacing: 0.06em;
+    }
+
+    .code-reveal {
+      margin-top: 12px;
+      padding: 8px 14px;
+      border: 1px dashed #c41e1e;
+      background: rgba(196,30,30,0.04);
+    }
+
+    .code-reveal-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #c41e1e;
+      letter-spacing: 0.2em;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .code-reveal-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #1e1210;
+      line-height: 1.8;
+    }
+
+    .code-number-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+      align-items: center;
+    }
+
+    .code-number-box {
+      width: 30px;
+      height: 30px;
+      border: 1.5px solid #c41e1e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #c41e1e;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page menu-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">食谱道具<br>RECIPE</div>
+  </div>
+
+  <div class="recipe-header">
+    <div class="recipe-title">孜然烤羊肉</div>
+    <div class="recipe-subtitle">康安饭馆招牌菜 · 伊本传授</div>
+    <div class="recipe-origin">回民街配方 · 天宝年间 · 长安西市</div>
+  </div>
+
+  <div class="ingredients-section">
+    <div class="section-header">食材清单</div>
+    <table class="ingredients-table">
+      <thead>
+        <tr>
+          <th style="width:24px;">#</th>
+          <th>食材</th>
+          <th>用量</th>
+          <th>单位</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="code-cell">①</td>
+          <td class="name-cell">羊后腿肉</td>
+          <td class="qty-cell">3</td>
+          <td class="unit-cell">斤</td>
+          <td class="note-cell">切寸段，肥瘦各半</td>
+        </tr>
+        <tr>
+          <td class="code-cell">②</td>
+          <td class="name-cell">酸奶</td>
+          <td class="qty-cell">7</td>
+          <td class="unit-cell">合</td>
+          <td class="note-cell">腌制用，须用新鲜羊奶发酵</td>
+        </tr>
+        <tr>
+          <td class="code-cell">③</td>
+          <td class="name-cell">孜然粒</td>
+          <td class="qty-cell">2</td>
+          <td class="unit-cell">钱</td>
+          <td class="note-cell">最后放，放早了就苦</td>
+        </tr>
+        <tr>
+          <td class="code-cell">④</td>
+          <td class="name-cell">粗盐</td>
+          <td class="qty-cell">1</td>
+          <td class="unit-cell">匙</td>
+          <td class="note-cell">从高处撒，让盐自选落处</td>
+        </tr>
+        <tr>
+          <td class="code-cell">⑤</td>
+          <td class="name-cell">葡萄酒</td>
+          <td class="qty-cell">3</td>
+          <td class="unit-cell">升</td>
+          <td class="note-cell">西市胡姬酿，腌制和佐餐均可</td>
+        </tr>
+        <tr>
+          <td class="code-cell">⑥</td>
+          <td class="name-cell">胡椒粉</td>
+          <td class="qty-cell">5</td>
+          <td class="unit-cell">分</td>
+          <td class="note-cell">天竺来的，比中原贵十倍</td>
+        </tr>
+        <tr>
+          <td class="code-cell">⑦</td>
+          <td class="name-cell">干无花果</td>
+          <td class="qty-cell">4</td>
+          <td class="unit-cell">枚</td>
+          <td class="note-cell">伊本说能去膻，可不放</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="steps-section">
+    <div class="section-header">做法</div>
+    <ol class="step-list">
+      <li class="step-item">
+        <span class="step-number">一、</span>
+        <span>羊肉用酸奶、葡萄酒、胡椒粉腌渍，至少半个时辰，最好过夜。</span>
+      </li>
+      <li class="step-item">
+        <span class="step-number">二、</span>
+        <span>炭火烧旺（火要旺——阿史那说），将羊肉串在铁签上，大火炙烤至表面焦脆，约两刻钟。</span>
+      </li>
+      <li class="step-item">
+        <span class="step-number">三、</span>
+        <span>出炉前撒孜然粒、粗盐，顺序不可颠倒。盐从高处撒下，让盐自己落。</span>
+      </li>
+      <li class="step-item">
+        <span class="step-number">四、</span>
+        <span>配胡饼或凉皮上桌，佐葡萄酒。伊本说不配酒的烤肉是对羊的不尊重。</span>
+      </li>
+    </ol>
+  </div>
+
+  <div class="annotation-box">
+    <div class="annotation-text">
+      伊本第一次教我做这道菜，说了三遍"孜然要最后放"。我以为他在重复，后来发现他是怕我忘。他在长安做生意八年，教会我的东西比我去过的任何城市都多。这道菜我学会了，但他走之后我再也没做过。一个人做七道菜，不如七个人各做一道。
+      <br><span style="font-size:10px;color:#8a5a1a;margin-left:2em;">——康安</span>
+    </div>
+  </div>
+
+  <div class="code-reveal">
+    <div class="code-reveal-title">◆ 密码提示 ◆</div>
+    <div class="code-reveal-text">
+      将食材①→⑦的用量数字，依次读出，得到七位数字密码：
+    </div>
+    <div class="code-number-row">
+      <div class="code-number-box">3</div>
+      <div class="code-number-box">7</div>
+      <div class="code-number-box">2</div>
+      <div class="code-number-box">1</div>
+      <div class="code-number-box">3</div>
+      <div class="code-number-box">5</div>
+      <div class="code-number-box">4</div>
+      <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#8a5a1a;margin-left:8px;">= 七站密码·排列组合</span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

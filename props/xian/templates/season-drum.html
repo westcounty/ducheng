@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>节气鼓记录卡 — 长安译</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .drum-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drum-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #5a2a10;
+      line-height: 1.9;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-left: 3px solid #d4a020;
+      background: rgba(212,160,32,0.06);
+    }
+
+    .solar-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, auto);
+      border: 2px solid #c41e1e;
+      margin-bottom: 14px;
+    }
+
+    .solar-cell {
+      border: 1px solid rgba(196,30,30,0.3);
+      padding: 6px 4px;
+      text-align: center;
+      position: relative;
+    }
+
+    .solar-cell.header-row {
+      background: rgba(196,30,30,0.08);
+      padding: 4px;
+    }
+
+    .solar-cell.header-row .season-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      font-weight: 700;
+      color: #c41e1e;
+      letter-spacing: 0.1em;
+    }
+
+    .cell-number {
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: rgba(196,30,30,0.4);
+    }
+
+    .solar-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e1210;
+      letter-spacing: 0.05em;
+    }
+
+    .solar-date {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #8a5a1a;
+      letter-spacing: 0.05em;
+      margin-top: 1px;
+    }
+
+    .solar-desc {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: #5a2a10;
+      letter-spacing: 0.03em;
+      margin-top: 1px;
+      font-style: italic;
+    }
+
+    .drum-count {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(196,30,30,0.6);
+      margin-top: 2px;
+    }
+
+    .highlighted-cell {
+      background: rgba(212,160,32,0.15);
+      border: 1px solid #d4a020 !important;
+    }
+
+    .extraction-box {
+      border: 2px solid #c41e1e;
+      padding: 10px 14px;
+      background: rgba(196,30,30,0.04);
+      margin-bottom: 12px;
+    }
+
+    .extraction-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #c41e1e;
+      letter-spacing: 0.2em;
+      margin-bottom: 6px;
+    }
+
+    .extraction-rule {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #1e1210;
+      line-height: 1.9;
+      letter-spacing: 0.06em;
+    }
+
+    .answer-area {
+      border: 1px solid #d4a020;
+      padding: 8px 12px;
+      margin-top: 10px;
+      min-height: 36px;
+      background: rgba(245,232,208,0.5);
+    }
+
+    .answer-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8a5a1a;
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+    }
+
+    .answer-boxes {
+      display: flex;
+      gap: 8px;
+    }
+
+    .answer-box {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid #c41e1e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      color: #c41e1e;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page drum-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">鼓楼节气<br>SOLAR TERMS</div>
+  </div>
+
+  <div class="title">节气鼓记录卡</div>
+  <div class="subtitle">24 SOLAR TERMS DRUM RECORD · 阿倍仲麻吕记录 · 长安鼓楼</div>
+
+  <hr class="divider">
+
+  <div class="drum-intro">
+    阿倍说："鼓楼的鼓不只报时，还报节气。每个节气，鼓声的次数不同。我在长安三十年，把二十四节气的鼓声都记下来了。" 以下是他在鼓楼旁誊写的节气表。
+  </div>
+
+  <!-- 4 rows × 6 columns = 24 cells -->
+  <div class="solar-grid">
+
+    <!-- Row 1: 春 Spring (立春 to 谷雨) -->
+    <div class="solar-cell">
+      <span class="cell-number">01</span>
+      <div class="solar-name">立春</div>
+      <div class="solar-date">2月3-5日</div>
+      <div class="solar-desc">春始</div>
+      <div class="drum-count">鼓 ●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">02</span>
+      <div class="solar-name">雨水</div>
+      <div class="solar-date">2月18-20日</div>
+      <div class="solar-desc">春雨始</div>
+      <div class="drum-count">鼓 ●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">03</span>
+      <div class="solar-name">惊蛰</div>
+      <div class="solar-date">3月5-7日</div>
+      <div class="solar-desc">雷始鸣</div>
+      <div class="drum-count">鼓 ●●●●</div>
+    </div>
+    <div class="solar-cell highlighted-cell">
+      <span class="cell-number">04</span>
+      <div class="solar-name">春分</div>
+      <div class="solar-date">3月20-22日</div>
+      <div class="solar-desc">昼夜等</div>
+      <div class="drum-count">鼓 ●●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">05</span>
+      <div class="solar-name">清明</div>
+      <div class="solar-date">4月4-6日</div>
+      <div class="solar-desc">万物清</div>
+      <div class="drum-count">鼓 ●●●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">06</span>
+      <div class="solar-name">谷雨</div>
+      <div class="solar-date">4月19-21日</div>
+      <div class="solar-desc">谷物生</div>
+      <div class="drum-count">鼓 ●●●●●●●</div>
+    </div>
+
+    <!-- Row 2: 夏 Summer (立夏 to 大暑) -->
+    <div class="solar-cell">
+      <span class="cell-number">07</span>
+      <div class="solar-name">立夏</div>
+      <div class="solar-date">5月5-7日</div>
+      <div class="solar-desc">夏始</div>
+      <div class="drum-count">鼓 ●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">08</span>
+      <div class="solar-name">小满</div>
+      <div class="solar-date">5月20-22日</div>
+      <div class="solar-desc">麦粒满</div>
+      <div class="drum-count">鼓 ●●</div>
+    </div>
+    <div class="solar-cell highlighted-cell">
+      <span class="cell-number">09</span>
+      <div class="solar-name">芒种</div>
+      <div class="solar-date">6月5-7日</div>
+      <div class="solar-desc">有芒谷</div>
+      <div class="drum-count">鼓 ●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">10</span>
+      <div class="solar-name">夏至</div>
+      <div class="solar-date">6月21-22日</div>
+      <div class="solar-desc">昼最长</div>
+      <div class="drum-count">鼓 ●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">11</span>
+      <div class="solar-name">小暑</div>
+      <div class="solar-date">7月6-8日</div>
+      <div class="solar-desc">暑气来</div>
+      <div class="drum-count">鼓 ●●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">12</span>
+      <div class="solar-name">大暑</div>
+      <div class="solar-date">7月22-24日</div>
+      <div class="solar-desc">最热时</div>
+      <div class="drum-count">鼓 ●●●●●●</div>
+    </div>
+
+    <!-- Row 3: 秋 Autumn (立秋 to 霜降) -->
+    <div class="solar-cell">
+      <span class="cell-number">13</span>
+      <div class="solar-name">立秋</div>
+      <div class="solar-date">8月7-9日</div>
+      <div class="solar-desc">秋始</div>
+      <div class="drum-count">鼓 ●●●●●●●</div>
+    </div>
+    <div class="solar-cell highlighted-cell">
+      <span class="cell-number">14</span>
+      <div class="solar-name">处暑</div>
+      <div class="solar-date">8月22-24日</div>
+      <div class="solar-desc">暑将去</div>
+      <div class="drum-count">鼓 ●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">15</span>
+      <div class="solar-name">白露</div>
+      <div class="solar-date">9月7-9日</div>
+      <div class="solar-desc">露始生</div>
+      <div class="drum-count">鼓 ●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">16</span>
+      <div class="solar-name">秋分</div>
+      <div class="solar-date">9月22-24日</div>
+      <div class="solar-desc">昼夜等</div>
+      <div class="drum-count">鼓 ●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">17</span>
+      <div class="solar-name">寒露</div>
+      <div class="solar-date">10月7-9日</div>
+      <div class="solar-desc">露寒冷</div>
+      <div class="drum-count">鼓 ●●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">18</span>
+      <div class="solar-name">霜降</div>
+      <div class="solar-date">10月23-25日</div>
+      <div class="solar-desc">霜始降</div>
+      <div class="drum-count">鼓 ●●●●●●</div>
+    </div>
+
+    <!-- Row 4: 冬 Winter (立冬 to 大寒) -->
+    <div class="solar-cell">
+      <span class="cell-number">19</span>
+      <div class="solar-name">立冬</div>
+      <div class="solar-date">11月7-8日</div>
+      <div class="solar-desc">冬始</div>
+      <div class="drum-count">鼓 ●●●●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">20</span>
+      <div class="solar-name">小雪</div>
+      <div class="solar-date">11月22-23日</div>
+      <div class="solar-desc">雪始降</div>
+      <div class="drum-count">鼓 ●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">21</span>
+      <div class="solar-name">大雪</div>
+      <div class="solar-date">12月6-8日</div>
+      <div class="solar-desc">雪大降</div>
+      <div class="drum-count">鼓 ●●●</div>
+    </div>
+    <div class="solar-cell highlighted-cell">
+      <span class="cell-number">22</span>
+      <div class="solar-name">冬至</div>
+      <div class="solar-date">12月21-23日</div>
+      <div class="solar-desc">夜最长</div>
+      <div class="drum-count">鼓 ●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">23</span>
+      <div class="solar-name">小寒</div>
+      <div class="solar-date">1月5-7日</div>
+      <div class="solar-desc">寒气积</div>
+      <div class="drum-count">鼓 ●●●●●</div>
+    </div>
+    <div class="solar-cell">
+      <span class="cell-number">24</span>
+      <div class="solar-name">大寒</div>
+      <div class="solar-date">1月19-21日</div>
+      <div class="solar-desc">最冷时</div>
+      <div class="drum-count">鼓 ●●●●●●</div>
+    </div>
+
+  </div><!-- /solar-grid -->
+
+  <div class="extraction-box">
+    <div class="extraction-title">◆ 提取规则 · Extraction Rule ◆</div>
+    <div class="extraction-rule">
+      阿倍说："四个分点（春分、芒种、处暑、冬至）的鼓声次数加起来，就是我在长安的年数。"<br>
+      <span style="color:#8a5a1a;font-size:10px;">黄色高亮格为"四分点"：04春分(5声)、09芒种(3声)、14处暑(2声)、22冬至(4声)</span><br>
+      将四个数字依次排列，即得密码：<strong style="color:#c41e1e;font-size:14px;">5 · 3 · 2 · 4</strong>
+    </div>
+  </div>
+
+  <div class="answer-area">
+    <div class="answer-label">玩家答案区 · PLAYER ANSWER</div>
+    <div class="answer-boxes">
+      <div class="answer-box"></div>
+      <div class="answer-box"></div>
+      <div class="answer-box"></div>
+      <div class="answer-box"></div>
+      <div style="font-family:'Noto Serif SC',serif;font-size:11px;color:#8a5a1a;align-self:center;margin-left:8px;">
+        四个高亮节气的鼓声数，按顺序填入
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

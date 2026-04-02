@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拍摄任务卡 — 长安译</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .photo-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #5a2a10;
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border: 1px solid rgba(196,30,30,0.3);
+      background: rgba(212,160,32,0.06);
+    }
+
+    .photo-cards-grid {
+      display: grid;
+      grid-template-columns: 85mm 85mm;
+      grid-template-rows: repeat(4, auto);
+      gap: 4mm;
+      flex: 1;
+    }
+
+    .photo-card {
+      border: 2px solid #c41e1e;
+      padding: 4mm 5mm;
+      background-color: #f5e8d0;
+      background-image:
+        radial-gradient(ellipse at 15% 15%, rgba(196,30,30,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 85%, rgba(212,160,32,0.08) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .photo-card::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border: 1px solid rgba(212,160,32,0.35);
+      pointer-events: none;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+
+    .station-tag {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #8a5a1a;
+      border: 1px solid #c41e1e;
+      padding: 1px 4px;
+      letter-spacing: 0.1em;
+    }
+
+    .card-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #c41e1e;
+      line-height: 1;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 18mm;
+      border: 1px dashed rgba(196,30,30,0.4);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(245,232,208,0.5);
+      position: relative;
+    }
+
+    .photo-icon {
+      font-size: 22px;
+      opacity: 0.25;
+    }
+
+    .photo-label {
+      position: absolute;
+      bottom: 3px;
+      right: 5px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: rgba(196,30,30,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    .location-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #c41e1e;
+      letter-spacing: 0.12em;
+      margin-bottom: 3px;
+    }
+
+    .prompt-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 10px;
+      color: #1e1210;
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+      flex: 1;
+    }
+
+    .speaker-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #8a5a1a;
+      text-align: right;
+      margin-top: 3px;
+      letter-spacing: 0.1em;
+    }
+
+    /* Last card (7) spans full width for the special ending */
+    .photo-card.full-width {
+      grid-column: span 2;
+    }
+
+    .final-card-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 12px;
+      color: #1e1210;
+      line-height: 1.8;
+      letter-spacing: 0.06em;
+      text-align: center;
+      flex: 1;
+    }
+
+    .final-emphasis {
+      color: #c41e1e;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page photo-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">拍摄任务<br>PHOTO TASK</div>
+  </div>
+
+  <div class="title">拍摄任务卡</div>
+  <div class="subtitle">PHOTO PROMPT CARDS · 长安七站 · 沿虚线剪下 · 共七张</div>
+
+  <hr class="divider">
+
+  <div class="page-intro">
+    每到一站，找到对应地点，拍下指定画面。拍完看背面的文字——那是康安的七个朋友各自说过的一句话。
+  </div>
+
+  <div class="photo-cards-grid">
+
+    <!-- Card 1: 小雁塔 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">第一站 · Station 1</span>
+        <span class="card-num">① 一</span>
+      </div>
+      <div class="photo-placeholder">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">粘贴照片处</span>
+      </div>
+      <div class="location-name">小雁塔</div>
+      <div class="prompt-text">
+        拍下小雁塔
+      </div>
+      <div class="speaker-name">般若 · Banruo</div>
+    </div>
+
+    <!-- Card 2: 城门洞 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">第二站 · Station 2</span>
+        <span class="card-num">② 二</span>
+      </div>
+      <div class="photo-placeholder">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">粘贴照片处</span>
+      </div>
+      <div class="location-name">城门洞</div>
+      <div class="prompt-text">
+        拍下城门洞
+      </div>
+      <div class="speaker-name">阿史那 · Ashena</div>
+    </div>
+
+    <!-- Card 3: 碑林入口 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">第三站 · Station 3</span>
+        <span class="card-num">③ 三</span>
+      </div>
+      <div class="photo-placeholder">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">粘贴照片处</span>
+      </div>
+      <div class="location-name">碑林入口</div>
+      <div class="prompt-text">
+        拍下碑林入口
+      </div>
+      <div class="speaker-name">约翰 · Yohanan</div>
+    </div>
+
+    <!-- Card 4: 书院门牌坊 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">第四站 · Station 4</span>
+        <span class="card-num">④ 四</span>
+      </div>
+      <div class="photo-placeholder">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">粘贴照片处</span>
+      </div>
+      <div class="location-name">书院门牌坊</div>
+      <div class="prompt-text">
+        拍下书院门牌坊
+      </div>
+      <div class="speaker-name">张怀远 · Zhang Huaiyuan</div>
+    </div>
+
+    <!-- Card 5: 鼓楼 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">第五站 · Station 5</span>
+        <span class="card-num">⑤ 五</span>
+      </div>
+      <div class="photo-placeholder">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">粘贴照片处</span>
+      </div>
+      <div class="location-name">鼓楼</div>
+      <div class="prompt-text">
+        拍下鼓楼
+      </div>
+      <div class="speaker-name">阿倍 · Abe no Nakamaro</div>
+    </div>
+
+    <!-- Card 6: 回民街 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">第六站 · Station 6</span>
+        <span class="card-num">⑥ 六</span>
+      </div>
+      <div class="photo-placeholder">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">粘贴照片处</span>
+      </div>
+      <div class="location-name">回民街</div>
+      <div class="prompt-text">
+        拍下回民街
+      </div>
+      <div class="speaker-name">伊本 · Ibn</div>
+    </div>
+
+    <!-- Card 7: 大雁塔 — full width, special -->
+    <div class="photo-card full-width">
+      <div class="card-top">
+        <span class="station-tag">第七站 · Station 7 · 最终站</span>
+        <span class="card-num">⑦ 七</span>
+      </div>
+      <div class="photo-placeholder" style="height:14mm;">
+        <span class="photo-icon">📷</span>
+        <span class="photo-label">粘贴照片处</span>
+      </div>
+      <div class="location-name" style="text-align:center;">大雁塔</div>
+      <div class="final-card-text">
+        拍下大雁塔——<br>
+        胡禄说<span class="final-emphasis">"这座城不需要神"</span>。<br>
+        然后你走进不夜城，灯亮了。
+      </div>
+      <div class="speaker-name">胡禄 · Hulu · 祆教徒</div>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 1 -->
+
+<!-- PAGE 2: Card backs with quotes -->
+<div class="page photo-page">
+
+  <div class="title" style="font-size:16px;">拍摄任务卡 — 背面语录</div>
+  <div class="subtitle">PHOTO CARD BACKS · 翻面对齐后剪下</div>
+
+  <hr class="divider">
+
+  <div class="instruction-box">
+    每张卡背面印有对应朋友的一句话。拍完照片后翻到背面，念出那句话——康安等了一千三百年就是为了等人来念这七句话。
+  </div>
+
+  <div class="photo-cards-grid">
+
+    <!-- Back 1 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">般若 · 小雁塔</span>
+        <span class="card-num">① 一</span>
+      </div>
+      <div class="prompt-text" style="font-size:12px;text-align:center;padding:6mm 0;">
+        "这座塔裂开过三次，又合上了三次。<br>
+        佛法也是这样，<br>
+        裂了不怕，怕的是不合。"
+      </div>
+      <div class="speaker-name">——般若，荐福寺，天宝年间</div>
+    </div>
+
+    <!-- Back 2 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">阿史那 · 城门洞</span>
+        <span class="card-num">② 二</span>
+      </div>
+      <div class="prompt-text" style="font-size:12px;text-align:center;padding:6mm 0;">
+        "我攻过很多城，<br>
+        这是我唯一想守的一座。"
+      </div>
+      <div class="speaker-name">——阿史那，城墙南门，天宝年间</div>
+    </div>
+
+    <!-- Back 3 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">约翰 · 碑林</span>
+        <span class="card-num">③ 三</span>
+      </div>
+      <div class="prompt-text" style="font-size:12px;text-align:center;padding:6mm 0;">
+        "我的神和般若的佛吵了一千年，<br>
+        但他们住在同一块石头上。"
+      </div>
+      <div class="speaker-name">——约翰，碑林，天宝年间</div>
+    </div>
+
+    <!-- Back 4 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">张怀远 · 书院门</span>
+        <span class="card-num">④ 四</span>
+      </div>
+      <div class="prompt-text" style="font-size:12px;text-align:center;padding:6mm 0;">
+        "字要是写得不好，不如不写。<br>
+        但不写就什么都没有了。"
+      </div>
+      <div class="speaker-name">——张怀远，书院门，天宝年间</div>
+    </div>
+
+    <!-- Back 5 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">阿倍 · 鼓楼</span>
+        <span class="card-num">⑤ 五</span>
+      </div>
+      <div class="prompt-text" style="font-size:12px;text-align:center;padding:6mm 0;">
+        "长安的鼓声告诉我几点该回家。<br>
+        但我的家在海的那边。"
+      </div>
+      <div class="speaker-name">——阿倍仲麻吕，鼓楼，天宝年间</div>
+    </div>
+
+    <!-- Back 6 -->
+    <div class="photo-card">
+      <div class="card-top">
+        <span class="station-tag">伊本 · 回民街</span>
+        <span class="card-num">⑥ 六</span>
+      </div>
+      <div class="prompt-text" style="font-size:12px;text-align:center;padding:6mm 0;">
+        "评价一座城市只需要一个标准：<br>
+        集市好不好。"
+      </div>
+      <div class="speaker-name">——伊本，回民街，天宝年间</div>
+    </div>
+
+    <!-- Back 7: full width -->
+    <div class="photo-card full-width" style="background-image:radial-gradient(ellipse at 50% 50%, rgba(196,30,30,0.10) 0%, transparent 70%);">
+      <div class="card-top">
+        <span class="station-tag">胡禄 · 大雁塔 · 最终</span>
+        <span class="card-num">⑦ 七</span>
+      </div>
+      <div class="final-card-text" style="padding:4mm 0;font-size:13px;">
+        <span style="color:#8a5a1a;font-size:11px;">胡禄说：</span><br>
+        <span class="final-emphasis">"这座城不需要神。"</span><br>
+        <span style="color:#8a5a1a;font-size:11px;">然后你走进不夜城，灯亮了。</span><br><br>
+        <span style="font-size:11px;color:#1e1210;">等了一千三百年。七封请帖，七种文字。你把七句话都念完了。</span><br>
+        <span style="font-size:11px;color:#c41e1e;font-weight:bold;">这顿饭，终于开席了。</span>
+      </div>
+      <div class="speaker-name">——胡禄，大雁塔，天宝年间 · ——康安，长安，一千三百年后</div>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

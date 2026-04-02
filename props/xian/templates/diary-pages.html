@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>康安旅记 — 长安译</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .diary-page {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .diary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #c41e1e;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .station-badge {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #8a5a1a;
+      border: 1px solid #c41e1e;
+      padding: 3px 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .location-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e1210;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .diary-date {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 11px;
+      color: #8a5a1a;
+      text-align: right;
+    }
+
+    .diary-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.2;
+      color: #1e1210;
+      letter-spacing: 0.06em;
+      flex: 1;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent calc(2.2em - 1px),
+        rgba(196,30,30,0.12) calc(2.2em - 1px),
+        rgba(196,30,30,0.12) 2.2em
+      );
+      padding: 0 4px;
+    }
+
+    .diary-body p {
+      margin-bottom: 0.4em;
+    }
+
+    .secret-section {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 2px dashed #c41e1e;
+    }
+
+    .secret-section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8a5a1a;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+    }
+
+    .hidden-cells {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hidden-cell {
+      border: 2px solid #d4a020;
+      padding: 8px 14px;
+      min-width: 80px;
+      text-align: center;
+      background: rgba(212,160,32,0.06);
+    }
+
+    .hidden-cell-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8a5a1a;
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: 0.2em;
+    }
+
+    .hidden-cell-text {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: #1e1210;
+      line-height: 1.6;
+    }
+
+    .diary-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(196,30,30,0.25);
+    }
+
+    .acrostic-hint {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: rgba(196,30,30,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    .page-corner-stamp {
+      position: absolute;
+      top: 14mm;
+      right: 14mm;
+      transform: rotate(8deg);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     旅记 第一页 — 小雁塔·荐福寺
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点一<br>STATION 1</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第一站 · Station 1</div>
+    <div class="location-name">小雁塔·荐福寺<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Small Wild Goose Pagoda · 雁塔区</span></div>
+    <div class="diary-date">天宝年间<br>长安</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>此地有一座塔，不算最高，但般若说它是他见过最倔的。三次地震，塔裂开了三次，又自己合上了三次。般若说"佛法也是这样，裂了不怕，怕的是不合"。他坚持早上四点起来念经，但每次念到一半就睡着。打呼的声音比钟还响。寺里的小沙弥偷偷给他起了个绰号叫"雷音法师"，他知道了也不恼，反而得意。</p>
+    <p>般若不吃肉，但他说荐福寺的素斋比天竺的好。我信他。尤其是那道香积厨的笋丝豆腐羹，用花椒叶点过，般若每次吃完都念一句佛号——我怀疑他是在替那道菜念的。他说天竺的寺院只有扁豆糊，吃了三十年，做梦都是黄色的。</p>
+    <p>塔有十五层，每层佛龛数目不同。般若曾从底层数到顶层，把每层佛龛数记在贝叶经背面。他说"数佛跟念经一样，数着数着就忘了自己"。我在长安三十年，学会了七种语言，却从来没能用同一种语言把七个朋友叫到一张桌上。我想请他们吃一顿饭。请帖已经写好了，用般若读得懂的悉昙文。</p>
+    <p>般若收到请帖的时候正在打呼，我把它塞在了他的蒲团底下。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 旅记暗记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">遗憾</span>
+        <div class="hidden-cell-text">我在长安三十年，学会了七种语言，却从来没能用同一种语言把七个朋友叫到一张桌上。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：此</span>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     旅记 第二页 — 城墙南门
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点二<br>STATION 2</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第二站 · Station 2</div>
+    <div class="location-name">城墙南门<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">South Gate of the City Wall · 碑林区</span></div>
+    <div class="diary-date">天宝年间<br>长安</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>城墙上的月亮，和关外的月亮不是同一个。阿史那跟我说这话的时候喝多了。他是我见过最大的人，骑在马上像一座移动的城楼。但他怕猫。有次一只花猫跳上城墙垛口，他退了三步，手按在刀柄上，那姿势像要跟猫单挑。我笑了一个月。后来他说草原上没有这种东西，眼睛会发光的小兽，不可信。</p>
+    <p>"秦时明月汉时关，万里长征人未还。"他背这首诗的时候表情很复杂。诗里说的那些关，有些是他的族人攻破的。他说他年轻时觉得破城是荣耀，现在站在城墙上往下看，才知道城里住着的都是活人。</p>
+    <p>南门的城门洞有多深，阿史那量过——他说正好是他三十步。他喜欢在傍晚沿城墙走，从南门走到东门角楼要多少步，他也记得。我说你怎么总在数步子，他说"守城的人要知道城有多大，才知道要守多久"。</p>
+    <p>最近他提过一次范阳那边调兵的事，说了一句"那个安禄山，眼神不对"。我没太在意。他攻过很多城，我走过很多路，但我们都没能回到自己出发的地方。请帖我用突厥卢尼文写的，夹在城墙砖缝里，他巡城的时候会看到。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 旅记暗记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">遗憾</span>
+        <div class="hidden-cell-text">他攻过很多城，我走过很多路，但我们都没能回到自己出发的地方。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：城</span>
+  </div>
+
+</div><!-- /page 2 -->
+
+<!-- ════════════════════════════════════════════════════════
+     旅记 第三页 — 碑林
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点三<br>STATION 3</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第三站 · Station 3</div>
+    <div class="location-name">碑林<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Forest of Stone Steles · 碑林区</span></div>
+    <div class="diary-date">天宝年间<br>长安</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>容不下两个神？约翰不同意。他总说他的神只有一个，然后花三个小时跟般若争论。争完了一起喝酒，说"你的佛不错"。般若也回一句"你的神挺倔"。他俩吵架的样子像两只争食的鸟，声音大，但谁也不真啄谁。</p>
+    <p>有一天我带他们俩去碑林，指着景教碑上面的十字架和莲花说："你看，你们的神早就和解了。"约翰沉默了很久，然后说："也许不是和解，是拥抱。"般若也沉默了。那天难得安静。</p>
+    <p>景教碑上刻着叙利亚文和汉字，两种文字挨得很近，像两个人靠在一起说话。约翰让我数碑上的叙利亚文有多少行，他自己数汉字有多少列，说"看看哪个神的话更多"。我数了。他也数了。然后他说："一样多。"我至今不知道他有没有骗我。</p>
+    <p>碑林里的碑太多了，刻的字加起来比任何一座图书馆都厚。石头能容下那么多字，却容不下一句"我也想家了"。约翰来长安是为了传教，但他说他传了十年，最大的收获是学会了用筷子。请帖用叙利亚文写的，我藏在碑林他最常去看的那块碑旁边。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 旅记暗记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">遗憾</span>
+        <div class="hidden-cell-text">石头能容下那么多字，却容不下一句"我也想家了"。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：容</span>
+  </div>
+
+</div><!-- /page 3 -->
+
+<!-- ════════════════════════════════════════════════════════
+     旅记 第四页 — 书院门
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点四<br>STATION 4</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第四站 · Station 4</div>
+    <div class="location-name">书院门<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Shuyuanmen · 碑林区</span></div>
+    <div class="diary-date">天宝年间<br>长安</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>得一好字不如得一好友，但张怀远说得一好字比得一好友难。我让他给我写个招牌，他写了三天，说前两版不够好。我说能认字就行。他说那不行，"字就是脸，你开门做生意，挂一张丑脸出去？"</p>
+    <p>给他带了一壶好酒，西市胡姬酿的葡萄酒，他非要用狂草给我写菜单。写完我一个字都看不懂。他说："看不懂才好。看得懂的字，不值钱。"我说我开的是饭馆不是书院。他大笑，又喝了三杯，说"你那个炖羊腿配胡饼，值得用行书写。狂草留给那道凉拌胡瓜，因为它清爽"。</p>
+    <p>张怀远写字的时候，笔走得快，像一个人在赶路。但他写完最后一笔就不动了，盯着看很久。我问他在看什么，他说在看"气"——字有没有在呼吸。书院门这条街上卖笔墨的铺子少说三十家，但张怀远只在一家买墨。那家的墨磨出来有松烟香，他说写字闻着松烟，像在山里。</p>
+    <p>他写了一辈子字，我卖了一辈子货，我们都在找一个"刚刚好"，但从来没找到过。请帖用汉字楷书写——这是唯一一封不需要翻译的，反而写得最久。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 旅记暗记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">遗憾</span>
+        <div class="hidden-cell-text">他写了一辈子字，我卖了一辈子货，我们都在找一个"刚刚好"，但从来没找到过。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：得</span>
+  </div>
+
+</div><!-- /page 4 -->
+
+<!-- ════════════════════════════════════════════════════════
+     旅记 第五页 — 钟鼓楼
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点五<br>STATION 5</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第五站 · Station 5</div>
+    <div class="location-name">钟鼓楼<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Bell and Drum Tower · 莲湖区</span></div>
+    <div class="diary-date">天宝年间<br>长安</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>下了鼓楼的台阶，阿倍仲麻吕站了很久没动。他来长安的时候十七岁，现在三十年了还没回去。我问他想不想家，他念了一首和歌，我没听懂，但他哭了。他说长安的鼓声告诉他几点该回家，但他的家在海的那边，鼓声传不到。</p>
+    <p>我不知道怎么安慰他。我给他倒了一杯酒。他喝完擦了擦眼睛，指着鼓楼顶上的鼓说："你知道那面鼓的鼓皮换过几次吗？"我说不知道。他说他知道，因为每次换鼓皮声音都会变，他听得出来。一个在长安听了三十年鼓的人，连鼓皮换了都听得出来，却听不见家乡的海浪。</p>
+    <p>"天の原 ふりさけ見れば 春日なる 三笠の山に 出でし月かも。"他又念了一首，这次我勉强听懂了几个词——天、月、山。他说这首是写给奈良的月亮的。我说长安的月亮不好吗？他说："长安的月亮很好，但它照不到我母亲的院子。"</p>
+    <p>鼓声能告诉一座城几点了，却告诉不了一个人离家有多远。钟楼的钟声一天响几次，每次几声，他都数过。我把请帖用万叶假名写好，卷起来绑在他常去的那个台阶扶手上。他下台阶的时候一定会摸到。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 旅记暗记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">遗憾</span>
+        <div class="hidden-cell-text">鼓声能告诉一座城几点了，却告诉不了一个人离家有多远。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：下</span>
+  </div>
+
+</div><!-- /page 5 -->
+
+<!-- ════════════════════════════════════════════════════════
+     旅记 第六页 — 回民街
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点六<br>STATION 6</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第六站 · Station 6</div>
+    <div class="location-name">回民街<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Muslim Quarter · 莲湖区</span></div>
+    <div class="diary-date">天宝年间<br>长安</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>万般美味中，伊本最爱的还是这条街。他评价所有城市只用一个标准：集市好不好。他说长安的西市是世界第二好的。我问第一是哪里，他说"我老家"。然后笑了。这个笑话他讲了八年，每次都笑，像第一次讲一样。</p>
+    <p>伊本教我做了一道羊肉——先用酸奶腌半个时辰，大火炙到表面焦脆，最后撒孜然。"孜然要最后放，放早了就苦。"这也算是丝路上的学问。他还说盐要从高处撒，"让盐自己选择落在哪里"。我说你做个菜怎么跟讲道理似的。他说"做菜就是最大的道理"。</p>
+    <p>他说："你们汉人什么都好，就是不会用香料。"我说："所以你来了。"他大笑，笑声能传过三条街。这条街上的香料铺子，有一半的货是从他船上卸下来的。胡椒、丁香、肉豆蔻，他能闭着眼睛用鼻子分辨产地。</p>
+    <p>最近有人说范阳那边不太平，东边的商路可能要断。伊本倒不担心，他说"路断了，货就值钱了"。生意人的脑子和常人不一样。他说每座城市都有一条最好的街，但没有一条街能通到所有人的家。请帖用阿拉伯文写，塞在他最爱的那个香料摊的秤砣底下。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 旅记暗记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">遗憾</span>
+        <div class="hidden-cell-text">他说每座城市都有一条最好的街，但没有一条街能通到所有人的家。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：万</span>
+  </div>
+
+</div><!-- /page 6 -->
+
+<!-- ════════════════════════════════════════════════════════
+     旅记 第七页 — 大雁塔·不夜城
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点七<br>STATION 7</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第七站 · Station 7</div>
+    <div class="location-name">大雁塔·不夜城<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Giant Wild Goose Pagoda · 雁塔区</span></div>
+    <div class="diary-date">天宝年间<br>长安</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>邦国之交，终归于一桌酒席。胡禄信火。他说火不灭就是神还在。他每次经过祆祠都会站一会儿，看火。不念经，不磕头，就看着。他说波斯的火和长安的火烧的是同一种东西——"人的念想"。</p>
+    <p>我给他看过长安的万家灯火，上元节那天，从大雁塔顶往下望。他站了很久，说："这座城不需要神。"我问为什么。他说："因为这座城自己就在发光。"</p>
+    <p>"春风得意马蹄疾，一日看尽长安花。"这不是胡禄写的，但那天他说了一句差不多的话——"今天谁都不用回家。"大雁塔七层，每层的窗看出去是不同的长安。胡禄说从最高层看，长安像一盘棋，每个人都是棋子，"但下棋的人不在城里"。</p>
+    <p>他给我讲过波斯的灭国。他说火还在烧，但庙没了。我说长安不会这样。他没说话。七封请帖都写好了，七种文字，七个名字。但那顿饭，我怕是来不及请了。最后一封用巴列维文写，放在大雁塔第三层的窗台上。胡禄喜欢站在那一层看日落。日落的方向是西边——我们来的方向。</p>
+  </div>
+
+  <!-- Acrostic reveal -->
+  <div class="border-frame" style="margin-top:16px;">
+    <div class="handwriting" style="font-size:12px;text-align:center;letter-spacing:0.3em;color:#c41e1e;">
+      七页首字连读：此 城 容 得 下 万 邦
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：邦</span>
+  </div>
+
+</div><!-- /page 7 -->
+
+</body>
+</html>

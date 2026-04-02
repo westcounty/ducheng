@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>书法辨体卡 — 长安译</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .calligraphy-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cards-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #5a2a10;
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border: 1px solid rgba(196,30,30,0.3);
+      background: rgba(212,160,32,0.06);
+      line-height: 1.8;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 6mm;
+      flex: 1;
+    }
+
+    .calli-card {
+      border: 2px solid #c41e1e;
+      padding: 8mm 6mm;
+      background-color: #f5e8d0;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(196,30,30,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(212,160,32,0.08) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .calli-card::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border: 1px solid rgba(212,160,32,0.4);
+      pointer-events: none;
+    }
+
+    .card-type-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #c41e1e;
+      letter-spacing: 0.3em;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(196,30,30,0.3);
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+
+    .card-type-en {
+      font-size: 8px;
+      color: #8a5a1a;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      margin-left: 4px;
+    }
+
+    .character-display {
+      font-size: 52px;
+      text-align: center;
+      color: #1e1210;
+      line-height: 1.1;
+      margin: 4px 0;
+      /* Each style uses a different approach via inline style */
+    }
+
+    .character-small {
+      font-size: 22px;
+      text-align: center;
+      color: #5a2a10;
+      letter-spacing: 0.2em;
+      margin: 2px 0;
+    }
+
+    .card-description {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #5a2a10;
+      line-height: 1.7;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+      flex: 1;
+    }
+
+    .card-code-hint {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(196,30,30,0.5);
+      text-align: right;
+      margin-top: 4px;
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+
+    .style-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .feature-tag {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      padding: 1px 5px;
+      border: 1px solid #d4a020;
+      color: #8a5a1a;
+      letter-spacing: 0.05em;
+    }
+
+    .cut-instruction {
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8a5a1a;
+      margin-top: 10px;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page calligraphy-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">书法辨体<br>CALLIGRAPHY</div>
+  </div>
+
+  <div class="title">书法辨体卡</div>
+  <div class="subtitle">CALLIGRAPHY STYLE IDENTIFICATION CARDS · 张怀远藏品 · 共四张</div>
+
+  <hr class="divider">
+
+  <div class="cards-intro">
+    张怀远说："字是脸。看字认人，看体识代。这四张卡是他留下的辨体练习，用于在书院门认出不同朝代文字的笔意。"
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1: 颜体 (Regular script, Tang) -->
+    <div class="calli-card">
+      <div class="card-type-label">
+        颜体 <span class="card-type-en">Yan Style · Regular Script · 楷书</span>
+      </div>
+      <div class="character-display" style="font-family:'Noto Serif SC',serif;font-weight:700;">
+        长
+      </div>
+      <div class="character-small">安 · 宴 · 城</div>
+      <div class="style-features">
+        <span class="feature-tag">端正雄浑</span>
+        <span class="feature-tag">横细竖粗</span>
+        <span class="feature-tag">捺有雁尾</span>
+        <span class="feature-tag">结体宽博</span>
+      </div>
+      <div class="card-description">
+        颜真卿所创，天宝年间盛行于长安。笔画横细竖粗，藏锋起笔，撇捺舒展有力。张怀远用颜体给康安写了饭馆招牌，说"颜体是给普通人看的字——看得懂，站得住"。<br>
+        <strong style="color:#c41e1e;">辨认要点：</strong>横画细、竖画粗，竖弯钩处圆厚。
+      </div>
+      <div class="card-code-hint">体型：方正 · 时代：盛唐</div>
+    </div>
+
+    <!-- Card 2: 草书 (Cursive script) -->
+    <div class="calli-card">
+      <div class="card-type-label">
+        草书 <span class="card-type-en">Cursive Script · 张旭狂草</span>
+      </div>
+      <div class="character-display" style="font-family:'ZCOOL XiaoWei','STKaiti',cursive;font-weight:400;font-style:italic;transform:rotate(-3deg);display:inline-block;width:100%;text-align:center;">
+        飛
+      </div>
+      <div class="character-small">胡 · 瓜 · 宴</div>
+      <div class="style-features">
+        <span class="feature-tag">笔势连贯</span>
+        <span class="feature-tag">字形变形</span>
+        <span class="feature-tag">难以辨认</span>
+        <span class="feature-tag">一气呵成</span>
+      </div>
+      <div class="card-description">
+        张旭、怀素所擅，张怀远喝醉酒时写。笔画简省连带，一字一笔或数字一笔，形体变化极大。张怀远给康安用狂草写了菜单，"写完我一个字都看不懂"。<br>
+        <strong style="color:#c41e1e;">辨认要点：</strong>笔画相连，字形与楷书差异极大，像画而非字。
+      </div>
+      <div class="card-code-hint">体型：流动 · 时代：盛唐</div>
+    </div>
+
+    <!-- Card 3: 隶书 (Clerical script, Han) -->
+    <div class="calli-card">
+      <div class="card-type-label">
+        隶书 <span class="card-type-en">Clerical Script · 汉代官文字体</span>
+      </div>
+      <div class="character-display" style="font-family:'Noto Serif SC',serif;font-weight:400;letter-spacing:0.05em;">
+        漢
+      </div>
+      <div class="character-small">宴 · 邦 · 城</div>
+      <div class="style-features">
+        <span class="feature-tag">横画蚕头雁尾</span>
+        <span class="feature-tag">字形扁平</span>
+        <span class="feature-tag">波磔分明</span>
+      </div>
+      <div class="card-description">
+        汉代官方字体，沿用至唐。横画起笔如蚕头，收笔如雁尾，向右上方挑出。字形整体扁宽，竖画较短。碑林中汉碑多用此体。城墙砖铭文亦有隶书残迹。<br>
+        <strong style="color:#c41e1e;">辨认要点：</strong>横画有明显"雁尾"（右端上翘），字形宽扁。
+      </div>
+      <div class="card-code-hint">体型：扁宽 · 时代：汉—唐</div>
+    </div>
+
+    <!-- Card 4: 篆书 (Seal script, Qin) -->
+    <div class="calli-card">
+      <div class="card-type-label">
+        篆书 <span class="card-type-en">Seal Script · 秦代正字</span>
+      </div>
+      <div class="character-display" style="font-family:'Noto Serif SC',serif;font-weight:300;letter-spacing:0.1em;color:#8a5a1a;">
+        國
+      </div>
+      <div class="character-small">長 · 安 · 萬</div>
+      <div class="style-features">
+        <span class="feature-tag">线条均匀</span>
+        <span class="feature-tag">圆转流畅</span>
+        <span class="feature-tag">对称严谨</span>
+        <span class="feature-tag">象形感强</span>
+      </div>
+      <div class="card-description">
+        秦始皇统一文字所定，线条粗细均匀，转折处圆润无棱角，布局对称。字形接近象形源头。城墙最底层秦砖铭文即为小篆变体。张怀远说"篆书是祖宗的字，写起来慢，但每一笔都有来历"。<br>
+        <strong style="color:#c41e1e;">辨认要点：</strong>线条粗细一致，弯曲圆滑，形状整齐对称。
+      </div>
+      <div class="card-code-hint">体型：圆转 · 时代：秦—汉</div>
+    </div>
+
+  </div>
+
+  <div class="cut-instruction">
+    ✂ 沿虚线剪下四张卡，在书院门书法作品前逐一比对辨认
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>
