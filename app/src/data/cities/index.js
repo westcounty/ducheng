@@ -14,8 +14,8 @@ export const CITIES = [
     scriptName: '金陵刻痕',
     tagline: '一个读了整座城的人',
     themeClass: 'theme-nanjing',
-    available: false,
-    totalStages: null
+    available: true,
+    totalStages: 7
   },
   {
     id: 'hangzhou',
@@ -23,8 +23,8 @@ export const CITIES = [
     scriptName: '断桥不断',
     tagline: '一条蛇写的人类观察笔记',
     themeClass: 'theme-hangzhou',
-    available: false,
-    totalStages: null
+    available: true,
+    totalStages: 7
   },
   {
     id: 'xian',
@@ -32,8 +32,8 @@ export const CITIES = [
     scriptName: '长安译',
     tagline: '一场迟到一千三百年的晚宴',
     themeClass: 'theme-xian',
-    available: false,
-    totalStages: null
+    available: true,
+    totalStages: 7
   }
 ]
 
