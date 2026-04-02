@@ -1,0 +1,365 @@
+/* ============================================
+   第七封密电 — Vintage Archive Theme
+   ============================================ */
+
+:root {
+  /* Color Variables */
+  --bg-primary: #f5f0e8;
+  --bg-secondary: #ebe4d4;
+  --text-primary: #2c1810;
+  --text-secondary: #5c4a3a;
+  --accent: #8b4513;
+  --border: #c4b59a;
+  --success: #4a7c59;
+  --error: #8b2500;
+
+  /* Typography */
+  --font-body: 'Noto Serif SC', serif;
+  --font-handwriting: 'ZCOOL XiaoWei', cursive;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* Paper texture */
+  --paper-texture:
+    radial-gradient(ellipse at 20% 30%, rgba(139, 69, 19, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, rgba(92, 74, 58, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 10%, rgba(196, 181, 154, 0.06) 0%, transparent 70%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(44, 24, 16, 0.12);
+  --shadow-md: 0 4px 12px rgba(44, 24, 16, 0.15);
+  --shadow-lg: 0 8px 24px rgba(44, 24, 16, 0.2);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   Keyframe Animations
+   ============================================ */
+
+@keyframes typewriter {
+  from {
+    width: 0;
+    opacity: 1;
+  }
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--accent);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.3) rotate(-5deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.95) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes paper-shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-1deg);
+  }
+  75% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 69, 19, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(139, 69, 19, 0);
+  }
+}
+
+/* ============================================
+   Typewriter Utility
+   ============================================ */
+
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--accent);
+  animation:
+    typewriter 2s steps(40, end) forwards,
+    blink-caret 0.75s step-end infinite;
+}
+
+/* ============================================
+   Cipher Card Component
+   ============================================ */
+
+.cipher-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.cipher-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--paper-texture);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cipher-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cipher-card--elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.cipher-card--accent {
+  border-color: var(--accent);
+  border-width: 2px;
+}
+
+/* ============================================
+   Primary Button
+   ============================================ */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 12px var(--spacing-xl);
+  background-color: var(--accent);
+  color: #f5f0e8;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-sm);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.btn-primary:hover {
+  background-color: #7a3b10;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+.btn-primary:disabled {
+  background-color: var(--border);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 10px var(--spacing-lg);
+  background-color: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent);
+  color: #f5f0e8;
+}
+
+.btn-secondary:active {
+  opacity: 0.8;
+}
+
+/* ============================================
+   Answer Input
+   ============================================ */
+
+.input-answer {
+  width: 100%;
+  padding: 12px var(--spacing-md);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+}
+
+.input-answer:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.15);
+}
+
+.input-answer::placeholder {
+  color: var(--border);
+}
+
+.input-answer--error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(139, 37, 0, 0.15);
+}
+
+.input-answer--success {
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.15);
+}
+
+/* ============================================
+   Typography Helpers
+   ============================================ */
+
+.text-handwriting {
+  font-family: var(--font-handwriting);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+/* ============================================
+   Layout Helpers
+   ============================================ */
+
+.page-padding {
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: var(--spacing-lg) 0;
+}
+
+.stamp {
+  display: inline-block;
+  border: 2px solid currentColor;
+  padding: 4px 10px;
+  transform: rotate(-5deg);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.stamp--success {
+  color: var(--success);
+}
+
+.stamp--accent {
+  color: var(--accent);
+}
+
+/* ============================================
+   Fade-in Animation Utility
+   ============================================ */
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease forwards;
+}
+
+.animate-stamp {
+  animation: stamp-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
