@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信封内容 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .letter-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #8b7355;
+    }
+
+    .letter-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: #1a0805;
+      margin-bottom: 6px;
+    }
+
+    .letter-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b7355;
+      letter-spacing: 0.15em;
+      font-style: italic;
+    }
+
+    .letter-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 16px;
+      line-height: 2.4;
+      color: #2a1505;
+      letter-spacing: 0.08em;
+      flex: 1;
+      padding: 8px 4px;
+    }
+
+    .letter-body p {
+      margin-bottom: 0.6em;
+      text-indent: 2em;
+    }
+
+    .letter-signature {
+      margin-top: 24px;
+      text-align: right;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 15px;
+      color: #2a1505;
+      line-height: 2;
+    }
+
+    /* Namelist page */
+    .namelist-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      color: #4a3020;
+      border: 1px solid #8b7355;
+      padding: 8px 14px;
+      margin-bottom: 20px;
+      background: rgba(139,115,85,0.06);
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+
+    .namelist-bold {
+      font-weight: 700;
+      color: #8b1a1a;
+    }
+
+    .namelist-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+    }
+
+    .namelist-table th {
+      border: 1.5px solid #8b7355;
+      padding: 8px 10px;
+      background: rgba(139,115,85,0.12);
+      color: #1a0805;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .namelist-table td {
+      border: 1px solid #8b7355;
+      padding: 10px 12px;
+      color: #2a1505;
+      line-height: 1.8;
+      vertical-align: top;
+    }
+
+    .namelist-table tr:nth-child(even) td {
+      background: rgba(139,115,85,0.04);
+    }
+
+    .num-cell {
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: #8b1a1a;
+      width: 28px;
+    }
+
+    .field-cell {
+      color: #8b7355;
+      font-style: italic;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     Page 1 — 陆鸣远遗札
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">通关后<br>拆封</div>
+  </div>
+
+  <div class="letter-header">
+    <div class="letter-title">陆鸣远遗札</div>
+    <div class="letter-note">通关后拆开的信封内第一张纸 · 仿手写体 · 泛黄纸张</div>
+  </div>
+
+  <div class="letter-body">
+    <p>如果你正在读这封信，说明有人走完了我刻过字的七个地方。</p>
+    <p>我必须对你坦白——这七处刻痕里没有密码，没有暗号，没有藏宝图。</p>
+    <p>将军刻功，是因为他打了胜仗。诗人刻诗，是因为他喝了酒。考生刻愿，是因为他怕落第。僧人刻经，是因为他信佛。妻子刻平安，是因为她等人回来。</p>
+    <p>我谁都不是。我只是一个验砖的吏员，识几个字，在这座城里读了一辈子别人刻下的东西。</p>
+    <p>临了，我想用他们的方式——将军的方式、诗人的方式、考生的方式、僧人的方式、妻子的方式——各说一句自己的话。不是给谁看的。就是想在这座城里留点什么。</p>
+    <p>留的是七个名字。七个和我一样普通的人。他们的名字真的刻在这座城的砖上、碑上、墙上、档案里。六百年了，没有人读到过他们。</p>
+    <p>你今天读到了。</p>
+  </div>
+
+  <div class="letter-signature">
+    ——陆鸣远<br>
+    南京城
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     Page 2 — 七人名单
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="letter-header">
+    <div class="letter-title">七人名单</div>
+    <div class="letter-note">信封内第二张纸 · 小纸条</div>
+  </div>
+
+  <div class="namelist-intro">
+    <span class="namelist-bold">这些是真的。这些人真的存在过。</span>
+  </div>
+
+  <table class="namelist-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>姓名</th>
+        <th>身份记录</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num-cell">一</td>
+        <td class="field-cell">__FIELD__</td>
+        <td>中华门城砖铭文上的窑匠</td>
+      </tr>
+      <tr>
+        <td class="num-cell">二</td>
+        <td class="field-cell">__FIELD__</td>
+        <td>老门东某处门框上的木匠落款</td>
+      </tr>
+      <tr>
+        <td class="num-cell">三</td>
+        <td class="field-cell">__FIELD__</td>
+        <td>江南贡院碑刻上的一位考生</td>
+      </tr>
+      <tr>
+        <td class="num-cell">四</td>
+        <td class="field-cell">__FIELD__</td>
+        <td>秦淮灯会记载中的一位扎灯艺人</td>
+      </tr>
+      <tr>
+        <td class="num-cell">五</td>
+        <td class="field-cell">__FIELD__</td>
+        <td>鸡鸣寺还愿铭文中的一位香客</td>
+      </tr>
+      <tr>
+        <td class="num-cell">六</td>
+        <td class="field-cell">__FIELD__</td>
+        <td>台城城墙修缮记录中的一位民夫</td>
+      </tr>
+      <tr>
+        <td class="num-cell">七</td>
+        <td class="field-cell">__FIELD__</td>
+        <td>玄武湖黄册库户籍档案中的一位普通户主</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 24px;">
+    <div class="border-frame">
+      <div class="handwriting" style="font-size:13px;text-align:center;letter-spacing:0.2em;">
+        七页首字连读：城 巷 有 声 音 尚 在
+      </div>
+    </div>
+  </div>
+
+  <div class="instruction-box" style="margin-top:16px;">
+    将七站收集的名字填入表格，首字连读即是陆鸣远最后留下的话。
+  </div>
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>八股残卷 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .scroll-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .scroll-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .exam-header-strip {
+      border: 2px solid #8b1a1a;
+      padding: 8px 16px;
+      text-align: center;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .exam-header-strip::before,
+    .exam-header-strip::after {
+      content: '◆';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8b1a1a;
+      font-size: 12px;
+    }
+
+    .exam-header-strip::before { left: 8px; }
+    .exam-header-strip::after  { right: 8px; }
+
+    .exam-main-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: #1a0805;
+      margin-bottom: 2px;
+    }
+
+    .exam-sub {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b7355;
+      letter-spacing: 0.2em;
+    }
+
+    .exam-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a3020;
+      border-bottom: 1px solid #8b7355;
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+
+    .instruction-strip {
+      background: rgba(139,26,26,0.06);
+      border: 1px solid #8b1a1a;
+      padding: 6px 12px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b1a1a;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    /* Section layout */
+    .bagu-section {
+      display: flex;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .section-label {
+      width: 52px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .section-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8b1a1a;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .section-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.15em;
+      display: block;
+      border: 1px solid #8b7355;
+      padding: 3px 4px;
+    }
+
+    .section-content {
+      flex: 1;
+      border-left: 2px solid #8b7355;
+      padding-left: 10px;
+    }
+
+    .section-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 14px;
+      line-height: 2;
+      color: #2a1505;
+      letter-spacing: 0.06em;
+    }
+
+    .section-text .nth-char {
+      font-weight: 700;
+      color: #8b1a1a;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .field-span {
+      display: inline-block;
+      min-width: 80px;
+      border-bottom: 1px dashed #8b7355;
+      color: #8b7355;
+      font-style: italic;
+      font-size: 11px;
+    }
+
+    .scroll-footer {
+      margin-top: 14px;
+      border-top: 2px double #8b1a1a;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .decode-hint {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a3020;
+      line-height: 1.7;
+    }
+
+    .decode-box {
+      border: 1px solid #8b7355;
+      padding: 6px 12px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2a1505;
+      background: rgba(139,115,85,0.06);
+    }
+
+    .answer-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .answer-cell {
+      width: 26px;
+      height: 26px;
+      border: 1.5px solid #8b7355;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b7355;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page scroll-page">
+
+  <div class="exam-header-strip">
+    <div class="exam-main-title">洪武朝科举试卷（残）</div>
+    <div class="exam-sub">Imperial Civil Examination · Fragment · 江南贡院存档</div>
+  </div>
+
+  <div class="exam-meta">
+    <span>科目：经义 · 八股文</span>
+    <span>题目：<span style="font-weight:700;color:#1a0805;">城中有声，其声尚在</span></span>
+    <span>考场：江南贡院 · 甲字号舍</span>
+  </div>
+
+  <div class="instruction-strip">
+    解码法则：取第 N 股第 N 字，八股各取一字，连读为答案
+  </div>
+
+  <!-- 破题 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第一股</span>
+      <span class="section-name">破题</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        <span class="nth-char">城</span>者，邦之所守也，砖石为骨，铭文为魂。
+      </div>
+    </div>
+  </div>
+
+  <!-- 承题 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第二股</span>
+      <span class="section-name">承题</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        凡<span class="nth-char">巷</span>陌之深，必有刻字之人，名虽微，意则重。
+      </div>
+    </div>
+  </div>
+
+  <!-- 起讲 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第三股</span>
+      <span class="section-name">起讲</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        吾闻古之立言者，不以官爵论高下，而以<span class="nth-char">有</span>无刻痕为凭。
+      </div>
+    </div>
+  </div>
+
+  <!-- 入题 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第四股</span>
+      <span class="section-name">入题</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        试问水上之声，孰能久留？唯<span class="nth-char">声</span>入石者，可传千古而不散。
+      </div>
+    </div>
+  </div>
+
+  <!-- 起股 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第五股</span>
+      <span class="section-name">起股</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        钟鸣于寺，声闻于野，是故僧之诵经，与工之刻砖，皆为留<span class="nth-char">音</span>之道也。
+      </div>
+    </div>
+  </div>
+
+  <!-- 中股 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第六股</span>
+      <span class="section-name">中股</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        城头柳色年年绿，然刻字之人<span class="nth-char">尚</span>在者几人？唯其刻痕，不随人逝。
+      </div>
+    </div>
+  </div>
+
+  <!-- 后股 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第七股</span>
+      <span class="section-name">后股</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        考生入号，三日不出，其所刻者，乃心中所系，与砖上窑匠之名，同<span class="nth-char">在</span>城中。
+      </div>
+    </div>
+  </div>
+
+  <!-- 束股 -->
+  <div class="bagu-section">
+    <div class="section-label">
+      <span class="section-num">第八股</span>
+      <span class="section-name">束股</span>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        综上所陈，<span class="field-span">__FIELD__</span>，此题之答，藏于七字之中，读者自得。
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-footer">
+    <div class="decode-hint">
+      取各股第 N 字（第N股取第N个字）：<br>
+      第1股第1字 · 第2股第2字 · 第3股第3字 ···
+    </div>
+    <div class="decode-box">
+      <div style="font-size:10px;color:#8b7355;margin-bottom:4px;letter-spacing:0.1em;">连读结果：</div>
+      <div class="answer-row">
+        <div class="answer-cell">城</div>
+        <div class="answer-cell">巷</div>
+        <div class="answer-cell">有</div>
+        <div class="answer-cell">声</div>
+        <div class="answer-cell">音</div>
+        <div class="answer-cell">尚</div>
+        <div class="answer-cell">在</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

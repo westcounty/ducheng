@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>验砖吏札记 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .diary-page {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .diary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #8b7355;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .station-badge {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #6b4c2a;
+      border: 1px solid #8b7355;
+      padding: 3px 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .location-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .diary-date {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 11px;
+      color: #6b4c2a;
+      text-align: right;
+    }
+
+    .diary-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.2;
+      color: #2a1505;
+      letter-spacing: 0.06em;
+      flex: 1;
+      /* Lined paper effect */
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent calc(2.2em - 1px),
+        rgba(139,115,85,0.2) calc(2.2em - 1px),
+        rgba(139,115,85,0.2) 2.2em
+      );
+      padding: 0 4px;
+    }
+
+    .diary-body p {
+      margin-bottom: 0.4em;
+    }
+
+    .secret-section {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 2px dashed #8b7355;
+    }
+
+    .secret-section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+    }
+
+    .hidden-cells {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hidden-cell {
+      border: 2px solid #8b7355;
+      padding: 8px 14px;
+      min-width: 80px;
+      text-align: center;
+      background: rgba(139,115,85,0.06);
+    }
+
+    .hidden-cell-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: 0.2em;
+    }
+
+    .hidden-cell-text {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: #2a1505;
+      line-height: 1.6;
+    }
+
+    .diary-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(139,115,85,0.3);
+    }
+
+    .acrostic-hint {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: rgba(139,115,85,0.5);
+      letter-spacing: 0.1em;
+    }
+
+    .page-corner-stamp {
+      position: absolute;
+      top: 14mm;
+      right: 14mm;
+      transform: rotate(8deg);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     札记 第一页 — 中华门城堡
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点一<br>STATION 1</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第一站 · Station 1</div>
+    <div class="location-name">中华门城堡<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Zhonghua Gate · 秦淮区</span></div>
+    <div class="diary-date">洪武年间<br>南京</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>城墙下来了新砖。我逐块验过，产地、监造、窑匠，三栏俱全方可入墙。这是规矩。但今日有一块——三栏文字对不上任何府县。我翻遍了名册也查不到。莫非是谁混进了一块不属于这座城的砖？</p>
+    <p>按制，砖铭须刻于砖侧左面，字深二分，横排三行。第一行书府县名，第二行书提调官与监造官，第三行书窑匠与造砖人夫。我验砖时有个习惯——先数某一段城墙上能辨认的砖铭总数，再逐一核对名册。今日自藏兵洞东壁起数，至第二十七块时便发现了那块异砖。它的字体略小于常制，且第二行监造官一栏空缺，只余窑匠姓名一个：周德。</p>
+    <p>我查了三遍名册，无此人。但砖是好砖，火候足、敲之声清。我验了十四年的砖，却从未在任何一块砖上刻过自己的名字。周德是谁？他在哪座窑烧出了这块无主之砖，又怎样让它混入了应天府的城墙？</p>
+    <p>我没有上报。我把那块砖的位置记在了随身册子上——藏兵洞东壁，自地面起第三层，左数第九块。将来若有人拆墙，或许能替我查清此事。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗记</span>
+        <div class="hidden-cell-text">我验了十四年的砖，却从未在任何一块砖上刻过自己的名字。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：城</span>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     札记 第二页 — 老门东
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点二<br>STATION 2</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第二站 · Station 2</div>
+    <div class="location-name">老门东<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Laomendong · 秦淮区</span></div>
+    <div class="diary-date">洪武年间<br>南京</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>巷子深处有户人家换门框，我帮着搬旧木头。木匠临走前在门框暗处刻了个名字——他说这是规矩，"将来这扇门坏了，后人知道找谁修。"我想，这和我验砖是一回事。砖上刻名，门上刻名，都是怕被忘记。</p>
+    <p>那木匠姓蒋，手艺粗，话也粗，但刻字认真得很。他下刀前先拿炭笔在木头上比画，一笔一划不马虎。他说门东这片巷子里的老木匠都有暗号——落款刻在门框内侧，从街上看不见，只有拆门的人才晓得。我问他暗号长什么样，他指给我看：姓氏一字，年份两字，外加一个只有本行认得的符号，三样缺一不可。</p>
+    <p>我蹲在巷口看了半天。这条巷子的旧门框上少说有七八处落款，有的已经被虫蛀得模糊了。我替人验了一辈子的名字，到头来连自己的名字该刻在哪里都不知道。蒋木匠走时跟我说，三条巷子里落款最老的那扇门在箍桶巷拐角，少说有六十年了。我没去看，但记住了位置。</p>
+    <p>黄昏的时候巷子里有人在烧饭，油烟从瓦缝里冒出来。木匠刻字，厨娘烧菜，验砖吏站在巷口发呆——各人有各人留在世上的方式。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗记</span>
+        <div class="hidden-cell-text">我替人验了一辈子的名字，到头来连自己的名字该刻在哪里都不知道。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：巷</span>
+  </div>
+
+</div><!-- /page 2 -->
+
+<!-- ════════════════════════════════════════════════════════
+     札记 第三页 — 科举博物馆
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点三<br>STATION 3</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第三站 · Station 3</div>
+    <div class="location-name">科举博物馆<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Imperial Examination Museum · 江南贡院</span></div>
+    <div class="diary-date">洪武年间<br>南京</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>有人在号舍墙上刻了字。不是诗，不是经，是一句"娘，儿必中"。字刻得很深，指甲断了也不停。我是来验砖的，不该管墙上的字。但我在那四个字前面站了很久。后来我也在墙角刻了一行——不是给谁看的，就是想在这里留点什么。</p>
+    <p>夫科场之制，号舍以千计，每舍阔三尺、深四尺，上覆黑瓦，内设两板，上板为案、下板为座。士子入号，锁门三日，饮食起居皆在其中。墙壁本为素面，然百年间无数举子于此磨砺，壁上之字竟如层累之地层，一朝覆一朝。我少时亦曾读书，只是家贫未能赴考，如今替人验砖，倒把天下读书人的名字都摸了一遍。</p>
+    <p>我细察号舍内壁，发现刻痕有新有旧。旧者笔画规整，刀工讲究，多为七言律诗或经义片段；新者则字迹潦草，显是匆忙所为。在明远楼可望之处的号舍中，有一间东壁刻满了数字——并非文章，像是某种记数之法，自上而下排列，我数了数，共七行。最末一行只刻了半截便停住了，不知那人是中了还是没中。</p>
+    <p>我在最不起眼的角落也留了一行，仿八股破题之式写了句不通的话。将来若有人当真用格式去读，便会发现破绽。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗记</span>
+        <div class="hidden-cell-text">我少时亦曾读书，只是家贫未能赴考，如今替人验砖，倒把天下读书人的名字都摸了一遍。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：有</span>
+  </div>
+
+</div><!-- /page 3 -->
+
+<!-- ════════════════════════════════════════════════════════
+     札记 第四页 — 秦淮河
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点四<br>STATION 4</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第四站 · Station 4</div>
+    <div class="location-name">秦淮河<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Qinhuai River · 秦淮区</span></div>
+    <div class="diary-date">洪武年间<br>南京</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>声从水上来。秦淮河的画舫经过瞻园后门时，总有人在船上唱曲子。我听不太懂，但调子好听。有天我在河边捡到一张灯谜条，写着半阙词——谜面倒映在水里，和正着看完全是两个意思。我想，这条河上的人惯会把话反着说。</p>
+    <p>灯谜条已经被水洇了一角，但尚可辨认。上写："上看一物下看一物，上下合观方见真物。"旁注小字："秋水为谜，明月为底。"我把纸翻过来对着河面照了照，水中的倒影果然显出另一层意思——左右颠倒之后，笔画重新组合成了一个新字。河上的灯谜从来不是给人猜的，是给人照的。</p>
+    <p>那半阙词我至今未能对上下阙，怕是这辈子也等不到一个替我续完的人了。我把这张灯谜条夹在了册子里，又在文德桥畔的石栏上刻了两句诗，上句嵌了一个字，下句藏了一个数，中间用谐音连着。不懂秦淮调子的人读不出来。</p>
+    <p>听说杭州西湖边也在修堤，不知那边的泥巴里有没有人偷偷刻字。天下刻字的人或许都是一样的心思——怕水流太急，把痕迹冲干净了。</p>
+    <p>夜里画舫都点了灯，灯影碎在水面上，像一行字被打散了。好看，但读不成句。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗记</span>
+        <div class="hidden-cell-text">那半阙词我至今未能对上下阙，怕是这辈子也等不到一个替我续完的人了。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：声</span>
+  </div>
+
+</div><!-- /page 4 -->
+
+<!-- ════════════════════════════════════════════════════════
+     札记 第五页 — 鸡鸣寺
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点五<br>STATION 5</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第五站 · Station 5</div>
+    <div class="location-name">鸡鸣寺<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Jiming Temple · 玄武区</span></div>
+    <div class="diary-date">洪武年间<br>南京</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>音从塔顶来。鸡鸣寺的钟声我每天都听得到，但从没进去过。今天第一次上去，台阶磨得很滑，石头上隐约有经文的痕迹——不知是哪个朝代的僧人，一边念经一边上台阶，念了几百年，把字磨进了石头里。</p>
+    <p>台阶共有多少级，我没有数完。但从山门至药师佛塔，每隔若干级便有一处平台，平台石板上皆有莲纹。莲纹瓣数不一，我留意了——自下而上分别是四、八、六、十二，像是某种递进之法。寺中僧人说，数字即是偈语，不必懂，记住便好。</p>
+    <p>我在最高处的还愿墙上看到满满的铭文。有人刻"合家平安"，有人刻"早生贵子"。众人皆有所求，唯我无愿可还，空立檐下，倒成了最不虔诚的那一个。我不信佛，只好写了句看起来像佛偈的话：</p>
+    <p>"砖自土生，土自砖灭，名刻于砖，砖归于尘。"</p>
+    <p>住持路过看了一眼，说像偈非偈，倒像是个验砖的人写的。我笑了笑没答话。他不知道这句话里藏了一个名字——把每句末字连起来读，音近一人之名。那人已不在世间，但名字寄在佛墙上，总比寄在砖缝里体面些。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗记</span>
+        <div class="hidden-cell-text">众人皆有所求，唯我无愿可还，空立檐下，倒成了最不虔诚的那一个。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：音</span>
+  </div>
+
+</div><!-- /page 5 -->
+
+<!-- ════════════════════════════════════════════════════════
+     札记 第六页 — 台城城墙
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点六<br>STATION 6</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第六站 · Station 6</div>
+    <div class="location-name">台城城墙<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Taicheng Wall · 玄武区</span></div>
+    <div class="diary-date">洪武年间<br>南京</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>尚能登高。今日奉命上台城检查砖缝，城头的风比城下大得多。向北望是玄武湖，柳树把城墙外侧遮了个严实。韦庄那句诗——"无情最是台城柳"——我站在这里才读懂了。柳树不是无情，是太长命，长命到把所有人都送走了还在。而我连一棵柳树都活不过。</p>
+    <p>今记修缮事宜如下。台城段自解放门至玄武门，砖面风化严重者计十七处，其中三处须即刻替换。旧砖取下后我逐一验看铭文，多已漫漶不清，偶可辨"洪武七年""提调官李""窑匠"等残字。新补之砖无铭，光滑刺目，与旧墙格格不入。</p>
+    <p>我在一块修缮碑旁边刻了一行字，伪装成洪武年间的修缮记录。格式照搬旧碑——年号在前，工段在中，监修姓名在后——但我故意把年号写成了"洪武三十二年"。洪武只有三十一年。将来如果有人仔细看，会发现年号和格式都不太对。</p>
+    <p>此处城砖排列有一规律：每隔五块横砖便嵌一块竖砖，竖砖侧面朝外，恰好露出铭文。沿城墙走一段，数数竖砖上还能辨认的姓氏，或许能拼出点什么。日暮收工，风更大了。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗记</span>
+        <div class="hidden-cell-text">柳树不是无情，是太长命，长命到把所有人都送走了还在。而我连一棵柳树都活不过。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：尚</span>
+  </div>
+
+</div><!-- /page 6 -->
+
+<!-- ════════════════════════════════════════════════════════
+     札记 第七页 — 玄武湖畔
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点七<br>STATION 7</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第七站 · Station 7</div>
+    <div class="location-name">玄武湖畔<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Xuanwu Lake · 玄武区</span></div>
+    <div class="diary-date">洪武年间<br>南京</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>在湖边坐了很久。黄册库就在湖心的岛上，全天下人的名字都存在那里。我验了一辈子砖上的名字，砖上的人没有一个我认识。但我记住了七个。他们的名字我分别刻在了这座城市的七个角落——不是密码，不是暗号，就是七个认真活过的普通人的名字。如果有人能把这七处都找到，那就——够了。</p>
+    <p>今造册存档如下。陆鸣远，男，江西吉安府庐陵县人氏。洪武十五年调任应天府验砖吏，司职城砖铭文核验。在任十四年，经手城砖不可计数。无妻，无子，无田产。住城南官舍一间，月俸米三石。</p>
+    <p>七个名字我都记住了，可他们没有一个人记得我。这大概就是验砖吏最后的验收报告。</p>
+    <p>以上七处刻痕，分布于中华门、老门东、贡院、秦淮河、鸡鸣寺、台城、玄武湖畔。每处所刻之字，取首字相连，可得一句完整的话。我不写明那句话是什么——写明就没意思了。</p>
+    <p>洪武二十九年秋，湖上起了雾。黄册库的屋顶若隐若现，像是全天下的名字都在雾里呼吸。我把这本册子合上，放在环洲亭下第三块石板底。石板松动，容一册。</p>
+    <p>此后再无需验砖。</p>
+  </div>
+
+  <!-- Acrostic reveal -->
+  <div class="border-frame" style="margin-top:16px;">
+    <div class="handwriting" style="font-size:12px;text-align:center;letter-spacing:0.3em;">
+      七页首字连读：城 巷 有 声 音 尚 在
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：在</span>
+  </div>
+
+</div><!-- /page 7 -->
+
+</body>
+</html>

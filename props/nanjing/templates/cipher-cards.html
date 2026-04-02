@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密码碎片卡 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .cards-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .cards-page-title {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b7355;
+      margin-bottom: 12px;
+    }
+
+    /* Card grid layout: 2 columns */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 85mm 85mm;
+      grid-template-rows: repeat(4, 55mm);
+      gap: 0;
+    }
+
+    /* Individual card wrapper */
+    .card-wrapper {
+      width: 85mm;
+      height: 55mm;
+      padding: 3mm;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Dashed cut border around each card */
+    .card-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 1mm;
+      border: 1.5px dashed #888;
+      pointer-events: none;
+    }
+
+    /* Front face of card */
+    .card-front {
+      width: 100%;
+      height: 100%;
+      background-color: #f0e8d8;
+      background-image:
+        radial-gradient(ellipse at 20% 25%, rgba(139,115,85,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 75%, rgba(100,75,50,0.15) 0%, transparent 50%);
+      border: 1.5px solid #8b7355;
+      padding: 3mm 4mm;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(139,115,85,0.4);
+      padding-bottom: 2mm;
+      margin-bottom: 2mm;
+    }
+
+    .card-station {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #6b4c2a;
+      letter-spacing: 0.15em;
+      border: 1px solid #8b7355;
+      padding: 1px 4px;
+    }
+
+    .card-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a0805;
+      line-height: 1;
+    }
+
+    .fragment-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2mm;
+    }
+
+    .fragment-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 13px;
+      color: #2a1505;
+      text-align: center;
+      line-height: 1.7;
+      letter-spacing: 0.08em;
+    }
+
+    .fragment-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(107,76,42,0.5);
+      letter-spacing: 0.2em;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .card-secret-corner {
+      position: absolute;
+      bottom: 2mm;
+      right: 3mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: rgba(139,115,85,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── BACK side ────────────────────── */
+    .card-back {
+      width: 100%;
+      height: 100%;
+      background-color: #e8dcc8;
+      background-image:
+        radial-gradient(ellipse at 70% 30%, rgba(139,115,85,0.2) 0%, transparent 50%);
+      border: 1.5px solid #8b7355;
+      padding: 2mm 3mm;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .back-pattern-area {
+      flex: 1;
+      border: 1px dashed rgba(139,115,85,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgba(240,232,216,0.3);
+    }
+
+    .back-pattern-svg {
+      opacity: 0.18;
+    }
+
+    .back-number {
+      position: absolute;
+      bottom: 2.5mm;
+      right: 3mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b1a1a;
+      opacity: 0.7;
+    }
+
+    .back-station-dot {
+      position: absolute;
+      top: 2mm;
+      left: 3mm;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #8b7355;
+      opacity: 0.5;
+    }
+
+    .back-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: rgba(74,48,32,0.5);
+      text-align: center;
+      margin-top: 1mm;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ PAGE 1: CARD FRONTS ════ -->
+<div class="page cards-page">
+
+  <div class="cards-page-title">
+    <div class="title" style="font-size:16px;">碎片卡 — 正面</div>
+    <div class="subtitle">CIPHER FRAGMENT CARDS (FRONT) · 沿虚线剪下 · 共七张</div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点一 · Station 1</span>
+          <span class="card-number">① 一</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-text">将军刻功，</div>
+          <div class="fragment-label">中华门城堡 · Zhonghua Gate</div>
+        </div>
+        <div class="card-secret-corner">陆鸣远</div>
+      </div>
+    </div>
+
+    <!-- Card 2 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点二 · Station 2</span>
+          <span class="card-number">② 二</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-text">诗人刻诗，</div>
+          <div class="fragment-label">老门东 · Laomendong</div>
+        </div>
+        <div class="card-secret-corner">陆鸣远</div>
+      </div>
+    </div>
+
+    <!-- Card 3 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点三 · Station 3</span>
+          <span class="card-number">③ 三</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-text">考生刻愿，</div>
+          <div class="fragment-label">科举博物馆 · Examination Museum</div>
+        </div>
+        <div class="card-secret-corner">陆鸣远</div>
+      </div>
+    </div>
+
+    <!-- Card 4 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点四 · Station 4</span>
+          <span class="card-number">④ 四</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-text">僧人刻经，</div>
+          <div class="fragment-label">秦淮河 · Qinhuai River</div>
+        </div>
+        <div class="card-secret-corner">陆鸣远</div>
+      </div>
+    </div>
+
+    <!-- Card 5 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点五 · Station 5</span>
+          <span class="card-number">⑤ 五</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-text">妻子刻平安。</div>
+          <div class="fragment-label">鸡鸣寺 · Jiming Temple</div>
+        </div>
+        <div class="card-secret-corner">陆鸣远</div>
+      </div>
+    </div>
+
+    <!-- Card 6 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点六 · Station 6</span>
+          <span class="card-number">⑥ 六</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-text" style="font-size:11px;">我谁都不是，就刻了这座城里<br>最不值钱的东西——</div>
+          <div class="fragment-label">台城城墙 · Taicheng Wall</div>
+        </div>
+        <div class="card-secret-corner">陆鸣远</div>
+      </div>
+    </div>
+
+    <!-- Card 7 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点七 · Station 7</span>
+          <span class="card-number">⑦ 七</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-text" style="font-size:11px;">七个认真活过的普通人的名字。<br>你现在知道了。够了。</div>
+          <div class="fragment-label">玄武湖畔 · Xuanwu Lake</div>
+        </div>
+        <div class="card-secret-corner">陆鸣远</div>
+      </div>
+    </div>
+
+    <!-- Spacer -->
+    <div class="card-wrapper" style="opacity:0;pointer-events:none;"></div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 1 -->
+
+<!-- ════ PAGE 2: CARD BACKS ════ -->
+<div class="page cards-page">
+
+  <div class="cards-page-title">
+    <div class="title" style="font-size:16px;">碎片卡 — 背面</div>
+    <div class="subtitle">CIPHER FRAGMENT CARDS (BACK) · 翻面对齐后剪下</div>
+  </div>
+
+  <div class="instruction-box" style="width:168mm;margin-bottom:10px;font-size:10px;">
+    背面含城砖铭文笔画局部，右下角红色数字为读取顺序编号。将七张卡按背面数字1→7排列，正面碎片文字拼合即得完整消息。
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-pattern-area">
+          <svg class="back-pattern-svg" viewBox="0 0 200 120" width="88%" height="88%">
+            <!-- Brick texture pattern -->
+            <rect x="5" y="5" width="190" height="110" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <rect x="15" y="20" width="70" height="25" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="95" y="20" width="90" height="25" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="5" y="55" width="80" height="25" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="95" y="55" width="60" height="25" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <text x="100" y="98" text-anchor="middle" font-size="14" fill="#8b7355" font-family="serif">洪武·铭</text>
+          </svg>
+        </div>
+        <div class="back-note">城砖铭文笔画局部 · 拼合七片还原完整消息</div>
+        <div class="back-number">1</div>
+      </div>
+    </div>
+
+    <!-- Card 2 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-pattern-area">
+          <svg class="back-pattern-svg" viewBox="0 0 200 120" width="88%" height="88%">
+            <rect x="5" y="5" width="190" height="110" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <line x1="5" y1="40" x2="195" y2="40" stroke="#8b7355" stroke-width="1" stroke-dasharray="6,4"/>
+            <line x1="5" y1="75" x2="195" y2="75" stroke="#8b7355" stroke-width="1" stroke-dasharray="6,4"/>
+            <text x="100" y="26" text-anchor="middle" font-size="11" fill="#8b7355" font-family="serif">门东·记</text>
+            <text x="100" y="61" text-anchor="middle" font-size="11" fill="#8b7355" font-family="serif">巷中落款</text>
+            <text x="100" y="98" text-anchor="middle" font-size="11" fill="#8b7355" font-family="serif">刻字者名</text>
+          </svg>
+        </div>
+        <div class="back-note">城砖铭文笔画局部 · 拼合七片还原完整消息</div>
+        <div class="back-number">2</div>
+      </div>
+    </div>
+
+    <!-- Card 3 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-pattern-area">
+          <svg class="back-pattern-svg" viewBox="0 0 200 120" width="88%" height="88%">
+            <rect x="5" y="5" width="190" height="110" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <!-- Grid like exam cells -->
+            <rect x="20" y="20" width="40" height="35" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <rect x="80" y="20" width="40" height="35" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <rect x="140" y="20" width="40" height="35" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <rect x="20" y="70" width="40" height="35" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <rect x="80" y="70" width="40" height="35" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <rect x="140" y="70" width="40" height="35" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <text x="100" y="115" text-anchor="middle" font-size="10" fill="#8b7355" font-family="serif">贡院·号舍</text>
+          </svg>
+        </div>
+        <div class="back-note">城砖铭文笔画局部 · 拼合七片还原完整消息</div>
+        <div class="back-number">3</div>
+      </div>
+    </div>
+
+    <!-- Card 4 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-pattern-area">
+          <svg class="back-pattern-svg" viewBox="0 0 200 120" width="88%" height="88%">
+            <rect x="5" y="5" width="190" height="110" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <!-- Water ripple like pattern -->
+            <ellipse cx="100" cy="60" rx="80" ry="40" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <ellipse cx="100" cy="60" rx="55" ry="25" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <ellipse cx="100" cy="60" rx="30" ry="12" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <text x="100" y="63" text-anchor="middle" font-size="10" fill="#8b7355" font-family="serif">秦淮·水</text>
+          </svg>
+        </div>
+        <div class="back-note">城砖铭文笔画局部 · 拼合七片还原完整消息</div>
+        <div class="back-number">4</div>
+      </div>
+    </div>
+
+    <!-- Card 5 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-pattern-area">
+          <svg class="back-pattern-svg" viewBox="0 0 200 120" width="88%" height="88%">
+            <rect x="5" y="5" width="190" height="110" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <!-- Pagoda outline -->
+            <polygon points="100,10 130,40 120,40 120,75 80,75 80,40 70,40" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="80" y="75" width="40" height="30" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <line x1="60" y1="40" x2="140" y2="40" stroke="#8b7355" stroke-width="1"/>
+            <text x="100" y="118" text-anchor="middle" font-size="10" fill="#8b7355" font-family="serif">鸡鸣寺·塔</text>
+          </svg>
+        </div>
+        <div class="back-note">城砖铭文笔画局部 · 拼合七片还原完整消息</div>
+        <div class="back-number">5</div>
+      </div>
+    </div>
+
+    <!-- Card 6 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-pattern-area">
+          <svg class="back-pattern-svg" viewBox="0 0 200 120" width="88%" height="88%">
+            <rect x="5" y="5" width="190" height="110" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <!-- Wall battlements -->
+            <rect x="20" y="30" width="25" height="60" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="60" y="20" width="25" height="70" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="100" y="30" width="25" height="60" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="140" y="20" width="25" height="70" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <line x1="5" y1="90" x2="195" y2="90" stroke="#8b7355" stroke-width="2"/>
+            <text x="100" y="112" text-anchor="middle" font-size="10" fill="#8b7355" font-family="serif">台城·垛口</text>
+          </svg>
+        </div>
+        <div class="back-note">城砖铭文笔画局部 · 拼合七片还原完整消息</div>
+        <div class="back-number">6</div>
+      </div>
+    </div>
+
+    <!-- Card 7 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-pattern-area">
+          <svg class="back-pattern-svg" viewBox="0 0 200 120" width="88%" height="88%">
+            <rect x="5" y="5" width="190" height="110" fill="none" stroke="#8b7355" stroke-width="2"/>
+            <!-- Lake and island -->
+            <ellipse cx="100" cy="65" rx="85" ry="45" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <ellipse cx="100" cy="65" rx="30" ry="18" fill="none" stroke="#8b7355" stroke-width="1.5"/>
+            <rect x="88" y="40" width="24" height="25" fill="none" stroke="#8b7355" stroke-width="1"/>
+            <text x="100" y="57" text-anchor="middle" font-size="8" fill="#8b7355" font-family="serif">黄册库</text>
+            <text x="100" y="112" text-anchor="middle" font-size="10" fill="#8b7355" font-family="serif">玄武湖·湖心岛</text>
+          </svg>
+        </div>
+        <div class="back-note">城砖铭文笔画局部 · 拼合七片还原完整消息</div>
+        <div class="back-number">7</div>
+      </div>
+    </div>
+
+    <!-- Spacer -->
+    <div class="card-wrapper" style="opacity:0;pointer-events:none;"></div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

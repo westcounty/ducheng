@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拍摄提示卡 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .photo-cards-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .photo-cards-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b7355;
+      margin-bottom: 16px;
+    }
+
+    /* 3-column grid, 3 rows for 7 cards + 1 spacer */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 85mm);
+      grid-template-rows: repeat(4, auto);
+      gap: 6mm;
+    }
+
+    .photo-card-wrapper {
+      width: 85mm;
+      position: relative;
+    }
+
+    .photo-card-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: -2mm;
+      border: 1.5px dashed #aaa;
+      pointer-events: none;
+    }
+
+    .photo-card {
+      width: 100%;
+      background-color: #f0e8d8;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(139,115,85,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(100,75,50,0.1) 0%, transparent 55%);
+      border: 1.5px solid #8b7355;
+      padding: 4mm 5mm;
+      display: flex;
+      flex-direction: column;
+      gap: 3mm;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .photo-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(139,115,85,0.4);
+      padding-bottom: 2mm;
+    }
+
+    .photo-station-tag {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #6b4c2a;
+      border: 1px solid #8b7355;
+      padding: 1px 5px;
+      letter-spacing: 0.1em;
+    }
+
+    .photo-station-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #8b1a1a;
+      line-height: 1;
+    }
+
+    /* Camera icon area */
+    .photo-icon-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 18mm;
+      border: 1px dashed rgba(139,115,85,0.4);
+      background: rgba(240,232,216,0.5);
+      position: relative;
+    }
+
+    .camera-icon {
+      font-size: 28px;
+      opacity: 0.25;
+    }
+
+    .photo-location {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .photo-instruction {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 13px;
+      color: #2a1505;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+      text-align: left;
+      border-left: 2px solid #8b7355;
+      padding-left: 6px;
+    }
+
+    .photo-card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(139,115,85,0.3);
+      padding-top: 2mm;
+    }
+
+    .photo-acrostic-char {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(139,26,26,0.4);
+      letter-spacing: 0;
+    }
+
+    .photo-task-tag {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #8b7355;
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+
+    /* Spacer card */
+    .photo-card-spacer {
+      width: 85mm;
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ PAGE 1: CARDS 1–6 ════ -->
+<div class="page photo-cards-page">
+
+  <div class="photo-cards-header">
+    <div class="title" style="font-size:16px;">拍摄提示卡</div>
+    <div class="subtitle">PHOTO PROMPT CARDS · 沿虚线剪下 · 每站一张 · 共七张</div>
+  </div>
+
+  <div class="photo-grid">
+
+    <!-- Card 1 -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-card-top">
+          <div class="photo-station-tag">第一站 · Station 1</div>
+          <div class="photo-station-num">①</div>
+        </div>
+        <div class="photo-location">中华门城堡</div>
+        <div class="photo-icon-area">
+          <span class="camera-icon">📷</span>
+        </div>
+        <div class="photo-instruction">
+          拍一块砖——上面有个人的名字，600年了
+        </div>
+        <div class="photo-card-bottom">
+          <div class="photo-acrostic-char">城</div>
+          <div class="photo-task-tag">拍完发给同伴 · 记录位置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-card-top">
+          <div class="photo-station-tag">第二站 · Station 2</div>
+          <div class="photo-station-num">②</div>
+        </div>
+        <div class="photo-location">老门东</div>
+        <div class="photo-icon-area">
+          <span class="camera-icon">📷</span>
+        </div>
+        <div class="photo-instruction">
+          拍一条最窄的巷子——巷子越窄，邻里越近
+        </div>
+        <div class="photo-card-bottom">
+          <div class="photo-acrostic-char">巷</div>
+          <div class="photo-task-tag">拍完发给同伴 · 记录位置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-card-top">
+          <div class="photo-station-tag">第三站 · Station 3</div>
+          <div class="photo-station-num">③</div>
+        </div>
+        <div class="photo-location">科举博物馆</div>
+        <div class="photo-icon-area">
+          <span class="camera-icon">📷</span>
+        </div>
+        <div class="photo-instruction">
+          拍下这间小屋——曾有人在1.3米宽的空间里写下改变命运的文章
+        </div>
+        <div class="photo-card-bottom">
+          <div class="photo-acrostic-char">有</div>
+          <div class="photo-task-tag">拍完发给同伴 · 记录位置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-card-top">
+          <div class="photo-station-tag">第四站 · Station 4</div>
+          <div class="photo-station-num">④</div>
+        </div>
+        <div class="photo-location">秦淮河</div>
+        <div class="photo-icon-area">
+          <span class="camera-icon">📷</span>
+        </div>
+        <div class="photo-instruction">
+          拍河面的倒影——杜牧看到的秦淮，和你看到的是同一条河
+        </div>
+        <div class="photo-card-bottom">
+          <div class="photo-acrostic-char">声</div>
+          <div class="photo-task-tag">拍完发给同伴 · 记录位置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-card-top">
+          <div class="photo-station-tag">第五站 · Station 5</div>
+          <div class="photo-station-num">⑤</div>
+        </div>
+        <div class="photo-location">鸡鸣寺</div>
+        <div class="photo-icon-area">
+          <span class="camera-icon">📷</span>
+        </div>
+        <div class="photo-instruction">
+          拍下佛塔和天空——这座塔看过1700年的云
+        </div>
+        <div class="photo-card-bottom">
+          <div class="photo-acrostic-char">音</div>
+          <div class="photo-task-tag">拍完发给同伴 · 记录位置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-card-top">
+          <div class="photo-station-tag">第六站 · Station 6</div>
+          <div class="photo-station-num">⑥</div>
+        </div>
+        <div class="photo-location">台城城墙</div>
+        <div class="photo-icon-area">
+          <span class="camera-icon">📷</span>
+        </div>
+        <div class="photo-instruction">
+          站在城头面朝玄武湖拍——六朝的皇帝看到的，和你一样
+        </div>
+        <div class="photo-card-bottom">
+          <div class="photo-acrostic-char">尚</div>
+          <div class="photo-task-tag">拍完发给同伴 · 记录位置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-card-top">
+          <div class="photo-station-tag">第七站 · Station 7</div>
+          <div class="photo-station-num">⑦</div>
+        </div>
+        <div class="photo-location">玄武湖畔</div>
+        <div class="photo-icon-area">
+          <span class="camera-icon">📷</span>
+        </div>
+        <div class="photo-instruction">
+          面朝湖面拍——你身后就是这座城六百年的故事
+        </div>
+        <div class="photo-card-bottom">
+          <div class="photo-acrostic-char">在</div>
+          <div class="photo-task-tag">拍完发给同伴 · 记录位置</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spacer -->
+    <div class="photo-card-spacer"></div>
+
+  </div><!-- /photo-grid -->
+
+</div><!-- /page -->
+
+</body>
+</html>

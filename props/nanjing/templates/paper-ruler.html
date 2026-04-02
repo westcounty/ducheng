@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>纸尺 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .ruler-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ruler-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .ruler-instruction {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #4a3020;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    /* Main ruler strip */
+    .ruler-strip-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .ruler-strip {
+      width: 200mm;
+      height: 22mm;
+      border: 2px solid #8b7355;
+      position: relative;
+      background: #f0e8d8;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Top edge tick marks */
+    .ruler-ticks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Chinese characters at major positions */
+    .ruler-label {
+      position: absolute;
+      bottom: 3px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #2a1505;
+      transform: translateX(-50%);
+      letter-spacing: 0;
+    }
+
+    .ruler-label-field {
+      position: absolute;
+      bottom: 3px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #8b1a1a;
+      font-style: italic;
+      transform: translateX(-50%);
+      background: rgba(139,26,26,0.08);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .ruler-mm-label {
+      position: absolute;
+      top: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 8px;
+      color: #8b7355;
+      transform: translateX(-50%);
+    }
+
+    /* Scale reference box */
+    .scale-ref-box {
+      border: 1.5px solid #8b7355;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      background: rgba(240,232,216,0.4);
+    }
+
+    .scale-ref-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b7355;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+    }
+
+    .scale-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+    }
+
+    .scale-table th {
+      border: 1px solid #8b7355;
+      padding: 5px 10px;
+      background: rgba(139,115,85,0.1);
+      text-align: center;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.1em;
+    }
+
+    .scale-table td {
+      border: 1px solid #8b7355;
+      padding: 6px 10px;
+      text-align: center;
+      color: #2a1505;
+    }
+
+    .scale-table tr:nth-child(even) td {
+      background: rgba(139,115,85,0.04);
+    }
+
+    .key-pos {
+      color: #8b1a1a;
+      font-weight: 700;
+    }
+
+    .field-val {
+      color: #8b7355;
+      font-style: italic;
+      font-size: 10px;
+    }
+
+    /* Usage notes */
+    .usage-section {
+      border-left: 3px solid #8b7355;
+      padding-left: 12px;
+      margin-bottom: 14px;
+    }
+
+    .usage-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .usage-steps {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2a1505;
+      line-height: 2;
+      list-style: none;
+      padding: 0;
+    }
+
+    .usage-steps li::before {
+      content: attr(data-num) '、';
+      color: #8b1a1a;
+      font-weight: 700;
+    }
+
+    /* Backup mini-ruler strip */
+    .mini-ruler-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8b7355;
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page ruler-page">
+
+  <div class="ruler-header">
+    <div class="title">纸尺</div>
+    <div class="subtitle">PAPER RULER · 金陵刻痕道具 · 实地量距专用</div>
+  </div>
+
+  <div class="ruler-instruction">
+    沿虚线剪下纸尺，用于现场测量城砖间距、门框宽度、石栏长度等数值。<br>
+    红色标注处（<span style="color:#8b1a1a;font-weight:700;">__FIELD__</span>）须在踩点后根据实测数据填入。
+  </div>
+
+  <!-- Main ruler strip (200mm) -->
+  <div class="ruler-strip-wrapper">
+    <div style="position:relative;">
+      <div style="font-family:'Noto Serif SC',serif;font-size:9px;color:#888;text-align:left;margin-bottom:2px;">✂ — — — — — — — — — — — — — — — — — — — — — — — — 沿虚线剪下</div>
+      <div class="ruler-strip">
+        <svg viewBox="0 0 756 83" width="200mm" height="22mm" style="position:absolute;top:0;left:0;">
+          <!-- Top edge ticks every 5mm -->
+          <!-- Major ticks every 10mm, minor ticks every 5mm -->
+          <!-- 200mm total = 756px at 96dpi scale; simplified: use proportional positions -->
+
+          <!-- Tick marks: 40 intervals of 5mm over 200mm -->
+          <!-- We'll draw them at 1% intervals representing 2mm each in a simplified SVG -->
+
+          <!-- Every 5mm tick (minor) - top edge -->
+          <line x1="0" y1="0" x2="0" y2="83" stroke="#8b7355" stroke-width="1.5"/>
+          <line x1="756" y1="0" x2="756" y2="83" stroke="#8b7355" stroke-width="1.5"/>
+
+          <!-- Generate tick lines at proportional positions for 200mm ruler -->
+          <!-- Positions: 0,10,20...200mm = 0, 37.8, 75.6...756px -->
+          <!-- Minor at 5mm = 18.9px steps -->
+
+          <!-- 5mm ticks (short) -->
+          <line x1="18.9" y1="0" x2="18.9" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="56.7" y1="0" x2="56.7" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="94.5" y1="0" x2="94.5" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="132.3" y1="0" x2="132.3" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="170.1" y1="0" x2="170.1" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="207.9" y1="0" x2="207.9" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="245.7" y1="0" x2="245.7" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="283.5" y1="0" x2="283.5" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="321.3" y1="0" x2="321.3" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="359.1" y1="0" x2="359.1" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="396.9" y1="0" x2="396.9" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="434.7" y1="0" x2="434.7" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="472.5" y1="0" x2="472.5" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="510.3" y1="0" x2="510.3" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="548.1" y1="0" x2="548.1" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="585.9" y1="0" x2="585.9" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="623.7" y1="0" x2="623.7" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="661.5" y1="0" x2="661.5" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="699.3" y1="0" x2="699.3" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+          <line x1="737.1" y1="0" x2="737.1" y2="15" stroke="#8b7355" stroke-width="0.8"/>
+
+          <!-- 10mm ticks (tall) with labels -->
+          <line x1="37.8" y1="0" x2="37.8" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="37.8" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">10</text>
+
+          <line x1="75.6" y1="0" x2="75.6" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="75.6" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">20</text>
+
+          <line x1="113.4" y1="0" x2="113.4" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="113.4" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">30</text>
+
+          <line x1="151.2" y1="0" x2="151.2" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="151.2" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">40</text>
+
+          <line x1="189.0" y1="0" x2="189.0" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="189.0" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">50</text>
+
+          <line x1="226.8" y1="0" x2="226.8" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="226.8" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">60</text>
+
+          <line x1="264.6" y1="0" x2="264.6" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="264.6" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">70</text>
+
+          <line x1="302.4" y1="0" x2="302.4" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="302.4" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">80</text>
+
+          <line x1="340.2" y1="0" x2="340.2" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="340.2" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">90</text>
+
+          <line x1="378.0" y1="0" x2="378.0" y2="30" stroke="#8b7355" stroke-width="1.5"/>
+          <text x="378.0" y="42" text-anchor="middle" font-size="10" fill="#8b1a1a" font-family="monospace" font-weight="bold">100</text>
+
+          <line x1="415.8" y1="0" x2="415.8" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="415.8" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">110</text>
+
+          <line x1="453.6" y1="0" x2="453.6" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="453.6" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">120</text>
+
+          <line x1="491.4" y1="0" x2="491.4" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="491.4" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">130</text>
+
+          <line x1="529.2" y1="0" x2="529.2" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="529.2" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">140</text>
+
+          <line x1="567.0" y1="0" x2="567.0" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="567.0" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">150</text>
+
+          <line x1="604.8" y1="0" x2="604.8" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="604.8" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">160</text>
+
+          <line x1="642.6" y1="0" x2="642.6" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="642.6" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">170</text>
+
+          <line x1="680.4" y1="0" x2="680.4" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="680.4" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">180</text>
+
+          <line x1="718.2" y1="0" x2="718.2" y2="25" stroke="#8b7355" stroke-width="1.2"/>
+          <text x="718.2" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">190</text>
+
+          <!-- Chinese character labels at key positions -->
+          <text x="0" y="70" text-anchor="start" font-size="11" fill="#2a1505" font-family="serif">起</text>
+          <text x="378" y="70" text-anchor="middle" font-size="11" fill="#8b1a1a" font-family="serif">中</text>
+          <text x="756" y="70" text-anchor="end" font-size="11" fill="#2a1505" font-family="serif">止</text>
+
+          <!-- Field positions -->
+          <text x="151.2" y="70" text-anchor="middle" font-size="9" fill="#8b1a1a" font-family="serif" font-style="italic">__</text>
+          <text x="567" y="70" text-anchor="middle" font-size="9" fill="#8b1a1a" font-family="serif" font-style="italic">__</text>
+
+          <!-- End label -->
+          <text x="756" y="38" text-anchor="middle" font-size="10" fill="#8b7355" font-family="monospace">200</text>
+
+          <!-- mm label -->
+          <text x="756" y="75" text-anchor="end" font-size="8" fill="#8b7355" font-family="serif">mm</text>
+        </svg>
+      </div>
+      <div style="font-family:'Noto Serif SC',serif;font-size:9px;color:#888;text-align:left;margin-top:2px;">✂ — — — — — — — — — — — — — — — — — — — — — — — —</div>
+    </div>
+  </div>
+
+  <!-- Scale reference table -->
+  <div class="scale-ref-box">
+    <div class="scale-ref-title">◆ 关键量测位置参照表</div>
+    <table class="scale-table">
+      <thead>
+        <tr>
+          <th>位置标记</th>
+          <th>对应实物</th>
+          <th>参考测量值</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key-pos">起（0mm）</td>
+          <td>城砖起点</td>
+          <td><span class="field-val">__FIELD__</span></td>
+          <td>自砖左侧边起量</td>
+        </tr>
+        <tr>
+          <td>40mm</td>
+          <td>标准砖铭字宽</td>
+          <td>约 38–42mm</td>
+          <td>洪武制式城砖</td>
+        </tr>
+        <tr>
+          <td class="key-pos">中（100mm）</td>
+          <td><span class="field-val">__FIELD__</span></td>
+          <td><span class="field-val">__FIELD__</span></td>
+          <td>踩点后填入</td>
+        </tr>
+        <tr>
+          <td>130mm</td>
+          <td>门框暗号位置</td>
+          <td><span class="field-val">__FIELD__</span></td>
+          <td>老门东木匠落款处</td>
+        </tr>
+        <tr>
+          <td class="key-pos">止（200mm）</td>
+          <td><span class="field-val">__FIELD__</span></td>
+          <td><span class="field-val">__FIELD__</span></td>
+          <td>踩点后填入</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Usage steps -->
+  <div class="usage-section">
+    <div class="usage-title">使用方法</div>
+    <ul class="usage-steps">
+      <li data-num="一">将纸尺贴靠于城砖铭文处，"起"端对齐砖的左侧边</li>
+      <li data-num="二">读取铭文各字的对应毫米数，记入工作册</li>
+      <li data-num="三">将测量值与索引卡"指令"栏对照，找出目标字符位置</li>
+      <li data-num="四">纸尺不能代替步量，误差在 ±5mm 以内均有效</li>
+    </ul>
+  </div>
+
+  <div class="instruction-box" style="font-size:10px;">
+    ※ 纸张打印后可能有轻微缩放误差，使用前请用已知长度（如硬币直径）校准。1元硬币直径 = 25mm，可作基准。
+  </div>
+
+</div>
+
+</body>
+</html>

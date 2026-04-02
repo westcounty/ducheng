@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>梵钟译码表 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .bell-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bell-header {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .bell-rule-box {
+      border: 2px solid #8b1a1a;
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      background: rgba(139,26,26,0.04);
+    }
+
+    .bell-rule-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #8b1a1a;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .bell-rule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #8b7355;
+      padding: 8px 12px;
+      background: rgba(240,232,216,0.5);
+    }
+
+    .rule-symbol {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #1a0805;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .rule-desc {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      color: #2a1505;
+      line-height: 1.7;
+    }
+
+    .rule-desc .rule-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #8b1a1a;
+    }
+
+    /* Main decode table */
+    .decode-table-wrap {
+      margin-bottom: 16px;
+    }
+
+    .decode-section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      color: #4a3020;
+      letter-spacing: 0.2em;
+      border-left: 3px solid #8b7355;
+      padding-left: 8px;
+      margin-bottom: 8px;
+    }
+
+    .decode-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+    }
+
+    .decode-table th {
+      border: 1.5px solid #8b7355;
+      padding: 7px 10px;
+      background: rgba(139,115,85,0.12);
+      text-align: center;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.15em;
+    }
+
+    .decode-table td {
+      border: 1px solid #8b7355;
+      padding: 7px 10px;
+      text-align: center;
+      color: #2a1505;
+    }
+
+    .decode-table tr:nth-child(even) td {
+      background: rgba(139,115,85,0.04);
+    }
+
+    .binary-cell {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.15em;
+    }
+
+    .decimal-cell {
+      font-size: 16px;
+      font-weight: 700;
+      color: #8b1a1a;
+    }
+
+    .sound-cell {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #2a1505;
+    }
+
+    /* Example box */
+    .example-box {
+      border: 1.5px solid #8b7355;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      background: rgba(240,232,216,0.4);
+    }
+
+    .example-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b7355;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+    }
+
+    .example-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ex-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .ex-sound {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 14px;
+      color: #2a1505;
+    }
+
+    .ex-bit {
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #8b1a1a;
+    }
+
+    .ex-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8b7355;
+    }
+
+    .ex-arrow {
+      font-size: 20px;
+      color: #8b7355;
+    }
+
+    .ex-result {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #8b1a1a;
+    }
+
+    .worksheet-area {
+      border: 1.5px dashed #8b7355;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .worksheet-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b7355;
+      margin-bottom: 8px;
+      letter-spacing: 0.15em;
+    }
+
+    .worksheet-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #4a3020;
+    }
+
+    .ws-cell {
+      width: 30px;
+      height: 28px;
+      border: 1px solid #8b7355;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ws-eq {
+      font-size: 14px;
+      color: #8b7355;
+    }
+
+    .ws-result {
+      width: 40px;
+      height: 28px;
+      border: 1.5px solid #8b1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8b1a1a;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page bell-page">
+
+  <div class="bell-header">
+    <div class="title">梵钟声韵译读表</div>
+    <div class="subtitle">BELL SOUND DECODER · 鸡鸣寺专用 · 金陵刻痕道具</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 基本规则 -->
+  <div class="bell-rule-box">
+    <div class="bell-rule-title">◆ 基本声律规则 ◆</div>
+    <div class="bell-rule-grid">
+      <div class="rule-item">
+        <div class="rule-symbol">—</div>
+        <div class="rule-desc">
+          长响<br>
+          = <span class="rule-value">1</span>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-symbol">·</div>
+        <div class="rule-desc">
+          短响<br>
+          = <span class="rule-value">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 示例 -->
+  <div class="example-box">
+    <div class="example-title">◆ 示例：1101 = 13</div>
+    <div class="example-row">
+      <div class="ex-item">
+        <div class="ex-sound">长响</div>
+        <div class="ex-bit">1</div>
+        <div class="ex-label">×8</div>
+      </div>
+      <span class="ex-arrow">+</span>
+      <div class="ex-item">
+        <div class="ex-sound">长响</div>
+        <div class="ex-bit">1</div>
+        <div class="ex-label">×4</div>
+      </div>
+      <span class="ex-arrow">+</span>
+      <div class="ex-item">
+        <div class="ex-sound">短响</div>
+        <div class="ex-bit">0</div>
+        <div class="ex-label">×2</div>
+      </div>
+      <span class="ex-arrow">+</span>
+      <div class="ex-item">
+        <div class="ex-sound">长响</div>
+        <div class="ex-bit">1</div>
+        <div class="ex-label">×1</div>
+      </div>
+      <span class="ex-arrow">=</span>
+      <div class="ex-item">
+        <div class="ex-result">13</div>
+        <div class="ex-label">十进制</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 译码对照表 -->
+  <div class="decode-table-wrap">
+    <div class="decode-section-title">四位声码对照表（0000 – 1111）</div>
+    <table class="decode-table">
+      <thead>
+        <tr>
+          <th>声码（长·短）</th>
+          <th>二进制</th>
+          <th>十进制</th>
+          <th>声码（长·短）</th>
+          <th>二进制</th>
+          <th>十进制</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sound-cell">·  ·  ·  ·</td>
+          <td class="binary-cell">0000</td>
+          <td class="decimal-cell">0</td>
+          <td class="sound-cell">—  ·  ·  ·</td>
+          <td class="binary-cell">1000</td>
+          <td class="decimal-cell">8</td>
+        </tr>
+        <tr>
+          <td class="sound-cell">·  ·  ·  —</td>
+          <td class="binary-cell">0001</td>
+          <td class="decimal-cell">1</td>
+          <td class="sound-cell">—  ·  ·  —</td>
+          <td class="binary-cell">1001</td>
+          <td class="decimal-cell">9</td>
+        </tr>
+        <tr>
+          <td class="sound-cell">·  ·  —  ·</td>
+          <td class="binary-cell">0010</td>
+          <td class="decimal-cell">2</td>
+          <td class="sound-cell">—  ·  —  ·</td>
+          <td class="binary-cell">1010</td>
+          <td class="decimal-cell">10</td>
+        </tr>
+        <tr>
+          <td class="sound-cell">·  ·  —  —</td>
+          <td class="binary-cell">0011</td>
+          <td class="decimal-cell">3</td>
+          <td class="sound-cell">—  ·  —  —</td>
+          <td class="binary-cell">1011</td>
+          <td class="decimal-cell">11</td>
+        </tr>
+        <tr>
+          <td class="sound-cell">·  —  ·  ·</td>
+          <td class="binary-cell">0100</td>
+          <td class="decimal-cell">4</td>
+          <td class="sound-cell">—  —  ·  ·</td>
+          <td class="binary-cell">1100</td>
+          <td class="decimal-cell">12</td>
+        </tr>
+        <tr>
+          <td class="sound-cell">·  —  ·  —</td>
+          <td class="binary-cell">0101</td>
+          <td class="decimal-cell">5</td>
+          <td class="sound-cell">—  —  ·  —</td>
+          <td class="binary-cell">1101</td>
+          <td class="decimal-cell" style="color:#8b1a1a;font-weight:900;">13</td>
+        </tr>
+        <tr>
+          <td class="sound-cell">·  —  —  ·</td>
+          <td class="binary-cell">0110</td>
+          <td class="decimal-cell">6</td>
+          <td class="sound-cell">—  —  —  ·</td>
+          <td class="binary-cell">1110</td>
+          <td class="decimal-cell">14</td>
+        </tr>
+        <tr>
+          <td class="sound-cell">·  —  —  —</td>
+          <td class="binary-cell">0111</td>
+          <td class="decimal-cell">7</td>
+          <td class="sound-cell">—  —  —  —</td>
+          <td class="binary-cell">1111</td>
+          <td class="decimal-cell">15</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 记录工作区 -->
+  <div class="worksheet-area">
+    <div class="worksheet-title">◆ 现场记录工作区（听到钟声后在此记录）</div>
+    <div class="worksheet-row">
+      <span>第一组：</span>
+      <div class="ws-cell"></div>
+      <div class="ws-cell"></div>
+      <div class="ws-cell"></div>
+      <div class="ws-cell"></div>
+      <span class="ws-eq">=</span>
+      <div class="ws-result"></div>
+    </div>
+    <div class="worksheet-row">
+      <span>第二组：</span>
+      <div class="ws-cell"></div>
+      <div class="ws-cell"></div>
+      <div class="ws-cell"></div>
+      <div class="ws-cell"></div>
+      <span class="ws-eq">=</span>
+      <div class="ws-result"></div>
+    </div>
+  </div>
+
+  <div class="instruction-box" style="font-size:10px;">
+    ※ 长响（—）约持续2-3秒；短响（·）约持续0.5-1秒。实地聆听时注意区分。鸡鸣寺药师佛塔共__FIELD__级台阶，对应__FIELD__次钟声。
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>验砖索引 — 金陵刻痕</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .index-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .index-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .official-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #8b1a1a;
+      letter-spacing: 0.25em;
+      margin-bottom: 4px;
+    }
+
+    .index-main-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.5em;
+      color: #1a0805;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .index-subtitle {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b7355;
+      letter-spacing: 0.2em;
+    }
+
+    .official-seal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      padding: 6px 0;
+      border-top: 2px solid #8b1a1a;
+      border-bottom: 2px solid #8b1a1a;
+    }
+
+    .seal-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #8b1a1a;
+      letter-spacing: 0.2em;
+    }
+
+    .index-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    .index-table th {
+      background: rgba(139,26,26,0.08);
+      border: 1.5px solid #8b7355;
+      padding: 8px 10px;
+      text-align: center;
+      font-weight: 700;
+      color: #1a0805;
+      letter-spacing: 0.2em;
+      font-size: 13px;
+    }
+
+    .index-table td {
+      border: 1px solid #8b7355;
+      padding: 9px 12px;
+      color: #2a1505;
+      line-height: 1.7;
+      vertical-align: middle;
+    }
+
+    .index-table tr:nth-child(even) td {
+      background: rgba(139,115,85,0.04);
+    }
+
+    /* Key row highlighted */
+    .index-table tr.key-row td {
+      background: rgba(139,26,26,0.06);
+      font-weight: 600;
+    }
+
+    .index-table tr.key-row td:first-child {
+      color: #8b1a1a;
+      font-weight: 700;
+    }
+
+    .num-col {
+      text-align: center;
+      width: 40px;
+      font-weight: 700;
+      color: #8b7355;
+    }
+
+    .pos-col {
+      width: 45%;
+    }
+
+    .cmd-col {
+      width: 40%;
+    }
+
+    .field {
+      color: #8b7355;
+      font-style: italic;
+      font-size: 11px;
+      background: rgba(139,115,85,0.12);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .index-footer {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .instruction-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a3020;
+      line-height: 1.7;
+      max-width: 120mm;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page index-page">
+
+  <div class="index-header">
+    <div class="official-title">应天府城砖管理局 · 洪武年间</div>
+    <div class="index-main-title">验砖索引</div>
+    <div class="index-subtitle">BRICK INSPECTION INDEX · 内部存档 · 不得外传</div>
+  </div>
+
+  <div class="official-seal-row">
+    <div class="seal-text">验砖吏：陆鸣远</div>
+    <div class="stamp" style="font-size:10px;padding:4px 10px;">官府存档<br>洪武年制</div>
+    <div class="seal-text">年份：洪武二十九年</div>
+  </div>
+
+  <table class="index-table">
+    <thead>
+      <tr>
+        <th class="num-col">编号</th>
+        <th class="pos-col">位置</th>
+        <th class="cmd-col">指令</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num-col">001</td>
+        <td>中华门 · 藏兵洞东壁<br><span style="font-size:10px;color:#8b7355;">自地面起第三层</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">002</td>
+        <td><span class="field">__FIELD__</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">003</td>
+        <td>老门东 · 箍桶巷拐角<br><span style="font-size:10px;color:#8b7355;">门框内侧落款处</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">004</td>
+        <td><span class="field">__FIELD__</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr class="key-row">
+        <td class="num-col">005</td>
+        <td>江南贡院 · 明远楼可望号舍<br><span style="font-size:10px;color:#8b1a1a;">东壁刻数第七行</span></td>
+        <td>数第七行半截刻痕，记下数字</td>
+      </tr>
+      <tr>
+        <td class="num-col">006</td>
+        <td><span class="field">__FIELD__</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">007</td>
+        <td>秦淮河 · 文德桥畔石栏<br><span style="font-size:10px;color:#8b7355;">石栏上刻诗处</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">008</td>
+        <td><span class="field">__FIELD__</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">009</td>
+        <td>鸡鸣寺 · 还愿墙<br><span style="font-size:10px;color:#8b7355;">偈语四句末字处</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">010</td>
+        <td><span class="field">__FIELD__</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">011</td>
+        <td>台城城墙 · 修缮碑旁<br><span style="font-size:10px;color:#8b7355;">伪年号处：洪武三十二年</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">012</td>
+        <td><span class="field">__FIELD__</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+      <tr>
+        <td class="num-col">013</td>
+        <td>玄武湖 · 环洲亭下<br><span style="font-size:10px;color:#8b7355;">第三块石板底</span></td>
+        <td><span class="field">__FIELD__</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="index-footer">
+    <div class="instruction-note">
+      ※ 带 <span style="color:#8b1a1a;font-weight:700;">红底</span> 行为关键条目，玩家须重点核查。<br>
+      ※ <span class="field" style="display:inline;">__FIELD__</span> 处须实地踩点后填入。<br>
+      ※ 此索引与验砖吏札记配合使用。
+    </div>
+    <div class="stamp">已验收<br>存档备案</div>
+  </div>
+
+</div>
+
+</body>
+</html>
