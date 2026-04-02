@@ -71,6 +71,25 @@
       </div>
     </div>
 
+    <!-- Cross-city Easter egg section -->
+    <section v-if="visibleThreads.length > 0" class="cross-city-section">
+      <div class="section-divider">
+        <span class="divider-text">暗线一瞥</span>
+      </div>
+      <div class="thread-list">
+        <div v-for="thread in visibleThreads" :key="thread.from + thread.to" class="thread-item">
+          <blockquote class="thread-quote">
+            "{{ thread.quote }}"
+          </blockquote>
+          <div class="thread-source">——{{ thread.source }}</div>
+        </div>
+      </div>
+      <p v-if="allCitiesCompleted" class="reveal-link">
+        四座城市的主角，都在不经意间提到了另一座城。
+        <router-link :to="'/cross-city-reveal'">→ 查看完整暗线</router-link>
+      </p>
+    </section>
+
     <!-- Footer -->
     <footer class="archive-footer cipher-card cipher-card--accent">
       <p class="footer-acrostic text-handwriting">
@@ -107,17 +126,25 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { useCityData } from '../data/cities/useCityData.js'
 import { getPhoto } from '../utils/photo-store.js'
 import { useGameStore } from '../stores/game.js'
+import { usePlatformStore } from '../stores/platform.js'
+import { getVisibleThreads } from '../data/cross-city-threads.js'
 
 const props = defineProps({ cityId: { type: String, required: true } })
 
 const photos = ref({})
 const openExcerpts = reactive({})
 const game = useGameStore(props.cityId)
+const platformStore = usePlatformStore()
 const { cityData, loading } = useCityData(computed(() => props.cityId))
 
 const PHOTO_DIARY_PAIRS = computed(() => cityData.value?.photoDiaryPairs ?? [])
 const HEYING_CHECKLIST = computed(() => cityData.value?.heyingChecklist ?? [])
 const STAGE_LOCATIONS = computed(() => cityData.value?.stageLocations ?? [])
+
+const visibleThreads = computed(() =>
+  getVisibleThreads(platformStore.completedCities, props.cityId)
+)
+const allCitiesCompleted = computed(() => platformStore.allCitiesCompleted)
 
 const today = new Date().toLocaleDateString('zh-CN', {
   year: 'numeric',
@@ -385,5 +412,81 @@ onMounted(async () => {
 .footer-date {
   font-size: 0.8rem;
   letter-spacing: 0.08em;
+}
+
+/* ── Cross-city Easter egg ── */
+.cross-city-section {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg) 0;
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color, var(--border));
+  opacity: 0.5;
+}
+
+.divider-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.thread-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.thread-item {
+  border-left: 2px solid var(--border-color, var(--border));
+  padding-left: var(--spacing-md);
+  opacity: 0.85;
+}
+
+.thread-quote {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0 0 var(--spacing-xs);
+  quotes: none;
+}
+
+.thread-source {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+}
+
+.reveal-link {
+  margin-top: var(--spacing-lg);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.reveal-link a {
+  color: var(--text-accent, var(--accent));
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+.reveal-link a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 </style>
