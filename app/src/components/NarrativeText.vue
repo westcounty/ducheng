@@ -1,5 +1,5 @@
 <template>
-  <div class="narrative-text" :class="{ 'text-handwriting': isHandwriting }">
+  <div class="narrative-text" :class="{ 'text-handwriting': isHandwriting }" @click="skipToEnd">
     <p
       v-for="(line, index) in visibleLines"
       :key="index"
@@ -47,6 +47,16 @@ function revealNextLine() {
       emit('complete')
     }
   }
+}
+
+function skipToEnd() {
+  if (currentIndex >= lines.length) return
+  if (timer) clearTimeout(timer)
+  while (currentIndex < lines.length) {
+    visibleLines.value.push(lines[currentIndex])
+    currentIndex++
+  }
+  emit('complete')
 }
 
 onMounted(() => {

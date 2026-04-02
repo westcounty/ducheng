@@ -27,21 +27,16 @@ export function caesarDecrypt(text, shift) {
 }
 
 /**
- * Normalize a string for comparison: trim whitespace, lowercase, remove all spaces.
- * @param {string} str
- * @returns {string}
- */
-function normalize(str) {
-  return str.trim().toLowerCase().replace(/\s+/g, '')
-}
-
-/**
  * Check whether a player's input matches the expected answer.
- * Comparison is case-insensitive, whitespace-insensitive.
+ * Comparison is case-insensitive, whitespace-insensitive, and ignores
+ * common Chinese and English punctuation so players aren't penalised for
+ * typing conventions.
  * @param {string} input - Raw player input
  * @param {string} expected - Correct answer
  * @returns {boolean}
  */
 export function checkAnswer(input, expected) {
+  const normalize = s => s.toString().trim().toLowerCase()
+    .replace(/[\s，。！？、；：""''（）《》【】·…—\-,.!?;:'"()\[\]]/g, '')
   return normalize(input) === normalize(expected)
 }

@@ -17,6 +17,7 @@
           @change="handleCapture"
         />
       </label>
+      <button class="btn-skip" @click="emit('done')">跳过存档</button>
     </template>
 
     <template v-else>
@@ -120,6 +121,23 @@ async function handleCapture(event) {
   border-radius: var(--radius-md);
   max-height: 300px;
   object-fit: cover;
+}
+
+.btn-skip {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  padding: var(--spacing-xs) 0;
+  opacity: 0.6;
+  text-decoration: underline;
+  letter-spacing: 0.04em;
+}
+
+.btn-skip:hover {
+  opacity: 1;
 }
 
 .preview-stamp {
