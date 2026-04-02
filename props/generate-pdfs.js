@@ -1,13 +1,13 @@
 /**
  * generate-pdfs.js
- * 第七封密电 — 道具模板 PDF 生成脚本
+ * 读城 — 道具模板 PDF 生成脚本
  *
  * 用法:
  *   cd props/
  *   npm install
  *   npm run generate
  *
- * 输出: output/ 目录下每个模板对应一个 PDF 文件
+ * 输出: output/{city}/ 目录下每个模板对应一个 PDF 文件
  */
 
 import puppeteer from 'puppeteer';
@@ -39,27 +39,48 @@ const WAIT_OPTIONS = {
 };
 
 /**
- * Find all .html files in the templates directory.
- * Returns an array of absolute file paths, sorted alphabetically.
+ * Find all .html files in the templates directories.
+ * Returns an array of { path, city } objects, sorted by city/filename.
  */
 async function findTemplates() {
-  const entries = await readdir(TEMPLATES_DIR);
-  return entries
-    .filter((f) => extname(f).toLowerCase() === '.html')
-    .sort()
-    .map((f) => resolve(TEMPLATES_DIR, f));
+  const results = [];
+
+  // Original Shanghai templates
+  const mainEntries = await readdir(TEMPLATES_DIR).catch(() => []);
+  for (const f of mainEntries) {
+    if (extname(f).toLowerCase() === '.html') {
+      results.push({ path: resolve(TEMPLATES_DIR, f), city: 'shanghai' });
+    }
+  }
+
+  // City-specific templates
+  for (const city of ['nanjing', 'hangzhou', 'xian']) {
+    const cityDir = resolve(__dirname, city, 'templates');
+    const entries = await readdir(cityDir).catch(() => []);
+    for (const f of entries) {
+      if (extname(f).toLowerCase() === '.html') {
+        results.push({ path: resolve(cityDir, f), city });
+      }
+    }
+  }
+
+  return results.sort((a, b) =>
+    `${a.city}/${basename(a.path)}`.localeCompare(`${b.city}/${basename(b.path)}`)
+  );
 }
 
 /**
  * Generate a PDF from a single HTML template file.
  *
  * @param {import('puppeteer').Browser} browser - Puppeteer browser instance
- * @param {string} htmlPath - Absolute path to the HTML file
- * @param {string} outputDir - Directory to write the PDF into
+ * @param {{ path: string, city: string }} template - Template descriptor
+ * @param {string} outputDir - Base output directory
  */
-async function generatePdf(browser, htmlPath, outputDir) {
+async function generatePdf(browser, { path: htmlPath, city }, outputDir) {
   const name = basename(htmlPath, '.html');
-  const outputPath = join(outputDir, `${name}.pdf`);
+  const cityOutputDir = join(outputDir, city);
+  await mkdir(cityOutputDir, { recursive: true });
+  const outputPath = join(cityOutputDir, `${name}.pdf`);
   const fileUrl = pathToFileURL(htmlPath).href;
 
   const page = await browser.newPage();
@@ -91,8 +112,8 @@ async function generatePdf(browser, htmlPath, outputDir) {
 async function main() {
   console.log('');
   console.log('╔═══════════════════════════════════════╗');
-  console.log('║   第七封密电 — PDF 生成工具            ║');
-  console.log('║   Seventh Cipher Props Generator      ║');
+  console.log('║   读城 — PDF 生成工具                  ║');
+  console.log('║   DuCheng Props Generator             ║');
   console.log('╚═══════════════════════════════════════╝');
   console.log('');
 
@@ -109,7 +130,7 @@ async function main() {
   }
 
   console.log(`Found ${templates.length} template(s):`);
-  templates.forEach((t) => console.log(`  • ${basename(t)}`));
+  templates.forEach(({ path: p, city }) => console.log(`  • [${city}] ${basename(p)}`));
   console.log('');
 
   // Launch browser once for all templates
@@ -132,12 +153,12 @@ async function main() {
   let successCount = 0;
   let failCount = 0;
 
-  for (const templatePath of templates) {
+  for (const template of templates) {
     try {
-      await generatePdf(browser, templatePath, OUTPUT_DIR);
+      await generatePdf(browser, template, OUTPUT_DIR);
       successCount++;
     } catch (err) {
-      console.error(`Unexpected error for ${basename(templatePath)}:`, err);
+      console.error(`Unexpected error for ${basename(template.path)}:`, err);
       failCount++;
     }
     console.log('');
@@ -154,7 +175,7 @@ async function main() {
     console.log(`  ✗ Failed:  ${failCount}`);
   }
   console.log('');
-  console.log(`PDFs saved to: ${OUTPUT_DIR}`);
+  console.log(`PDFs saved to: ${OUTPUT_DIR}/{city}/`);
   console.log('');
 }
 
