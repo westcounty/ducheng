@@ -16,7 +16,7 @@ export const STAGES = [
     title: '和平饭店',
     location: '和平饭店（沙逊大厦）',
     address: '南京东路20号，近外滩',
-    photoPrompt: '拍下接头点外观，存档备查',
+    photoPrompt: '拍下绿塔——他说"特工不留痕迹"。但你替他留了',
     photoSubject: '和平饭店正门或标志性绿色屋顶',
     diaryQuote:
       '绿塔在夕阳里的样子，我只能记在脑子里。特工不留痕迹。',
@@ -79,7 +79,7 @@ export const STAGES = [
     title: '海关大楼',
     location: '上海海关大楼',
     address: '中山东一路13号',
-    photoPrompt: '记录校准器，以备后续对表',
+    photoPrompt: '拍下海关钟面——这座钟从1928年开始响，他听到的和你今天听到的，是同一口钟',
     photoSubject: '海关大楼大钟及钟楼正面',
     diaryQuote:
       '钟声四点响了。我想把这个声音装进口袋带走，但我只能带走数字。',
@@ -154,7 +154,7 @@ export const STAGES = [
     title: '汇丰银行大楼',
     location: '原汇丰银行大楼（现浦发银行）',
     address: '中山东一路12号',
-    photoPrompt: '拍下沉默之狮，确认接头标记',
+    photoPrompt: '拍下铜狮身上的弹痕——它什么都见过，什么都没说',
     photoSubject: '门前铜狮（左侧或右侧均可）',
     diaryQuote:
       '那头不说话的狮子，表情比我见过的任何人都诚实。可惜我没法把它的脸撕下来夹进档案。',
@@ -229,7 +229,7 @@ export const STAGES = [
     title: '豫园九曲桥',
     location: '豫园九曲桥',
     address: '黄浦区豫园路，豫园商城湖心亭旁',
-    photoPrompt: '记录来路，确认未被跟踪',
+    photoPrompt: '拍下湖心亭——他没敢进去喝茶。你可以',
     photoSubject: '九曲桥全景或湖心亭',
     diaryQuote:
       '桥上回头看，水面碎成一千块镜子。这种东西，纸和笔留不住。',
@@ -305,7 +305,7 @@ export const STAGES = [
     title: '中共一大会址',
     location: '中共一大会址纪念馆',
     address: '黄浦区兴业路76号',
-    photoPrompt: '存档信箱位置',
+    photoPrompt: '拍下弄堂的晾衣竿——1943年这里也晾着衣服，间谍从衣服底下走过',
     photoSubject: '石库门门框及卷草纹装饰细节',
     diaryQuote:
       '石头门楣上那张脸少说看了一百年的人来人往。我从它面前经过的这一次，它不会记得。',
@@ -380,7 +380,7 @@ export const STAGES = [
     title: '思南公馆',
     location: '思南公馆历史风貌区',
     address: '黄浦区复兴中路517号',
-    photoPrompt: '拍下死信箱周围环境',
+    photoPrompt: '拍下梧桐树影——他走过的那棵树的种子，也许就是你面前这棵',
     photoSubject: '指定墙面全景（含周边梧桐树）',
     diaryQuote:
       '梧桐的影子落在墙上，像还没干的墨水。风一吹就会变。明天再来，什么也看不到了。',
@@ -442,7 +442,7 @@ export const STAGES = [
     title: '武康大楼',
     location: '武康大楼（原诺曼底公寓）',
     address: '徐汇区淮海中路1836号',
-    photoPrompt: '拍下最终接头点全貌',
+    photoPrompt: '拍下船头——这艘船哪儿也去不了。但站在船头的这几分钟，天光是好的',
     photoSubject: '武康大楼"船头"转角全景',
     diaryQuote:
       '这艘船哪儿也去不了。但我站在船头的这几分钟，天光是好的。',
