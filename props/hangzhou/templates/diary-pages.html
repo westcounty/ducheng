@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>白素贞手稿 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .diary-page {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .diary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #7a9e7e;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .station-badge {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #4a6a4e;
+      border: 1px solid #7a9e7e;
+      padding: 3px 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .location-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a2e1a;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .diary-date {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 11px;
+      color: #4a6a4e;
+      text-align: right;
+    }
+
+    .diary-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.2;
+      color: #2c3e2c;
+      letter-spacing: 0.06em;
+      flex: 1;
+      /* Lined paper effect */
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent calc(2.2em - 1px),
+        rgba(122,158,126,0.2) calc(2.2em - 1px),
+        rgba(122,158,126,0.2) 2.2em
+      );
+      padding: 0 4px;
+    }
+
+    .diary-body p {
+      margin-bottom: 0.4em;
+    }
+
+    .secret-section {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 2px dashed #7a9e7e;
+    }
+
+    .secret-section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+    }
+
+    .hidden-cells {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hidden-cell {
+      border: 2px solid #7a9e7e;
+      padding: 8px 14px;
+      min-width: 80px;
+      text-align: center;
+      background: rgba(122,158,126,0.06);
+    }
+
+    .hidden-cell-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: 0.2em;
+    }
+
+    .hidden-cell-text {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: #2c3e2c;
+      line-height: 1.6;
+    }
+
+    .diary-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(122,158,126,0.3);
+    }
+
+    .acrostic-hint {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: rgba(122,158,126,0.5);
+      letter-spacing: 0.1em;
+    }
+
+    .page-corner-stamp {
+      position: absolute;
+      top: 14mm;
+      right: 14mm;
+      transform: rotate(8deg);
+    }
+
+    /* Page 7 special: ink blot and water stain effects */
+    .ink-blot-page .diary-body {
+      position: relative;
+    }
+
+    .ink-blot {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .ink-blot-main {
+      top: 18px;
+      left: 40px;
+      width: 80px;
+      height: 60px;
+      background: radial-gradient(ellipse at 40% 45%, rgba(20,30,20,0.85) 0%, rgba(20,30,20,0.6) 35%, rgba(20,30,20,0.15) 70%, transparent 100%);
+      transform: rotate(-8deg);
+    }
+
+    .ink-blot-2 {
+      top: 50px;
+      left: 90px;
+      width: 35px;
+      height: 28px;
+      background: radial-gradient(ellipse at 45% 50%, rgba(20,30,20,0.7) 0%, rgba(20,30,20,0.3) 60%, transparent 100%);
+      transform: rotate(12deg);
+    }
+
+    .ink-blot-3 {
+      top: 30px;
+      left: 110px;
+      width: 18px;
+      height: 14px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(20,30,20,0.5) 0%, transparent 100%);
+    }
+
+    .water-stain-1 {
+      bottom: 80px;
+      left: 60px;
+      width: 22px;
+      height: 28px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(122,158,126,0.25) 0%, rgba(122,158,126,0.08) 60%, transparent 100%);
+      border-radius: 50% 50% 60% 60%;
+    }
+
+    .water-stain-2 {
+      bottom: 55px;
+      left: 75px;
+      width: 16px;
+      height: 20px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(122,158,126,0.20) 0%, rgba(122,158,126,0.06) 60%, transparent 100%);
+      border-radius: 50% 50% 60% 60%;
+    }
+
+    .water-stain-3 {
+      bottom: 72px;
+      left: 92px;
+      width: 12px;
+      height: 16px;
+      background: radial-gradient(ellipse at 50% 40%, rgba(122,158,126,0.18) 0%, transparent 100%);
+      border-radius: 50% 50% 60% 60%;
+    }
+
+    .final-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 18px;
+      color: #2c3e2c;
+      letter-spacing: 0.15em;
+      padding-top: 12px;
+      padding-left: 6px;
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     手稿 第一页 — 断桥
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点一<br>STATION 1</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第一站 · Station 1</div>
+    <div class="location-name">断桥<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Broken Bridge · 白堤东端</span></div>
+    <div class="diary-date">南宋·杭州<br>白素贞手稿</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>湖面很大。比我记忆中的大。可能是因为我以前总在水底看。今天我假装是一个游客。我穿了她们穿的衣服，学她们走路的样子。一个人朝我笑了。我不知道该怎么办，就也笑了。好像答对了——她没有跑。桥上很多人。他们在一座断了名字的桥上走来走去。我听到一个人说"断桥其实不断"。那它为什么叫断桥？人类的语言真的很麻烦。</p>
+    <p>桥栏杆上有花纹。我数了数，一共重复了很多组。他们把石头凿成这种样子，只为了好看。好看有什么用？我以前也不懂"冷"，现在站在桥上，风吹过来，我忽然懂了一点——皮肤会替你记住温度。也许好看也是这样，眼睛会替你记住形状。</p>
+    <p>桥头有一块石碑，上面刻着"断桥残雪"四个字。碑文里讲了这座桥名字的来历。我看了很久。人类喜欢给所有东西取名字，连一场雪化了一半的样子都要取一个名字。我笑了，但我不知道笑是什么意思。也许学会了笑，就算学会了一点点做人。</p>
+    <p>我决定继续往前走。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">隐忧</span>
+        <div class="hidden-cell-text">我笑了，但我不知道笑是什么意思。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：湖</span>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     手稿 第二页 — 孤山／西泠印社
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点二<br>STATION 2</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第二站 · Station 2</div>
+    <div class="location-name">孤山／西泠印社<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Solitary Hill · 西泠印社</span></div>
+    <div class="diary-date">南宋·杭州<br>白素贞手稿</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>心里有一种说不出的东西。在山上遇到一块石头，上面刻着一首诗。写诗的人已经死了很久了。但他种的梅花还活着——不对，梅花也死了。但有人又种了新的。他说鹤是他的妻子。我一开始觉得他疯了。后来我想了很久——他不是疯了，他是认真的。认真和疯了，在人类那里好像是同一件事。</p>
+    <p>我也试着写了一首诗。写得很烂。但是我写得很认真。</p>
+    <p style="margin-left:2em;line-height:2;">水底千年不识花，<br>今朝上岸看梅斜。<br>欲学孤山人种鹤，<br>奈何不解何为家。</p>
+    <p>注：梅斜——放鹤亭旁梅树有一棵是歪的，朝着湖面长。像是要看自己在水里的样子。</p>
+    <p>旁边有一座印社，石壁上刻了许多印章，有阴刻有阳刻，凹凸相反，如同一句话的正面和背面。我写得很认真，但没有人会读到它。也许这就是写诗的意义——不是给人读的，是给自己一个交代。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">隐忧</span>
+        <div class="hidden-cell-text">我写得很认真，但没有人会读到它。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：心</span>
+  </div>
+
+</div><!-- /page 2 -->
+
+<!-- ════════════════════════════════════════════════════════
+     手稿 第三页 — 龙井村
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点三<br>STATION 3</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第三站 · Station 3</div>
+    <div class="location-name">龙井村<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Longjing Village · 西湖茶园</span></div>
+    <div class="diary-date">南宋·杭州<br>白素贞手稿</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>有一种植物的叶子。他们摘下来，烤干，泡在热水里喝。我偷偷尝了一口——是苦的。但他们喝的时候表情很安静。不是忍耐的安静，是享受的安静。我不懂。苦的东西有什么好享受的？后来一个老人对我说："第一口是苦的，第二口是甜的。你要等。"我等了。第二口还是苦的。但我好像懂了一点点——他们享受的不是味道，是等待本身。他们管这叫"耐心"。</p>
+    <p>今日试以茶谱之法录之：</p>
+    <p><strong>色</strong>：初泡嫩绿近黄，如三月柳叶尚未长足。续泡转淡，至第四泡几近透明。</p>
+    <p><strong>香</strong>：有炒豆气，又有一丝说不清的甜。老人说这叫"兰花香"。我没闻过兰花，但我相信他。</p>
+    <p><strong>味</strong>：第一口，涩。第二口，涩。第三口——喉咙深处有一点点回甘。很短。像一个人对你笑了一下就转身走了。</p>
+    <p><strong>形</strong>：叶片在水中缓缓展开，像是在伸懒腰。一芽一叶，形如雀舌。</p>
+    <p>我学会了等，但不知道在等什么。也许等本身就是答案——他们好像也不知道在等什么。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">隐忧</span>
+        <div class="hidden-cell-text">我学会了等，但不知道在等什么。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：有</span>
+  </div>
+
+</div><!-- /page 3 -->
+
+<!-- ════════════════════════════════════════════════════════
+     手稿 第四页 — 岳王庙
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点四<br>STATION 4</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第四站 · Station 4</div>
+    <div class="location-name">岳王庙<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Yue Fei Temple · 西湖北岸</span></div>
+    <div class="diary-date">南宋·杭州<br>白素贞手稿</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>一件我完全无法理解的事。有个人死了八百年。他们为他建了一座庙。在庙门前放了几个铁人，跪在那里。铁人跪了八百年，膝盖都磨薄了。我问一个老人："他做了什么？"老人说："他精忠报国。"我说："然后呢？"老人说："然后他被冤枉死了。"</p>
+    <p>这不合理。一个死了的人，怎么会比活着的人更重要？但是我站在那里看了很久，我竟然——我不知道怎么描述这个感觉。眼睛里有水。这是第一次。我以为只有人类才会这样。</p>
+    <p>门前对联写得清楚，每一笔每一画都是后人的愤怒：</p>
+    <p style="text-align:center;letter-spacing:0.3em;font-size:14px;">青山有幸埋忠骨<br>白铁无辜铸佞臣</p>
+    <p>忠骨与佞臣，同在一个院子里，一个站着，四个跪着。八百年了。我活了一千年，从未因任何事流泪。但今天站在这里，看那四个铁人跪在地上——我第一次哭，却不是为自己。人类最可怕的不是死亡，是被冤枉。而最动人的，是八百年后还在替一个死人生气。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">隐忧</span>
+        <div class="hidden-cell-text">我第一次哭，却不是为自己。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：一</span>
+  </div>
+
+</div><!-- /page 4 -->
+
+<!-- ════════════════════════════════════════════════════════
+     手稿 第五页 — 苏堤六桥
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点五<br>STATION 5</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第五站 · Station 5</div>
+    <div class="location-name">苏堤六桥<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Su Causeway · 西湖长堤</span></div>
+    <div class="diary-date">南宋·杭州<br>白素贞手稿</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>人会死。这我知道。但有个人死了快一千年了，他修的这条路还在。路上种的树也还在——不是原来那些树，是后来的人又种的。他写的诗，别人还在念。但让我吃惊的不是诗——是这条堤。诗可以不写，堤不能不修。西湖水淹进城里，人会淹死。他是来写诗的，最后去挖泥了。</p>
+    <p>我从北往南走，记下六座桥的名字：映波、锁澜、望山、压堤、东浦、跨虹。</p>
+    <p>第一桥"映波"——桥面平整，石板拼缝约一指宽。水面倒映桥拱，形成一个完整的圆。苏东坡大概没想过这个圆好不好看，他只想着别让水漫出来。</p>
+    <p>第二桥"锁澜"——桥名取得实在。锁住波澜，就是锁住灾害。造桥的人是工匠，取名的人是诗人，但他们做的是同一件事。</p>
+    <p>我走完六座桥，用了很久。中途坐下来歇了一次。一千年来我从未觉得累，今天第一次觉得——走路是要花力气的。也许是因为我在用人类的方式走。</p>
+    <p>我忽然很想为一个人做一件没用的事。不是因为有用，是因为想做。他们活不过一棵树。但他们种树。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">隐忧</span>
+        <div class="hidden-cell-text">我忽然很想为一个人做一件没用的事。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：人</span>
+  </div>
+
+</div><!-- /page 5 -->
+
+<!-- ════════════════════════════════════════════════════════
+     手稿 第六页 — 净慈寺
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点六<br>STATION 6</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第六站 · Station 6</div>
+    <div class="location-name">净慈寺<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Jingci Temple · 南屏山麓</span></div>
+    <div class="diary-date">南宋·杭州<br>白素贞手稿</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>未曾有过这种感觉。安静。不是山洞里的安静——那种安静是空的。这种安静是满的。</p>
+    <p>钟声响了。很大声。然后停了。但他们没有走——所有人都还站在那里。他们在听什么？钟已经不响了。后来我也听到了。钟声停了之后，空气里还有东西在振动。不是声音，是声音的影子。他们管这叫"回响"。</p>
+    <p>我第一次觉得安静是好的。</p>
+    <p style="margin-left:2em;line-height:2;">钟鸣一声满湖山，<br>钟止无声胜有言。<br>千年水底不曾听，<br>今朝岸上始知禅。</p>
+    <p>有个和尚从门里走出来，看了我一眼。他没有笑，也没有不笑。他只是看了我一眼，然后走了。那一眼让我觉得——他知道我不是人。但他不在意。</p>
+    <p>也许这就是他们说的"慈悲"——不是原谅你做错了什么，是根本不觉得你有什么需要被原谅的。</p>
+    <p>我第一次觉得安静是好的——因为终于不用假装了。我在寺门外坐了很久。不想走。</p>
+  </div>
+
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 记 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">隐忧</span>
+        <div class="hidden-cell-text">我第一次觉得安静是好的——因为终于不用假装了。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：未</span>
+  </div>
+
+</div><!-- /page 6 -->
+
+<!-- ════════════════════════════════════════════════════════
+     手稿 第七页 — 雷峰塔（几乎空白）
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page ink-blot-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点七<br>STATION 7</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第七站 · Station 7</div>
+    <div class="location-name">雷峰塔<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Leifeng Pagoda · 夕照山</span></div>
+    <div class="diary-date">南宋·杭州<br>白素贞手稿</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Almost blank body with ink blot and water stains -->
+  <div class="diary-body" style="position:relative;min-height:160mm;">
+    <!-- Ink blots (墨渍) via radial-gradient -->
+    <div class="ink-blot ink-blot-main"></div>
+    <div class="ink-blot ink-blot-2"></div>
+    <div class="ink-blot ink-blot-3"></div>
+    <!-- Water stains / tear marks (泪痕) -->
+    <div class="ink-blot water-stain-1"></div>
+    <div class="ink-blot water-stain-2"></div>
+    <div class="ink-blot water-stain-3"></div>
+
+    <div class="final-text">走不了了……</div>
+  </div>
+
+  <!-- Acrostic reveal on final page -->
+  <div class="border-frame" style="margin-top:16px;">
+    <div class="handwriting" style="font-size:12px;text-align:center;letter-spacing:0.3em;">
+      七页首字连读：湖 心 有 一 人 未 走
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：走</span>
+  </div>
+
+</div><!-- /page 7 -->
+
+</body>
+</html>

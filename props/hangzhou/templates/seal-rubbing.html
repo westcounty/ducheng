@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>残印拓片 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .seal-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+      width: 100%;
+    }
+
+    /* The seal rubbing image area */
+    .seal-wrapper {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0 20px;
+    }
+
+    .seal-rubbing {
+      width: 80mm;
+      height: 80mm;
+      position: relative;
+      background: #1a2e1a;
+      border: 3px solid #4a6a4e;
+      overflow: hidden;
+      box-shadow: 2px 3px 12px rgba(0,0,0,0.35);
+    }
+
+    /* White areas = the carved recesses catching ink (阴刻 carved chars show white) */
+    .seal-text-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Missing/gap areas — white patches where the seal is damaged */
+    .seal-gap {
+      position: absolute;
+      background: #f5f0eb;
+      pointer-events: none;
+    }
+
+    .gap-1 {
+      top: 8%;
+      right: 10%;
+      width: 22%;
+      height: 18%;
+      clip-path: polygon(20% 0%, 100% 15%, 85% 100%, 0% 80%);
+    }
+
+    .gap-2 {
+      bottom: 12%;
+      left: 8%;
+      width: 28%;
+      height: 16%;
+      clip-path: polygon(0% 20%, 100% 0%, 90% 100%, 10% 85%);
+    }
+
+    .gap-3 {
+      top: 42%;
+      right: 5%;
+      width: 15%;
+      height: 20%;
+      clip-path: polygon(15% 0%, 100% 10%, 100% 90%, 0% 100%);
+    }
+
+    /* Two-column layout for instructions + legend */
+    .seal-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .seal-info {
+      border: 1.5px solid #7a9e7e;
+      padding: 10px 12px;
+      background: rgba(122,158,126,0.04);
+    }
+
+    .seal-info-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a2e1a;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(122,158,126,0.3);
+    }
+
+    .seal-info-body {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2c3e2c;
+      line-height: 1.9;
+      letter-spacing: 0.05em;
+    }
+
+    /* Legend items */
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .legend-swatch {
+      width: 20px;
+      height: 16px;
+      border: 1px solid #7a9e7e;
+      flex-shrink: 0;
+    }
+
+    .legend-swatch-dark {
+      background: #1a2e1a;
+    }
+
+    .legend-swatch-light {
+      background: #f5f0eb;
+    }
+
+    .legend-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2c3e2c;
+    }
+
+    /* Mechanism explanation box */
+    .mechanism-box {
+      width: 100%;
+      margin-top: 14px;
+      border: 2px solid #7a9e7e;
+      padding: 12px 16px;
+      background: rgba(122,158,126,0.06);
+    }
+
+    .mechanism-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .mechanism-body {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2c3e2c;
+      line-height: 1.9;
+    }
+
+    .mechanism-highlight {
+      background: rgba(122,158,126,0.15);
+      border: 1px solid #7a9e7e;
+      padding: 2px 6px;
+      font-weight: 700;
+    }
+
+    /* Task answer grid */
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .answer-cell {
+      border: 1.5px dashed #7a9e7e;
+      padding: 8px 4px;
+      text-align: center;
+      background: rgba(245,240,235,0.5);
+    }
+
+    .answer-cell-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #4a6a4e;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .answer-cell-blank {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      color: rgba(122,158,126,0.4);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page seal-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">站点二<br>STATION 2</div>
+  </div>
+
+  <div class="page-header">
+    <div class="title">残印拓片</div>
+    <div class="subtitle">DAMAGED SEAL RUBBING · 孤山西泠印社 · 第二站线索</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="instruction-box" style="width:100%;">
+    西泠印社石壁上有一方残印，三处缺损。阴刻与阳刻互补——用手头的另一张卡（阳刻版）覆盖在此拓片上，缺损处会显现出隐藏内容。
+  </div>
+
+  <!-- Seal rubbing image -->
+  <div class="seal-wrapper">
+    <div class="seal-rubbing">
+      <svg class="seal-text-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Dark background is already set via CSS -->
+        <!-- White characters (阴刻 — carved chars, ink fills the background, chars show through) -->
+        <!-- Border of seal -->
+        <rect x="8" y="8" width="264" height="264" fill="none" stroke="#f5f0eb" stroke-width="4"/>
+        <rect x="16" y="16" width="248" height="248" fill="none" stroke="#f5f0eb" stroke-width="1.5"/>
+
+        <!-- Four character seal: 西泠·印·社·记 arranged in 2x2 -->
+        <!-- Top-left: 西 -->
+        <text x="70" y="120" text-anchor="middle" font-size="88" fill="#f5f0eb" font-family="Noto Serif SC, serif" font-weight="700">西</text>
+        <!-- Top-right: 泠 — partially missing (gap-1 covers this area) -->
+        <text x="210" y="120" text-anchor="middle" font-size="88" fill="#f5f0eb" font-family="Noto Serif SC, serif" font-weight="700">泠</text>
+        <!-- Bottom-left: 印 — partially missing (gap-2 covers this area) -->
+        <text x="70" y="240" text-anchor="middle" font-size="88" fill="#f5f0eb" font-family="Noto Serif SC, serif" font-weight="700">印</text>
+        <!-- Bottom-right: 社 — partially missing (gap-3 covers edge) -->
+        <text x="210" y="240" text-anchor="middle" font-size="88" fill="#f5f0eb" font-family="Noto Serif SC, serif" font-weight="700">社</text>
+
+        <!-- Center dividing lines -->
+        <line x1="140" y1="24" x2="140" y2="256" stroke="#f5f0eb" stroke-width="2" opacity="0.4"/>
+        <line x1="24" y1="140" x2="256" y2="140" stroke="#f5f0eb" stroke-width="2" opacity="0.4"/>
+      </svg>
+
+      <!-- White gap patches — damaged areas -->
+      <div class="seal-gap gap-1"></div>
+      <div class="seal-gap gap-2"></div>
+      <div class="seal-gap gap-3"></div>
+    </div>
+  </div>
+
+  <!-- Two-column info section -->
+  <div class="seal-content">
+
+    <div class="seal-info">
+      <div class="seal-info-title">◆ 图例说明</div>
+      <div class="seal-info-body">
+        <div class="legend-item">
+          <div class="legend-swatch legend-swatch-dark"></div>
+          <div class="legend-label">墨色底面（阴刻底）</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch legend-swatch-light"></div>
+          <div class="legend-label">白色字迹（阴刻字）</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-swatch" style="background: repeating-linear-gradient(45deg, #f5f0eb 0px, #f5f0eb 3px, #7a9e7e 3px, #7a9e7e 6px);"></div>
+          <div class="legend-label">缺损区域（三处）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seal-info">
+      <div class="seal-info-title">◆ 印章信息</div>
+      <div class="seal-info-body">
+        来源：西泠印社石壁旧藏拓本<br>
+        印面：方形，边长约6cm<br>
+        刻法：阴刻（白文印）<br>
+        时代：清末民初<br>
+        缺损：右上、左下、右中三处<br>
+        备注：与阳刻版互补，<br>
+        　　　缺损处可还原
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Mechanism explanation -->
+  <div class="mechanism-box">
+    <div class="mechanism-title">◆ 阴刻阳刻互补机制 ◆</div>
+    <div class="mechanism-body">
+      此拓片为<span class="mechanism-highlight">阴刻版</span>（白文）：字迹显白，底色为深色，三处缺损为白色空白。<br><br>
+      信封另附<span class="mechanism-highlight">阳刻版</span>（朱文）：字迹显深，底色为浅色，三处位置正好与此缺损互补。<br><br>
+      将阳刻版叠压在此拓片的三处缺损上，透过灯光或强光，可在缺损处读出隐藏的<strong>方向字符</strong>，组合成本站密钥方向指引。
+    </div>
+
+    <div class="answer-grid">
+      <div class="answer-cell">
+        <span class="answer-cell-label">缺损①<br>右上</span>
+        <div class="answer-cell-blank">＿</div>
+      </div>
+      <div class="answer-cell">
+        <span class="answer-cell-label">缺损②<br>左下</span>
+        <div class="answer-cell-blank">＿</div>
+      </div>
+      <div class="answer-cell">
+        <span class="answer-cell-label">缺损③<br>右中</span>
+        <div class="answer-cell-blank">＿</div>
+      </div>
+      <div class="answer-cell">
+        <span class="answer-cell-label">密钥<br>方向</span>
+        <div class="answer-cell-blank" style="font-size:14px;">E＿＿</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

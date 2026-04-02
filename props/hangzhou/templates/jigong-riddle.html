@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>济公禅机卡 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .jigong-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+    }
+
+    /* Jigong portrait / icon area */
+    .jigong-portrait {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .portrait-box {
+      border: 2px solid #4a6a4e;
+      padding: 10px 14px;
+      background: rgba(74,106,78,0.06);
+      text-align: center;
+      position: relative;
+    }
+
+    .portrait-icon {
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .portrait-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a2e1a;
+      letter-spacing: 0.3em;
+    }
+
+    .portrait-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.15em;
+    }
+
+    /* Riddle card — main riddle */
+    .riddle-card {
+      border: 2px solid #4a6a4e;
+      padding: 14px 18px;
+      background: rgba(74,106,78,0.06);
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .riddle-card::before {
+      content: '禅';
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #4a6a4e;
+      background: #f5f0eb;
+      padding: 0 8px;
+      letter-spacing: 0.2em;
+    }
+
+    .riddle-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.15em;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .riddle-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 16px;
+      color: #1a2e1a;
+      line-height: 2.2;
+      letter-spacing: 0.1em;
+    }
+
+    .riddle-text strong {
+      color: #4a6a4e;
+    }
+
+    .riddle-punch {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #4a6a4e;
+      font-style: italic;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(122,158,126,0.4);
+    }
+
+    /* Buddhist verse reordering section */
+    .verse-section {
+      border: 1.5px solid #7a9e7e;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      background: rgba(122,158,126,0.04);
+    }
+
+    .verse-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .verse-instruction {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2c3e2c;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    /* Scrambled verse lines — shown as cut-out tiles */
+    .verse-tiles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+      justify-content: center;
+    }
+
+    .verse-tile {
+      border: 1.5px solid #7a9e7e;
+      padding: 8px 12px;
+      background: #f5f0eb;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 14px;
+      color: #2c3e2c;
+      letter-spacing: 0.1em;
+      cursor: default;
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .verse-tile-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #7a9e7e;
+      display: block;
+      margin-bottom: 3px;
+      text-align: center;
+    }
+
+    /* Ordering answer slots */
+    .ordering-slots {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .ordering-slot {
+      border: 1.5px dashed #7a9e7e;
+      padding: 10px 8px;
+      text-align: center;
+      background: rgba(245,240,235,0.5);
+    }
+
+    .ordering-slot-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #4a6a4e;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .ordering-blank {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      color: rgba(122,158,126,0.4);
+    }
+
+    /* Key extraction */
+    .key-box {
+      border: 2px solid #7a9e7e;
+      padding: 10px 14px;
+      background: rgba(122,158,126,0.06);
+      text-align: center;
+    }
+
+    .key-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 6px;
+    }
+
+    .key-formula {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #2c3e2c;
+      margin-bottom: 6px;
+    }
+
+    .key-blank {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      letter-spacing: 0.5em;
+      color: rgba(122,158,126,0.4);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page jigong-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">站点六<br>STATION 6</div>
+  </div>
+
+  <div class="page-header">
+    <div class="title">济公禅机卡</div>
+    <div class="subtitle">JIGONG KOAN CARD · 净慈寺 · 第六站线索</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Jigong portrait -->
+  <div class="jigong-portrait">
+    <div class="portrait-box">
+      <div class="portrait-icon">🏮</div>
+      <div class="portrait-name">济公</div>
+      <div class="portrait-title">活佛 · 净慈寺旧僧 · 杭州</div>
+    </div>
+  </div>
+
+  <!-- Main riddle -->
+  <div class="riddle-card">
+    <div class="riddle-intro">净慈寺山门外，一只破扇挂在柱上，扇面写着——</div>
+    <div class="riddle-text">
+      <strong>鞋子破了还是鞋，</strong><br>
+      <strong>帽子歪了还是帽，</strong><br>
+      和尚疯了——还是和尚。<br>
+      <br>
+      钟声停了之后，<br>
+      寺里还有什么？<br>
+      <br>
+      你以为是空的，<br>
+      其实是满的。<br>
+      告诉我那个字。
+    </div>
+    <div class="riddle-punch">
+      ——济公老僧问，不必跪，站着说。
+    </div>
+  </div>
+
+  <!-- Buddhist verse reordering -->
+  <div class="verse-section">
+    <div class="verse-title">◆ 佛偈重组 · 四句排序 ◆</div>
+
+    <div class="verse-instruction">
+      下面四句佛偈顺序已被打乱。将它们按正确顺序排列，各句首字连读，即为本站密钥。
+    </div>
+
+    <!-- Scrambled tiles -->
+    <div class="verse-tiles">
+      <div class="verse-tile">
+        <span class="verse-tile-num">乙</span>
+        钟止无声胜有言
+      </div>
+      <div class="verse-tile">
+        <span class="verse-tile-num">丁</span>
+        今朝岸上始知禅
+      </div>
+      <div class="verse-tile">
+        <span class="verse-tile-num">甲</span>
+        钟鸣一声满湖山
+      </div>
+      <div class="verse-tile">
+        <span class="verse-tile-num">丙</span>
+        千年水底不曾听
+      </div>
+    </div>
+
+    <!-- Answer ordering slots -->
+    <div class="ordering-slots">
+      <div class="ordering-slot">
+        <span class="ordering-slot-label">第一句</span>
+        <div class="ordering-blank">＿</div>
+      </div>
+      <div class="ordering-slot">
+        <span class="ordering-slot-label">第二句</span>
+        <div class="ordering-blank">＿</div>
+      </div>
+      <div class="ordering-slot">
+        <span class="ordering-slot-label">第三句</span>
+        <div class="ordering-blank">＿</div>
+      </div>
+      <div class="ordering-slot">
+        <span class="ordering-slot-label">第四句</span>
+        <div class="ordering-blank">＿</div>
+      </div>
+    </div>
+
+    <!-- Correct order reminder -->
+    <div style="font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(122,158,126,0.6);text-align:center;font-style:italic;">
+      （正确顺序中，四句首字连读构成一个有意义的词语）
+    </div>
+  </div>
+
+  <!-- Key extraction -->
+  <div class="key-box">
+    <div class="key-label">◆ 本站密钥提取 ◆</div>
+    <div class="key-formula">
+      正确顺序的四句首字：＿ · ＿ · ＿ · ＿<br>
+      各首字笔画数之和 = 本站密钥
+    </div>
+    <div class="key-blank">＿＿＿</div>
+  </div>
+
+  <div class="instruction-box" style="margin-top:12px;">
+    提示：禅机谜底的答案字也与密钥有关——"空"或"响"？答案就在钟声停止之后。
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

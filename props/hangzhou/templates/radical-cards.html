@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>偏旁部首碎片卡 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .radical-page {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+    }
+
+    /* Main character display */
+    .char-decomp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0 24px;
+    }
+
+    .char-box {
+      border: 2px solid #7a9e7e;
+      background: rgba(122,158,126,0.06);
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+    }
+
+    .char-big {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 56px;
+      font-weight: 700;
+      color: #1a2e1a;
+      line-height: 1;
+    }
+
+    .char-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.15em;
+      margin-top: 6px;
+    }
+
+    .decomp-arrow {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 24px;
+      color: #7a9e7e;
+      line-height: 1;
+    }
+
+    .radical-parts {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .radical-box {
+      border: 2px solid #4a6a4e;
+      background: rgba(74,106,78,0.08);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 55px;
+    }
+
+    .radical-char {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #2c3e2c;
+      line-height: 1;
+    }
+
+    .radical-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.1em;
+      margin-top: 5px;
+    }
+
+    .radical-plus {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      color: #7a9e7e;
+    }
+
+    /* Observation task panels */
+    .task-panels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .task-panel {
+      border: 1.5px solid #7a9e7e;
+      padding: 10px;
+      background: rgba(122,158,126,0.04);
+    }
+
+    .task-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(122,158,126,0.3);
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+
+    .task-radical {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a2e1a;
+      line-height: 1;
+    }
+
+    .task-panel-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #4a6a4e;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+
+    .task-instruction {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2c3e2c;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+    }
+
+    .task-answer-box {
+      margin-top: 8px;
+      border: 1px dashed #7a9e7e;
+      padding: 8px;
+      background: rgba(245,240,235,0.5);
+      min-height: 36px;
+    }
+
+    .task-answer-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(122,158,126,0.6);
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+
+    .combine-result {
+      margin-top: 20px;
+      padding: 12px 16px;
+      border: 2px solid #7a9e7e;
+      background: rgba(122,158,126,0.06);
+      text-align: center;
+    }
+
+    .combine-result-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 6px;
+    }
+
+    .combine-formula {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 16px;
+      color: #2c3e2c;
+      letter-spacing: 0.2em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page radical-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">站点一<br>STATION 1</div>
+  </div>
+
+  <div class="page-header">
+    <div class="title">偏旁部首碎片卡</div>
+    <div class="subtitle">RADICAL DECOMPOSITION · 断桥 · 第一站线索</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="instruction-box">
+    "断"字可以拆开来看。每一个偏旁，对应断桥上一项实地观察任务。三项任务完成后，将答案组合，得到本站密钥。
+  </div>
+
+  <!-- Character decomposition display -->
+  <div class="char-decomp">
+    <div class="char-box">
+      <div class="char-big">断</div>
+      <div class="char-label">目标字</div>
+    </div>
+    <div class="decomp-arrow">＝</div>
+    <div class="radical-parts">
+      <div class="radical-box">
+        <div class="radical-char">米</div>
+        <div class="radical-name">米字旁</div>
+      </div>
+      <div class="radical-plus">＋</div>
+      <div class="radical-box">
+        <div class="radical-char">刀</div>
+        <div class="radical-name">刀字旁</div>
+      </div>
+      <div class="radical-plus">＋</div>
+      <div class="radical-box">
+        <div class="radical-char">斤</div>
+        <div class="radical-name">斤字旁</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Three observation task panels -->
+  <div class="task-panels">
+
+    <!-- Task A: 米 -->
+    <div class="task-panel">
+      <div class="task-panel-header">
+        <div class="task-radical">米</div>
+        <div class="task-panel-title">观察任务 A<br>米字旁</div>
+      </div>
+      <div class="task-instruction">
+        在断桥栏杆上，找到花纹重复的单元。<br>
+        数一数：从东端桥头至桥中央，<strong>完整的花纹单元重复了几组？</strong><br>
+        将数字记在右下方空格。
+      </div>
+      <div class="task-answer-box">
+        <div class="task-answer-label">答案 A ＝ ＿＿＿</div>
+      </div>
+    </div>
+
+    <!-- Task B: 刀 -->
+    <div class="task-panel">
+      <div class="task-panel-header">
+        <div class="task-radical">刀</div>
+        <div class="task-panel-title">观察任务 B<br>刀字旁</div>
+      </div>
+      <div class="task-instruction">
+        找到"断桥残雪"石碑。<br>
+        碑文落款年份的最后一位数字是什么？<br>
+        （如"嘉靖三十七年"→ 取"七"对应的阿拉伯数字）
+      </div>
+      <div class="task-answer-box">
+        <div class="task-answer-label">答案 B ＝ ＿＿＿</div>
+      </div>
+    </div>
+
+    <!-- Task C: 斤 -->
+    <div class="task-panel">
+      <div class="task-panel-header">
+        <div class="task-radical">斤</div>
+        <div class="task-panel-title">观察任务 C<br>斤字旁</div>
+      </div>
+      <div class="task-instruction">
+        站在桥中央，向南望。<br>
+        可以看到湖岸上有几棵柳树的倒影落在桥拱水面范围内？<br>
+        数清楚后记下数字。
+      </div>
+      <div class="task-answer-box">
+        <div class="task-answer-label">答案 C ＝ ＿＿＿</div>
+      </div>
+    </div>
+
+  </div><!-- /task-panels -->
+
+  <!-- Combination result -->
+  <div class="combine-result">
+    <div class="combine-result-label">◆ 三部首合一 · 本站密钥 ◆</div>
+    <div class="combine-formula">密钥 ＝ A＿＿ · B＿＿ · C＿＿</div>
+  </div>
+
+  <div class="instruction-box" style="margin-top:12px;">
+    提示：答案为三位数字组合，即"断"字在这座桥上留下的数字痕迹。将此密钥记录在通关卡上，前往孤山进行下一站。
+  </div>
+
+  <div class="diary-footer" style="display:flex;justify-content:flex-end;margin-top:8px;padding-top:8px;border-top:1px solid rgba(122,158,126,0.3);">
+    <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:rgba(122,158,126,0.5);letter-spacing:0.1em;">断 ＝ 米＋刀＋斤</span>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

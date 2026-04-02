@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拍照任务卡 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .photo-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+      width: 100%;
+    }
+
+    /* 7 photo cards on 2 pages: 4 on page 1, 3 on page 2 */
+    .photo-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .photo-card {
+      border: 1.5px solid #7a9e7e;
+      padding: 0;
+      background: rgba(122,158,126,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Viewfinder frame top part */
+    .photo-card-frame {
+      width: 100%;
+      height: 52mm;
+      background: #2c3e2c;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Viewfinder corners */
+    .vf-corner {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-color: rgba(245,240,235,0.7);
+      border-style: solid;
+    }
+
+    .vf-tl { top: 6px; left: 6px; border-width: 2px 0 0 2px; }
+    .vf-tr { top: 6px; right: 6px; border-width: 2px 2px 0 0; }
+    .vf-bl { bottom: 6px; left: 6px; border-width: 0 0 2px 2px; }
+    .vf-br { bottom: 6px; right: 6px; border-width: 0 2px 2px 0; }
+
+    /* Center cross-hair */
+    .vf-crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .vf-crosshair::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -0.5px;
+      width: 1px;
+      height: 16px;
+      background: rgba(245,240,235,0.3);
+    }
+
+    .vf-crosshair::after {
+      content: '';
+      position: absolute;
+      top: -0.5px;
+      left: -8px;
+      width: 16px;
+      height: 1px;
+      background: rgba(245,240,235,0.3);
+    }
+
+    .photo-card-station-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(245,240,235,0.7);
+      letter-spacing: 0.1em;
+      background: rgba(44,62,44,0.5);
+      padding: 2px 6px;
+    }
+
+    .photo-card-num {
+      position: absolute;
+      bottom: 6px;
+      left: 8px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(245,240,235,0.6);
+      line-height: 1;
+    }
+
+    /* Location text in viewfinder */
+    .photo-card-location {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(245,240,235,0.85);
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    /* Bottom part: caption */
+    .photo-card-caption {
+      padding: 10px 12px;
+    }
+
+    .caption-prompt {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .caption-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 12px;
+      color: #2c3e2c;
+      line-height: 1.8;
+      letter-spacing: 0.04em;
+    }
+
+    /* Special card 7 — Leifeng Pagoda, different border */
+    .photo-card-final {
+      border: 2px solid #4a6a4e;
+      grid-column: span 2;
+    }
+
+    .photo-card-final .photo-card-frame {
+      height: 40mm;
+      background: #1a2e1a;
+    }
+
+    .photo-card-final .caption-text {
+      font-size: 13px;
+      font-style: italic;
+      color: #1a2e1a;
+    }
+
+    /* Cut line between cards */
+    .page-cut-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(122,158,126,0.5);
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin: 4px 0;
+      font-style: italic;
+    }
+
+    /* Stamp area on each card */
+    .photo-stamp-area {
+      border: 1px dashed rgba(122,158,126,0.5);
+      padding: 4px 8px;
+      margin-top: 6px;
+      min-height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-stamp-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(122,158,126,0.4);
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ PAGE 1: Cards 1–4 ════ -->
+<div class="page photo-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">拍照<br>任务卡</div>
+  </div>
+
+  <div class="page-header">
+    <div class="title">拍照任务卡</div>
+    <div class="subtitle">PHOTO MISSION CARDS · 七站实景拍摄 · 断桥不断</div>
+  </div>
+
+  <div class="page-cut-note">沿虚线剪下，每站对应一张 · 完成拍摄后在背面盖站点印章</div>
+  <hr class="cut-line" style="margin:4px 0 10px;">
+
+  <div class="photo-cards-grid">
+
+    <!-- Card 1: 断桥 -->
+    <div class="photo-card">
+      <div class="photo-card-frame">
+        <div class="vf-corner vf-tl"></div>
+        <div class="vf-corner vf-tr"></div>
+        <div class="vf-corner vf-bl"></div>
+        <div class="vf-corner vf-br"></div>
+        <div class="vf-crosshair"></div>
+        <div class="photo-card-station-badge">站点一 · S1</div>
+        <div class="photo-card-num">①</div>
+        <div class="photo-card-location">断桥</div>
+      </div>
+      <div class="photo-card-caption">
+        <div class="caption-prompt">拍摄指令</div>
+        <div class="caption-text">拍下断桥——<br>她说"他们的命只有几十年，却还敢在桥上犹豫"</div>
+        <div class="photo-stamp-area">
+          <span class="photo-stamp-label">站点印章 / 完成打卡</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: 放鹤亭 -->
+    <div class="photo-card">
+      <div class="photo-card-frame">
+        <div class="vf-corner vf-tl"></div>
+        <div class="vf-corner vf-tr"></div>
+        <div class="vf-corner vf-bl"></div>
+        <div class="vf-corner vf-br"></div>
+        <div class="vf-crosshair"></div>
+        <div class="photo-card-station-badge">站点二 · S2</div>
+        <div class="photo-card-num">②</div>
+        <div class="photo-card-location">放鹤亭</div>
+      </div>
+      <div class="photo-card-caption">
+        <div class="caption-prompt">拍摄指令</div>
+        <div class="caption-text">拍下放鹤亭——<br>她说"种梅的人说鹤是妻子，他不是疯了，他是认真的"</div>
+        <div class="photo-stamp-area">
+          <span class="photo-stamp-label">站点印章 / 完成打卡</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: 茶园 -->
+    <div class="photo-card">
+      <div class="photo-card-frame">
+        <div class="vf-corner vf-tl"></div>
+        <div class="vf-corner vf-tr"></div>
+        <div class="vf-corner vf-bl"></div>
+        <div class="vf-corner vf-br"></div>
+        <div class="vf-crosshair"></div>
+        <div class="photo-card-station-badge">站点三 · S3</div>
+        <div class="photo-card-num">③</div>
+        <div class="photo-card-location">茶园</div>
+      </div>
+      <div class="photo-card-caption">
+        <div class="caption-prompt">拍摄指令</div>
+        <div class="caption-text">拍下茶园——<br>她说"人类把叶子泡在水里，等苦味变甜。他们管这叫耐心"</div>
+        <div class="photo-stamp-area">
+          <span class="photo-stamp-label">站点印章 / 完成打卡</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: 岳王庙的门 -->
+    <div class="photo-card">
+      <div class="photo-card-frame">
+        <div class="vf-corner vf-tl"></div>
+        <div class="vf-corner vf-tr"></div>
+        <div class="vf-corner vf-bl"></div>
+        <div class="vf-corner vf-br"></div>
+        <div class="vf-crosshair"></div>
+        <div class="photo-card-station-badge">站点四 · S4</div>
+        <div class="photo-card-num">④</div>
+        <div class="photo-card-location">岳王庙</div>
+      </div>
+      <div class="photo-card-caption">
+        <div class="caption-prompt">拍摄指令</div>
+        <div class="caption-text">拍下岳王庙的门——<br>她说"他死了八百年，他们还在替他生气。这不理性。"</div>
+        <div class="photo-stamp-area">
+          <span class="photo-stamp-label">站点印章 / 完成打卡</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+</div><!-- /page 1 -->
+
+<!-- ════ PAGE 2: Cards 5–7 ════ -->
+<div class="page photo-page">
+
+  <div class="page-header">
+    <div class="title">拍照任务卡</div>
+    <div class="subtitle">PHOTO MISSION CARDS · 第五至七站 · 断桥不断</div>
+  </div>
+
+  <div class="page-cut-note">沿虚线剪下，与第一组合并使用</div>
+  <hr class="cut-line" style="margin:4px 0 10px;">
+
+  <div class="photo-cards-grid">
+
+    <!-- Card 5: 苏堤 -->
+    <div class="photo-card">
+      <div class="photo-card-frame">
+        <div class="vf-corner vf-tl"></div>
+        <div class="vf-corner vf-tr"></div>
+        <div class="vf-corner vf-bl"></div>
+        <div class="vf-corner vf-br"></div>
+        <div class="vf-crosshair"></div>
+        <div class="photo-card-station-badge">站点五 · S5</div>
+        <div class="photo-card-num">⑤</div>
+        <div class="photo-card-location">苏堤</div>
+      </div>
+      <div class="photo-card-caption">
+        <div class="caption-prompt">拍摄指令</div>
+        <div class="caption-text">拍下苏堤——<br>她说"他们活不过一棵树，但他们种树"</div>
+        <div class="photo-stamp-area">
+          <span class="photo-stamp-label">站点印章 / 完成打卡</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: 寺门 -->
+    <div class="photo-card">
+      <div class="photo-card-frame">
+        <div class="vf-corner vf-tl"></div>
+        <div class="vf-corner vf-tr"></div>
+        <div class="vf-corner vf-bl"></div>
+        <div class="vf-corner vf-br"></div>
+        <div class="vf-crosshair"></div>
+        <div class="photo-card-station-badge">站点六 · S6</div>
+        <div class="photo-card-num">⑥</div>
+        <div class="photo-card-location">净慈寺门</div>
+      </div>
+      <div class="photo-card-caption">
+        <div class="caption-prompt">拍摄指令</div>
+        <div class="caption-text">拍下寺门——<br>她说"钟声停了之后他们还在听。他们听的不是声音，是回响"</div>
+        <div class="photo-stamp-area">
+          <span class="photo-stamp-label">站点印章 / 完成打卡</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7: 雷峰塔 — special full-width card -->
+    <div class="photo-card photo-card-final">
+      <div class="photo-card-frame">
+        <div class="vf-corner vf-tl"></div>
+        <div class="vf-corner vf-tr"></div>
+        <div class="vf-corner vf-bl"></div>
+        <div class="vf-corner vf-br"></div>
+        <div class="vf-crosshair"></div>
+        <div class="photo-card-station-badge">站点七 · S7 · 终章</div>
+        <div class="photo-card-num">⑦</div>
+        <div class="photo-card-location" style="font-size:18px;">雷峰塔</div>
+      </div>
+      <div class="photo-card-caption">
+        <div class="caption-prompt">终章拍摄指令</div>
+        <div class="caption-text">拍下雷峰塔——<br>不是塔困住了她。是她不舍得走。</div>
+        <div class="photo-stamp-area" style="min-height:28px;border-color:#4a6a4e;">
+          <span class="photo-stamp-label" style="color:rgba(74,106,78,0.6);">终章完成 · 拆封信封 · 湖心有一人未走</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- Final acrostic reveal box -->
+  <div class="border-frame" style="margin-top:16px;width:100%;">
+    <div class="handwriting" style="font-size:13px;text-align:center;letter-spacing:0.25em;">
+      七站首字藏头：湖 心 有 一 人 未 走
+    </div>
+  </div>
+
+  <div class="instruction-box" style="margin-top:12px;">
+    七张拍照卡全部完成后，在雷峰塔前广场拼合所有碎片卡。完整消息：<em>我见过一千年的西湖。但值得留下来的理由，只需要一个下午就够了。</em>
+  </div>
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

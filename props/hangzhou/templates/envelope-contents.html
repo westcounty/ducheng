@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信封内容 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .letter-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+    }
+
+    .letter-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: #1a2e1a;
+      margin-bottom: 6px;
+    }
+
+    .letter-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #7a9e7e;
+      letter-spacing: 0.15em;
+      font-style: italic;
+    }
+
+    /* Page 1: mostly blank paper with faint "back side" text */
+    .seventh-page-wrapper {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 180mm;
+    }
+
+    /* Ink and water blot decorations */
+    .blot-area {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80mm;
+      pointer-events: none;
+    }
+
+    .blot-main {
+      position: absolute;
+      top: 20px;
+      left: 50px;
+      width: 100px;
+      height: 75px;
+      background: radial-gradient(ellipse at 40% 45%, rgba(20,30,20,0.80) 0%, rgba(20,30,20,0.55) 35%, rgba(20,30,20,0.12) 70%, transparent 100%);
+      border-radius: 50%;
+      transform: rotate(-5deg);
+    }
+
+    .blot-small-1 {
+      position: absolute;
+      top: 60px;
+      left: 120px;
+      width: 40px;
+      height: 30px;
+      background: radial-gradient(ellipse at 45% 50%, rgba(20,30,20,0.6) 0%, rgba(20,30,20,0.2) 60%, transparent 100%);
+      border-radius: 50%;
+      transform: rotate(15deg);
+    }
+
+    .blot-small-2 {
+      position: absolute;
+      top: 38px;
+      left: 130px;
+      width: 20px;
+      height: 15px;
+      background: radial-gradient(ellipse at 50% 50%, rgba(20,30,20,0.45) 0%, transparent 100%);
+      border-radius: 50%;
+    }
+
+    .tear-1 {
+      position: absolute;
+      top: 130px;
+      left: 70px;
+      width: 20px;
+      height: 26px;
+      background: radial-gradient(ellipse at 50% 35%, rgba(122,158,126,0.28) 0%, rgba(122,158,126,0.10) 60%, transparent 100%);
+      border-radius: 50% 50% 65% 65%;
+    }
+
+    .tear-2 {
+      position: absolute;
+      top: 108px;
+      left: 88px;
+      width: 14px;
+      height: 19px;
+      background: radial-gradient(ellipse at 50% 35%, rgba(122,158,126,0.22) 0%, rgba(122,158,126,0.07) 60%, transparent 100%);
+      border-radius: 50% 50% 65% 65%;
+    }
+
+    /* Faint back-side text */
+    .backside-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 14px;
+      line-height: 2.4;
+      color: rgba(44, 62, 44, 0.18);
+      letter-spacing: 0.08em;
+      transform: scaleX(-1);
+      text-align: right;
+      padding: 0 8px;
+      user-select: none;
+      pointer-events: none;
+      position: absolute;
+      bottom: 30mm;
+      left: 0;
+      right: 0;
+    }
+
+    .front-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.4;
+      color: #2c3e2c;
+      letter-spacing: 0.08em;
+      padding: 0 4px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .front-text p {
+      margin-bottom: 0.5em;
+      text-indent: 2em;
+    }
+
+    .front-signature {
+      margin-top: 20px;
+      text-align: right;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 14px;
+      color: #2c3e2c;
+      line-height: 2;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Page 2: annotation cards */
+    .annot-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      color: #2c3e2c;
+      border: 1px solid #7a9e7e;
+      padding: 8px 14px;
+      margin-bottom: 20px;
+      background: rgba(122,158,126,0.06);
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+
+    .annot-bold {
+      font-weight: 700;
+      color: #4a6a4e;
+    }
+
+    .annot-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .annot-card {
+      border: 1.5px solid #7a9e7e;
+      padding: 10px 10px 8px;
+      background: rgba(122,158,126,0.04);
+      position: relative;
+    }
+
+    .annot-card-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .annot-card-location {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a2e1a;
+      margin-bottom: 6px;
+      letter-spacing: 0.1em;
+    }
+
+    .annot-card-text {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 11px;
+      color: #2c3e2c;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+    }
+
+    /* Card 7: Xu Xian's handwriting — different style, slightly tilted */
+    .annot-card-xuxian {
+      border: 1.5px solid #4a6a4e;
+      background: rgba(74,106,78,0.08);
+      transform: rotate(-1.5deg);
+      grid-column: span 1;
+    }
+
+    .annot-card-xuxian .annot-card-text {
+      font-family: 'KaiTi', 'STKaiti', cursive;
+      font-size: 13px;
+      color: #1a2e1a;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .annot-card-xuxian .annot-card-num {
+      color: #2c3e2c;
+      font-size: 9px;
+    }
+
+    .xuxian-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(74,106,78,0.55);
+      margin-top: 4px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     Page 1 — 第七页手稿
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">通关后<br>拆封</div>
+  </div>
+
+  <div class="letter-header">
+    <div class="letter-title">第七页手稿</div>
+    <div class="letter-note">通关后拆开的信封内第一张纸 · 仿手写体 · 几乎空白</div>
+  </div>
+
+  <div class="seventh-page-wrapper">
+    <!-- Ink blots and tear marks decorating the blank paper -->
+    <div class="blot-area">
+      <div class="blot-main"></div>
+      <div class="blot-small-1"></div>
+      <div class="blot-small-2"></div>
+      <div class="tear-1"></div>
+      <div class="tear-2"></div>
+    </div>
+
+    <!-- Faint mirrored "back side" text bleeding through -->
+    <div class="backside-text">
+      前六种是我在你们身上看到的。第七种是我自己的——不舍。<br>
+      我观察了你们一千年，以为自己什么都懂了。
+    </div>
+
+    <!-- Actual front text at the bottom of the mostly-blank page -->
+    <div class="front-text">
+      <p>前六种是我在你们身上看到的。第七种是我自己的——不舍。</p>
+      <p>我观察了你们一千年，以为自己什么都懂了。变成人的第一天我才知道，懂和心疼不是一回事。</p>
+      <p>没有人把我关在塔下。是我自己留下来的。不是为了他——他已经不在了。</p>
+      <p>我留下来是因为，变成人的那几年里，我学会了一件蛇永远学不会的事：在乎一个地方。</p>
+      <p>我舍不得走。</p>
+    </div>
+
+    <div class="front-signature">
+      ——白素贞<br>
+      雷峰塔下
+    </div>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     Page 2 — 七张照片标注卡
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="letter-header">
+    <div class="letter-title">七张照片标注卡</div>
+    <div class="letter-note">信封内第二张纸 · 七张小卡片 · 白素贞亲笔标注</div>
+  </div>
+
+  <div class="annot-intro">
+    <span class="annot-bold">她称之为"人间观察笔记"。</span><br>
+    第七张的笔迹不是她的。
+  </div>
+
+  <div class="annot-cards-grid">
+
+    <!-- Card 1 -->
+    <div class="annot-card">
+      <span class="annot-card-num">① 断桥</span>
+      <div class="annot-card-location">断桥</div>
+      <div class="annot-card-text">"他们称之为选择"</div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="annot-card">
+      <span class="annot-card-num">② 孤山</span>
+      <div class="annot-card-location">孤山</div>
+      <div class="annot-card-text">"他们称之为陪伴"</div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="annot-card">
+      <span class="annot-card-num">③ 龙井村</span>
+      <div class="annot-card-location">龙井村</div>
+      <div class="annot-card-text">"他们称之为耐心"</div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="annot-card">
+      <span class="annot-card-num">④ 岳王庙</span>
+      <div class="annot-card-location">岳王庙</div>
+      <div class="annot-card-text">"他们称之为忠诚"</div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="annot-card">
+      <span class="annot-card-num">⑤ 苏堤</span>
+      <div class="annot-card-location">苏堤</div>
+      <div class="annot-card-text">"他们称之为建造"</div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="annot-card">
+      <span class="annot-card-num">⑥ 净慈寺</span>
+      <div class="annot-card-location">净慈寺</div>
+      <div class="annot-card-text">"他们称之为信仰"</div>
+    </div>
+
+  </div>
+
+  <!-- Card 7: Xu Xian's writing — different style, tilted -->
+  <div style="display:flex;justify-content:center;margin-top:8px;">
+    <div class="annot-card annot-card-xuxian" style="width:160px;">
+      <span class="annot-card-num">⑦ 雷峰塔 — 笔迹有异</span>
+      <div class="annot-card-location">雷峰塔</div>
+      <div class="annot-card-text">我知道你还在。</div>
+      <div class="xuxian-note">——许仙</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <div class="border-frame">
+      <div class="handwriting" style="font-size:13px;text-align:center;letter-spacing:0.2em;">
+        七页首字连读：湖 心 有 一 人 未 走
+      </div>
+    </div>
+  </div>
+
+  <div class="instruction-box" style="margin-top:14px;">
+    将七站收集的标注卡按顺序排列，七页首字连读即是白素贞最后的留言。第七张是许仙写的——他从未离开。
+  </div>
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

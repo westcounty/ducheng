@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>六桥记录卡 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .bridge-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+    }
+
+    /* Route map */
+    .route-map {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 10px 0 16px;
+      padding: 10px 8px;
+      border: 1px solid rgba(122,158,126,0.4);
+      background: rgba(122,158,126,0.03);
+      overflow: hidden;
+    }
+
+    .route-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    .route-node-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #4a6a4e;
+      color: #f5f0eb;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .route-node-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #2c3e2c;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .route-connector {
+      width: 20px;
+      height: 2px;
+      background: rgba(122,158,126,0.5);
+      flex-shrink: 0;
+      margin-bottom: 10px;
+    }
+
+    /* Bridge record table */
+    .bridge-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .bridge-table th {
+      border: 1.5px solid #7a9e7e;
+      padding: 8px 10px;
+      background: rgba(122,158,126,0.12);
+      color: #1a2e1a;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .bridge-table td {
+      border: 1px solid rgba(122,158,126,0.5);
+      padding: 12px 10px;
+      color: #2c3e2c;
+      line-height: 1.8;
+      vertical-align: top;
+    }
+
+    .bridge-table tr:nth-child(even) td {
+      background: rgba(122,158,126,0.03);
+    }
+
+    .bridge-num-cell {
+      text-align: center;
+      font-weight: 700;
+      font-size: 15px;
+      color: #4a6a4e;
+      width: 24px;
+    }
+
+    .bridge-name-cell {
+      font-weight: 700;
+      font-size: 14px;
+      color: #1a2e1a;
+      letter-spacing: 0.1em;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    .bridge-name-en {
+      font-size: 9px;
+      font-weight: 400;
+      color: #4a6a4e;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .obs-cell {
+      min-width: 80px;
+    }
+
+    .obs-cell-label {
+      font-size: 9px;
+      color: #7a9e7e;
+      letter-spacing: 0.1em;
+      font-style: italic;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .obs-blank {
+      border-bottom: 1px solid rgba(122,158,126,0.4);
+      min-height: 20px;
+      display: block;
+    }
+
+    .notes-cell {
+      min-width: 60px;
+      color: rgba(44,62,44,0.5);
+      font-size: 11px;
+      font-style: italic;
+    }
+
+    /* Code extraction row */
+    .code-row td {
+      background: rgba(74,106,78,0.08) !important;
+      border: 1.5px solid #4a6a4e;
+    }
+
+    /* Summary section */
+    .summary-section {
+      border: 2px solid #7a9e7e;
+      padding: 12px 16px;
+      background: rgba(122,158,126,0.04);
+    }
+
+    .summary-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .summary-formula {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #2c3e2c;
+      line-height: 2;
+      text-align: center;
+    }
+
+    .final-key {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      letter-spacing: 0.5em;
+      color: rgba(122,158,126,0.4);
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page bridge-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">站点五<br>STATION 5</div>
+  </div>
+
+  <div class="page-header">
+    <div class="title">六桥记录卡</div>
+    <div class="subtitle">SIX BRIDGES LOG · 苏堤 · 第五站线索</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Route map -->
+  <div class="route-map">
+    <div class="route-node">
+      <div class="route-node-num">①</div>
+      <div class="route-node-name">映波</div>
+    </div>
+    <div class="route-connector"></div>
+    <div class="route-node">
+      <div class="route-node-num">②</div>
+      <div class="route-node-name">锁澜</div>
+    </div>
+    <div class="route-connector"></div>
+    <div class="route-node">
+      <div class="route-node-num">③</div>
+      <div class="route-node-name">望山</div>
+    </div>
+    <div class="route-connector"></div>
+    <div class="route-node">
+      <div class="route-node-num">④</div>
+      <div class="route-node-name">压堤</div>
+    </div>
+    <div class="route-connector"></div>
+    <div class="route-node">
+      <div class="route-node-num">⑤</div>
+      <div class="route-node-name">东浦</div>
+    </div>
+    <div class="route-connector"></div>
+    <div class="route-node">
+      <div class="route-node-num">⑥</div>
+      <div class="route-node-name">跨虹</div>
+    </div>
+  </div>
+
+  <div class="instruction-box">
+    从北端映波桥出发，依次走过六座桥，记录每座桥的观察数据。注意：第三桥"望山"与第六桥"跨虹"有特殊任务（见备注栏）。
+  </div>
+
+  <!-- Bridge record table -->
+  <table class="bridge-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>桥名</th>
+        <th>桥拱柱数</th>
+        <th>望柱数<br>（石栏杆柱）</th>
+        <th>桥名首字<br>笔画数</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bridge-num-cell">①</td>
+        <td class="bridge-name-cell">映波<span class="bridge-name-en">Yingbo</span></td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">拱柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">望柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">"映"字笔画</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="notes-cell">起点桥，<br>面朝北</td>
+      </tr>
+      <tr>
+        <td class="bridge-num-cell">②</td>
+        <td class="bridge-name-cell">锁澜<span class="bridge-name-en">Suolan</span></td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">拱柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">望柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">"锁"字笔画</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="notes-cell">——</td>
+      </tr>
+      <tr>
+        <td class="bridge-num-cell">③</td>
+        <td class="bridge-name-cell">望山<span class="bridge-name-en">Wangshan</span></td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">拱柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">望柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">"望"字笔画</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="notes-cell"><strong>★</strong> 最高桥，<br>拱最大，<br>记录拱高</td>
+      </tr>
+      <tr>
+        <td class="bridge-num-cell">④</td>
+        <td class="bridge-name-cell">压堤<span class="bridge-name-en">Yadi</span></td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">拱柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">望柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">"压"字笔画</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="notes-cell">堤中央桥</td>
+      </tr>
+      <tr>
+        <td class="bridge-num-cell">⑤</td>
+        <td class="bridge-name-cell">东浦<span class="bridge-name-en">Dongpu</span></td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">拱柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">望柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">"东"字笔画</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="notes-cell">——</td>
+      </tr>
+      <tr>
+        <td class="bridge-num-cell">⑥</td>
+        <td class="bridge-name-cell">跨虹<span class="bridge-name-en">Kuahong</span></td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">拱柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">望柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">"跨"字笔画</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="notes-cell"><strong>★</strong> 最长桥，<br>记录桥长<br>（步数）</td>
+      </tr>
+      <tr class="code-row">
+        <td colspan="2" style="text-align:center;font-weight:700;color:#4a6a4e;letter-spacing:0.1em;">密钥提取</td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">③望山拱柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">⑥跨虹望柱数</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="obs-cell">
+          <span class="obs-cell-label">桥名首字<br>笔画之和</span>
+          <span class="obs-blank"></span>
+        </td>
+        <td class="notes-cell">三值组合<br>→ 密钥</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Summary -->
+  <div class="summary-section">
+    <div class="summary-title">◆ 本站密钥组合 ◆</div>
+    <div class="summary-formula">
+      望山拱柱数 · 跨虹望柱数 · 六桥首字笔画和
+    </div>
+    <div class="final-key">＿＿ · ＿＿ · ＿＿＿</div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

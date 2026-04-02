@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>茶谱道具卡 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .tea-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+    }
+
+    /* Tea manual title block */
+    .manual-title-block {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .manual-main-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.6em;
+      color: #1a2e1a;
+      margin-bottom: 4px;
+    }
+
+    .manual-subtitle-line {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: #4a6a4e;
+      letter-spacing: 0.25em;
+    }
+
+    .manual-border {
+      width: 80%;
+      margin: 8px auto;
+      border-top: 1px solid #7a9e7e;
+      border-bottom: 1px solid #7a9e7e;
+      padding: 3px 0;
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.4em;
+    }
+
+    /* Tea category sections */
+    .tea-categories {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .tea-category {
+      border: 1.5px solid #7a9e7e;
+      padding: 10px 12px;
+      position: relative;
+      background: rgba(122,158,126,0.04);
+    }
+
+    .tea-category-label {
+      position: absolute;
+      top: -10px;
+      left: 12px;
+      background: #f5f0eb;
+      padding: 0 8px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a2e1a;
+      letter-spacing: 0.3em;
+    }
+
+    .tea-category-en {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #7a9e7e;
+      letter-spacing: 0.15em;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+
+    .tea-category-content {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 13px;
+      color: #2c3e2c;
+      line-height: 2;
+      letter-spacing: 0.05em;
+    }
+
+    /* Encoded/field section */
+    .encoded-section {
+      border: 2px solid #4a6a4e;
+      padding: 12px 14px;
+      background: rgba(74,106,78,0.06);
+      margin-bottom: 14px;
+    }
+
+    .encoded-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .encoded-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+    }
+
+    .encoded-table th {
+      border: 1px solid #7a9e7e;
+      padding: 6px 10px;
+      background: rgba(122,158,126,0.10);
+      color: #1a2e1a;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .encoded-table td {
+      border: 1px solid rgba(122,158,126,0.4);
+      padding: 8px 10px;
+      color: #2c3e2c;
+      line-height: 1.8;
+      vertical-align: top;
+    }
+
+    .field-cell {
+      color: #7a9e7e;
+      font-style: italic;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .encoded-cell {
+      text-align: center;
+      font-weight: 700;
+      color: #4a6a4e;
+      font-size: 13px;
+    }
+
+    /* Annotation note */
+    .tea-annotation {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: rgba(44,62,44,0.6);
+      font-style: italic;
+      border-left: 2px solid rgba(122,158,126,0.4);
+      padding-left: 10px;
+      margin: 6px 0;
+      line-height: 1.9;
+    }
+
+    /* Imperial seal note */
+    .imperial-note {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1.5px solid #7a9e7e;
+      padding: 8px 12px;
+      background: rgba(122,158,126,0.04);
+      margin-bottom: 12px;
+    }
+
+    .imperial-icon {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      color: #4a6a4e;
+      line-height: 1;
+      opacity: 0.7;
+    }
+
+    .imperial-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2c3e2c;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page tea-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">站点三<br>STATION 3</div>
+  </div>
+
+  <div class="page-header">
+    <div class="title">茶谱道具卡</div>
+    <div class="subtitle">TEA MANUAL PROP · 龙井村 · 第三站线索</div>
+  </div>
+
+  <!-- Tea manual title block -->
+  <div class="manual-title-block">
+    <div class="manual-main-title">龙井茶谱</div>
+    <div class="manual-border">西湖龙井 · 品鉴手记 · 乾隆御赐</div>
+    <div class="manual-subtitle-line">白素贞亲笔注录 · 南宋·杭州</div>
+  </div>
+
+  <!-- Imperial note -->
+  <div class="imperial-note">
+    <div class="imperial-icon">御</div>
+    <div class="imperial-text">
+      乾隆皇帝巡幸杭州，御封胡公庙前茶树<strong>十八棵</strong>为"御茶"。<br>
+      每年贡茶由此十八棵采制，茶碑记载于庙前石刻，今犹存。
+    </div>
+  </div>
+
+  <!-- Four categories: 色香味形 -->
+  <div class="tea-categories">
+
+    <div class="tea-category">
+      <div class="tea-category-label">色</div>
+      <div class="tea-category-en">Colour · 外观汤色</div>
+      <div class="tea-category-content">
+        初泡嫩绿近黄，如三月柳叶尚未长足。续泡转淡，至第四泡几近透明。
+      </div>
+      <div class="tea-annotation">注：透明度即"清"，此字笔画数见下表编码栏。</div>
+    </div>
+
+    <div class="tea-category">
+      <div class="tea-category-label">香</div>
+      <div class="tea-category-en">Aroma · 茶香气息</div>
+      <div class="tea-category-content">
+        有炒豆气，又有一丝说不清的甜。老人说这叫"兰花香"——我没闻过兰花，但我相信他。
+      </div>
+      <div class="tea-annotation">注："兰"字偏旁结构，参考密钥提取规则。</div>
+    </div>
+
+    <div class="tea-category">
+      <div class="tea-category-label">味</div>
+      <div class="tea-category-en">Flavour · 口感滋味</div>
+      <div class="tea-category-content">
+        第一口，涩。第二口，涩。第三口——喉咙深处有一点点回甘。很短。像一个人对你笑了一下就转身走了。
+      </div>
+      <div class="tea-annotation">注："甘"字在古茶谱中常作数字编码使用。</div>
+    </div>
+
+    <div class="tea-category">
+      <div class="tea-category-label">形</div>
+      <div class="tea-category-en">Appearance · 叶形茶姿</div>
+      <div class="tea-category-content">
+        叶片在水中缓缓展开，像是在伸懒腰。一芽一叶，形如雀舌。
+      </div>
+      <div class="tea-annotation">注："雀舌"形——芽叶长度比例约1:__FIELD__，填入答案。</div>
+    </div>
+
+  </div>
+
+  <!-- Encoded information table -->
+  <div class="encoded-section">
+    <div class="encoded-title">◆ 龙井四绝编码表 · 密钥提取 ◆</div>
+    <table class="encoded-table">
+      <thead>
+        <tr>
+          <th>类别</th>
+          <th>关键词</th>
+          <th>笔画数</th>
+          <th>编码值</th>
+          <th>填写答案</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>色</td>
+          <td>清（透明）</td>
+          <td class="encoded-cell">11</td>
+          <td class="field-cell">__FIELD__</td>
+          <td class="field-cell">＿＿＿</td>
+        </tr>
+        <tr>
+          <td>香</td>
+          <td>兰（兰花香）</td>
+          <td class="encoded-cell">__FIELD__</td>
+          <td class="field-cell">查碑文</td>
+          <td class="field-cell">＿＿＿</td>
+        </tr>
+        <tr>
+          <td>味</td>
+          <td>甘（回甘）</td>
+          <td class="encoded-cell">5</td>
+          <td class="field-cell">__FIELD__</td>
+          <td class="field-cell">＿＿＿</td>
+        </tr>
+        <tr>
+          <td>形</td>
+          <td>雀舌比例</td>
+          <td class="encoded-cell">——</td>
+          <td class="field-cell">实地量取</td>
+          <td class="field-cell">＿＿＿</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="instruction-box">
+    将四列编码值按 色·香·味·形 顺序排列，组合为本站四位密钥。提示：御茶树碑文上有一处数字与"兰"字笔画吻合，需现场辨认。
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对联提取规则卡 — 断桥不断</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .couplet-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #7a9e7e;
+    }
+
+    /* Large couplet display */
+    .couplet-display {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 16px 0 20px;
+    }
+
+    .couplet-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .couplet-column-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 6px;
+    }
+
+    .couplet-text {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a2e1a;
+      letter-spacing: 0.15em;
+      border: 2px solid #7a9e7e;
+      padding: 12px 8px;
+      background: rgba(122,158,126,0.04);
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    /* Highlighted extraction characters */
+    .ext-char {
+      color: #4a6a4e;
+      border-bottom: 2px solid #4a6a4e;
+      font-weight: 900;
+    }
+
+    /* Horizontal layout alternative */
+    .couplet-horizontal {
+      display: none;
+    }
+
+    /* Rules section */
+    .rules-section {
+      border: 1.5px solid #7a9e7e;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      background: rgba(122,158,126,0.04);
+    }
+
+    .rules-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4a6a4e;
+      letter-spacing: 0.2em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed rgba(122,158,126,0.3);
+    }
+
+    .rule-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .rule-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a6a4e;
+      min-width: 22px;
+      line-height: 1.6;
+    }
+
+    .rule-body {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      color: #2c3e2c;
+      line-height: 1.9;
+    }
+
+    .rule-example {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: #4a6a4e;
+      border-left: 2px solid #7a9e7e;
+      padding-left: 8px;
+      margin-top: 4px;
+    }
+
+    /* Context note about Yue Fei */
+    .context-box {
+      border: 1px solid rgba(122,158,126,0.5);
+      padding: 10px 14px;
+      background: rgba(122,158,126,0.04);
+      margin-bottom: 14px;
+    }
+
+    .context-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #4a6a4e;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .context-body {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2c3e2c;
+      line-height: 1.9;
+    }
+
+    /* Answer extraction grid */
+    .extraction-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .extraction-box {
+      border: 1.5px dashed #7a9e7e;
+      padding: 10px;
+      background: rgba(245,240,235,0.5);
+    }
+
+    .extraction-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6a4e;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    .extraction-blanks {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      color: rgba(122,158,126,0.5);
+      letter-spacing: 0.5em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page couplet-page">
+
+  <div style="position:absolute;top:14mm;right:14mm;transform:rotate(8deg);">
+    <div class="stamp">站点四<br>STATION 4</div>
+  </div>
+
+  <div class="page-header">
+    <div class="title">对联提取规则卡</div>
+    <div class="subtitle">COUPLET EXTRACTION · 岳王庙 · 第四站线索</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Context note -->
+  <div class="context-box">
+    <div class="context-title">◆ 背景</div>
+    <div class="context-body">
+      岳王庙大门两侧，悬挂着一副传颂至今的对联。据传为明代文人叶盛题写，后人多有演绎。白素贞在庙前站了很久，把每一笔每一画都记在了手稿里。这副对联本身就是密钥——不过你需要知道用哪几个字。
+    </div>
+  </div>
+
+  <!-- Couplet vertical display -->
+  <div class="couplet-display">
+    <div class="couplet-column">
+      <div class="couplet-column-label">上联</div>
+      <div class="couplet-text">
+        <span class="ext-char">青</span>山有幸<span class="ext-char">埋</span>忠<span class="ext-char">骨</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;">
+      <div style="font-family:'Noto Serif SC',serif;font-size:11px;color:#7a9e7e;writing-mode:vertical-rl;letter-spacing:0.3em;">岳飞庙联</div>
+    </div>
+
+    <div class="couplet-column">
+      <div class="couplet-column-label">下联</div>
+      <div class="couplet-text">
+        白铁无辜<span class="ext-char">铸</span>佞<span class="ext-char">臣</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Extraction rules -->
+  <div class="rules-section">
+    <div class="rules-title">◆ 提取规则说明 ◆</div>
+
+    <div class="rule-item">
+      <div class="rule-num">①</div>
+      <div class="rule-body">
+        上联取第一字、第五字（含）后半段：<strong>青</strong>——<strong>埋</strong>——<strong>骨</strong>，对应三个笔画数值。
+        <div class="rule-example">青(8) · 埋(10) · 骨(9) → 三位编码</div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">②</div>
+      <div class="rule-body">
+        下联取第五字、第七字：<strong>铸</strong>——<strong>臣</strong>，对应两个笔画数值。
+        <div class="rule-example">铸(22) · 臣(7) → 两位编码</div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">③</div>
+      <div class="rule-body">
+        将五个数值按上联三字、下联两字顺序排列，取个位数字，组合为五位密钥。
+        <div class="rule-example">示例：8·10·9·22·7 → 取个位 → 8·0·9·2·7</div>
+      </div>
+    </div>
+
+    <div class="rule-item">
+      <div class="rule-num">④</div>
+      <div class="rule-body">
+        现场核验：在岳王庙入口匾额上找到一处数字刻记，与第③步结果的首位或末位相符，方为正确。
+      </div>
+    </div>
+  </div>
+
+  <!-- Answer extraction grid -->
+  <div class="extraction-grid">
+    <div class="extraction-box">
+      <div class="extraction-label">上联取字（青·埋·骨）笔画数</div>
+      <div class="extraction-blanks">＿ · ＿＿ · ＿</div>
+    </div>
+    <div class="extraction-box">
+      <div class="extraction-label">下联取字（铸·臣）笔画数</div>
+      <div class="extraction-blanks">＿＿ · ＿</div>
+    </div>
+    <div class="extraction-box">
+      <div class="extraction-label">各取个位数字</div>
+      <div class="extraction-blanks">＿ · ＿ · ＿ · ＿ · ＿</div>
+    </div>
+    <div class="extraction-box">
+      <div class="extraction-label">本站五位密钥</div>
+      <div class="extraction-blanks" style="font-size:20px;letter-spacing:0.3em;">＿＿＿＿＿</div>
+    </div>
+  </div>
+
+  <div class="instruction-box" style="margin-top:12px;">
+    提示：汉字笔画请以现代规范笔画数为准（如"青"按国标计8画）。如有疑问，可查庙内说明牌上的书法鉴赏卡，其中有标注。
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>
