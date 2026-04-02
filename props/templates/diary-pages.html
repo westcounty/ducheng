@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鹤影日记 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .diary-page {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .diary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #a08060;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .station-badge {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #6b4c2a;
+      border: 1px solid #a08060;
+      padding: 3px 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .location-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a0c05;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .diary-date {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 11px;
+      color: #6b4c2a;
+      text-align: right;
+    }
+
+    .diary-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.2;
+      color: #2a1505;
+      letter-spacing: 0.06em;
+      flex: 1;
+      /* Lined paper effect */
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent calc(2.2em - 1px),
+        rgba(139,101,64,0.2) calc(2.2em - 1px),
+        rgba(139,101,64,0.2) 2.2em
+      );
+      padding: 0 4px;
+    }
+
+    .diary-body p {
+      margin-bottom: 0.4em;
+    }
+
+    .secret-section {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 2px dashed #8b6540;
+    }
+
+    .secret-section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+    }
+
+    .hidden-cells {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hidden-cell {
+      border: 2px solid #8b6540;
+      padding: 8px 14px;
+      min-width: 80px;
+      text-align: center;
+      background: rgba(139,101,64,0.06);
+    }
+
+    .hidden-cell-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      display: block;
+      margin-bottom: 4px;
+      letter-spacing: 0.2em;
+    }
+
+    .hidden-cell-text {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 12px;
+      color: #2a1505;
+      line-height: 1.6;
+    }
+
+    .diary-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(139,101,64,0.3);
+    }
+
+    .acrostic-hint {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: rgba(139,101,64,0.5);
+      letter-spacing: 0.1em;
+    }
+
+    .page-corner-stamp {
+      position: absolute;
+      top: 14mm;
+      right: 14mm;
+      transform: rotate(8deg);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     日记 第一页 — 和平饭店
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点一<br>STATION 1</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第一站 · Station 1</div>
+    <div class="location-name">和平饭店<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Peace Hotel · 外滩</span></div>
+    <div class="diary-date">1943年秋<br>上海</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>你第一次见到这栋楼，大约也是傍晚。绿色的穹顶在夕光里发暗，像一枚放久了的铜章。我在东门停了两分钟，门楣上的年份刻得很深，不需要记——但我还是记了。东立面的装饰线脚一共数了三遍，头两遍结果不同，第三遍才对。首尾相减，得到的数字压在大衣内袋里。</p>
+    <p>绿塔在夕阳里的样子，我只能记在脑子里。特工不留痕迹。</p>
+    <p>这座楼见过太多人进出，拎箱子的，没有箱子的，面目模糊的，面目清晰的。我属于哪一种，连我自己也说不准。</p>
+    <p>海关的心跳每刻钟响几下？这件事你迟早需要知道。</p>
+    <p>鹤影只信任能看到周公故居的那面墙。</p>
+  </div>
+
+  <!-- 暗格 sections from diary front matter -->
+  <div class="secret-section">
+    <div class="secret-section-title">◆ 暗 格 ◆</div>
+    <div class="hidden-cells">
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗格 7</span>
+        <div class="hidden-cell-text">海关的心跳每刻钟响几下？这件事你迟早需要知道。</div>
+      </div>
+      <div class="hidden-cell">
+        <span class="hidden-cell-number">暗格 12</span>
+        <div class="hidden-cell-text">鹤影只信任能看到周公故居的那面墙。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：你</span>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     日记 第二页 — 海关大楼
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点二<br>STATION 2</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第二站 · Station 2</div>
+    <div class="location-name">海关大楼<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Customs House · 外滩</span></div>
+    <div class="diary-date">1943年秋<br>上海</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>走到外滩这一段，人声盖过了一切，反而安全。海关大楼的罗马柱一根一根数过去，数目是确定的，不会撒谎。抬头看钟面，有件事值得记下：钟面上的四不写作IV，写作IIII。所有人都接受了这个谎言，没有人追问为什么。</p>
+    <p>钟声四点响了。我想把这个声音装进口袋带走，但我只能带走数字。</p>
+    <p>敲钟的规律是固定的，每刻钟一次，像一颗按时跳动的心。我在钟楼下数了整整一刻钟，把次数抄在火柴盒侧面。这个数字之后有用，藏在这里：海关的心跳每刻钟响几下？</p>
+    <p>柱子的数目、钟的谎言、每刻钟的响声——三件事叠在一起，才出得了这扇门。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：走</span>
+  </div>
+
+</div><!-- /page 2 -->
+
+<!-- ════════════════════════════════════════════════════════
+     日记 第三页 — 汇丰银行
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点三<br>STATION 3</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第三站 · Station 3</div>
+    <div class="location-name">汇丰银行大楼<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">HSBC Building · 外滩</span></div>
+    <div class="diary-date">1943年秋<br>上海</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>过了这道门，里面比外面安静得多。门口两头铜狮，一头张嘴，一头闭嘴。闭嘴那头更难对付——沉默的东西总是更难对付。用手机当镜子，能看见屋顶边缘数不清的线脚和装饰构件，一件一件数，别漏。两狮之间的距离，我用折好的纸尺量了，步数不准，纸不会骗人。</p>
+    <p>那头不说话的狮子，表情比我见过的任何人都诚实。可惜我没法把它的脸撕下来夹进档案。</p>
+    <p>屋顶上的东西数清楚，和两狮间的距离放在一起，这道题才有解。镜子这件事提醒我：有些角度，只有反着看才看得见。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：过</span>
+  </div>
+
+</div><!-- /page 3 -->
+
+<!-- ════════════════════════════════════════════════════════
+     日记 第四页 — 豫园九曲桥
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点四<br>STATION 4</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第四站 · Station 4</div>
+    <div class="location-name">豫园九曲桥<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Yuyuan Zigzag Bridge · 老城厢</span></div>
+    <div class="diary-date">1943年秋<br>上海</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>的确有人说这桥是为了挡鬼而建。鬼走直线，不会转弯。我从头到尾走了一遍，把每一个转角的方向用左右记下来——这串字母就是密钥的骨架。亭子屋脊上的走兽一共几只，我数了两遍，两遍相同，可以信。</p>
+    <p>桥上回头看，水面碎成一千块镜子。这种东西，纸和笔留不住。</p>
+    <p>转角的方向序列、屋脊走兽的数目，两者配合，才能从这座园子里走出去。我在桥中段停了大概三十秒，假装看水，实际上在把转角默记一遍。没有人注意我。这是好事，也可能不是。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：的</span>
+  </div>
+
+</div><!-- /page 4 -->
+
+<!-- ════════════════════════════════════════════════════════
+     日记 第五页 — 新天地
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点五<br>STATION 5</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第五站 · Station 5</div>
+    <div class="location-name">一大会址·新天地<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Site of 1st Congress · Xintiandi</span></div>
+    <div class="diary-date">1943年秋<br>上海</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>每条石库门弄堂的门牌号都有讲究：单号在一侧，双号在另一侧，这不是装饰，是规则。会址附近发了六张照片卡，要把它们和真实建筑一一配对，靠的不是猜，是看门洞比例、砖缝间距、铁门样式。石门楣的铁艺卷草纹里藏着一张脸，不仔细盯根本发现不了。</p>
+    <p>石头门楣上那张脸少说看了一百年的人来人往。我从它面前经过的这一次，它不会记得。</p>
+    <p>六张卡配完，门牌奇偶的规律吃透，那张脸的位置记准——三样东西合起来，才能摸到这一站的答案。我在弄堂里来回走了两趟，像一个迷路的人，但我没有迷路。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：每</span>
+  </div>
+
+</div><!-- /page 5 -->
+
+<!-- ════════════════════════════════════════════════════════
+     日记 第六页 — 思南公馆
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点六<br>STATION 6</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第六站 · Station 6</div>
+    <div class="location-name">思南公馆<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Sinan Mansions · 思南路</span></div>
+    <div class="diary-date">1943年秋<br>上海</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>一面墙比另一面墙更值得信任，原因只有一个：它朝向周公故居。我在铭牌前站定，把随身带的格栅板盖上去，镂空的位置露出来的字才是真正的信息，其余的字是烟幕。梧桐这条路的法国梧桐数清楚，地砖的花纹也看过——细节不是装饰，是坐标。</p>
+    <p>梧桐的影子落在墙上，像还没干的墨水。风一吹就会变。明天再来，什么也看不到了。</p>
+    <p>格栅要对正，差一行都不行。能看到周公故居的那面墙——记住这句话，迟早要用。铭牌上的字经格栅过滤之后，剩下的才是我要带走的东西。梧桐树的数目压在最后，作为验证。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：一</span>
+  </div>
+
+</div><!-- /page 6 -->
+
+<!-- ════════════════════════════════════════════════════════
+     日记 第七页 — 武康大楼
+     ════════════════════════════════════════════════════════ -->
+<div class="page diary-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">站点七<br>STATION 7</div>
+  </div>
+
+  <div class="diary-header">
+    <div class="station-badge">第七站 · Station 7</div>
+    <div class="location-name">武康大楼<br><span style="font-size:11px;font-weight:400;letter-spacing:0.1em;">Wukang Building · 武康路</span></div>
+    <div class="diary-date">1943年秋<br>上海</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="diary-body">
+    <p>步子走到这里，就到了。六张密码卡翻过来，拼成大楼的轮廓——这座楼本来就是一艘船的形状，船头朝北，永远停在这个路口。卡背面有数字，数字决定读取顺序，把之前所有站收集的碎片按这个顺序排好，最后的信息就出来了。</p>
+    <p>这艘船哪儿也去不了。但我站在船头的这几分钟，天光是好的。</p>
+    <p>我设计这条路线的时候，想的是：如果有一个人把七个地方都走完，他就算见过我了。我没有留下照片，没有留下名字，只留下了这些脚步。你现在站的地方，我也站过。天光一样好。</p>
+    <p>六张卡、卡背数字、碎片拼合——这不是终点，这是我们见面的地方。</p>
+  </div>
+
+  <!-- Acrostic hint footer -->
+  <div class="border-frame" style="margin-top:16px;">
+    <div class="handwriting" style="font-size:12px;text-align:center;letter-spacing:0.3em;">
+      七页首字连读：你 走 过 的 每 一 步
+    </div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：步</span>
+  </div>
+
+</div><!-- /page 7 -->
+
+</body>
+</html>

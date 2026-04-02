@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鹤影信封内容 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ── Letter page ─────────────────────────────── */
+    .letter-page {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .letter-masthead {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #8b6540;
+    }
+
+    .letter-eyebrow {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: #6b4c2a;
+      margin-bottom: 6px;
+    }
+
+    .letter-title {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 28px;
+      color: #1a0c05;
+      letter-spacing: 0.3em;
+    }
+
+    .letter-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 16px;
+      line-height: 2.3;
+      color: #2a1505;
+      letter-spacing: 0.05em;
+      flex: 1;
+    }
+
+    .letter-body p {
+      margin-bottom: 0.8em;
+      text-indent: 2em;
+    }
+
+    .letter-signature {
+      margin-top: 24px;
+      text-align: right;
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      color: #2a1505;
+      line-height: 2;
+    }
+
+    .signature-line {
+      display: inline-block;
+      border-bottom: 1px solid rgba(42,21,5,0.4);
+      min-width: 120px;
+      margin-bottom: 2px;
+    }
+
+    /* ── Checklist page ──────────────────────────── */
+    .checklist-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .checklist-paper {
+      width: 140mm;
+      min-height: 180mm;
+      background-color: #f2ead6;
+      background-image:
+        radial-gradient(ellipse at 20% 30%, rgba(160,120,60,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(140,100,50,0.12) 0%, transparent 45%);
+      border: 1px solid #8b6540;
+      padding: 16mm 14mm;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .checklist-masthead {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #8b6540;
+    }
+
+    .checklist-title {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 14px;
+      color: #1a0c05;
+      line-height: 1.7;
+      letter-spacing: 0.1em;
+    }
+
+    .checklist-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .checklist-item {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      color: #2a1505;
+      line-height: 2.2;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 2px 0;
+      border-bottom: 1px solid rgba(139,101,64,0.15);
+    }
+
+    .checklist-item .num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #6b4c2a;
+      min-width: 18px;
+    }
+
+    /* Strikethrough styling — all items crossed out per content spec */
+    .checklist-item .text {
+      text-decoration: line-through;
+      text-decoration-color: rgba(42,21,5,0.7);
+      text-decoration-thickness: 1.5px;
+    }
+
+    .checklist-note {
+      margin-top: 16px;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 11px;
+      color: #6b4c2a;
+      font-style: italic;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    /* Aged paper crinkle overlay on checklist */
+    .checklist-paper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 60% 40%, rgba(200,170,100,0.08) 0%, transparent 60%);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     PAGE 1 — 遗书 (Letter from Heying)
+     Source: content/envelope-letter.md
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="letter-masthead">
+    <div class="letter-eyebrow">通关后拆开 · 信封内第一张纸</div>
+    <div class="letter-title">鹤影遗书</div>
+  </div>
+
+  <div class="letter-body">
+    <p>如果你正在读这封信，说明有人走完了我最后走过的路。</p>
+    <p>我必须对你坦白——没有什么军事密电。从来没有。</p>
+    <p>我知道自己活不过这个冬天。我只是想把这条路留下来。我想让一个人——哪怕是一个素不相识的人，在很多年以后——走一遍我最后看过的上海。从饭店的绿塔，到钟楼的谎言，到狮子的沉默，到九曲桥的弯道，到石库门的脸，到梧桐树的阴影，到那艘永远不会开走的船。</p>
+    <p>这些地方不会记住我，但如果你今天认真看了它们，那你的记忆里就有了我看过的东西。</p>
+    <p>这样的话，我就没有真的消失。</p>
+  </div>
+
+  <div class="letter-signature">
+    <div class="signature-line"></div><br>
+    ——鹤影<br>
+    一九四三年秋，上海
+  </div>
+
+  <!-- Decorative wax seal area -->
+  <div style="position:absolute;bottom:22mm;left:20mm;opacity:0.6;">
+    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="25" cy="25" r="22" fill="#8b2020" opacity="0.15"/>
+      <circle cx="25" cy="25" r="18" fill="none" stroke="#8b2020" stroke-width="1.5" opacity="0.4"/>
+      <text x="25" y="21" text-anchor="middle" font-family="serif" font-size="9" fill="#8b2020" opacity="0.7">鶴</text>
+      <text x="25" y="33" text-anchor="middle" font-family="serif" font-size="9" fill="#8b2020" opacity="0.7">影</text>
+    </svg>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ════════════════════════════════════════════════════════
+     PAGE 2 — 清单 (Checklist)
+     Source: content/envelope-checklist.md
+     ════════════════════════════════════════════════════════ -->
+<div class="page checklist-page">
+
+  <div style="margin-bottom:12px;text-align:center;">
+    <div class="subtitle">信封内第二张纸 · 鹤影清单</div>
+  </div>
+
+  <div class="checklist-paper">
+
+    <div class="checklist-masthead">
+      <div class="checklist-title">
+        如果有一天有人替我走这条路——<br>
+        帮我留住这些。
+      </div>
+    </div>
+
+    <ol class="checklist-items">
+      <li class="checklist-item">
+        <span class="num">1.</span>
+        <span class="text">绿塔在光线里的样子</span>
+      </li>
+      <li class="checklist-item">
+        <span class="num">2.</span>
+        <span class="text">钟的脸</span>
+      </li>
+      <li class="checklist-item">
+        <span class="num">3.</span>
+        <span class="text">那头不说话的狮子</span>
+      </li>
+      <li class="checklist-item">
+        <span class="num">4.</span>
+        <span class="text">桥上回头看到的水面</span>
+      </li>
+      <li class="checklist-item">
+        <span class="num">5.</span>
+        <span class="text">石头门楣上那张脸</span>
+      </li>
+      <li class="checklist-item">
+        <span class="num">6.</span>
+        <span class="text">梧桐的影子</span>
+      </li>
+      <li class="checklist-item">
+        <span class="num">7.</span>
+        <span class="text">那艘船的船头</span>
+      </li>
+    </ol>
+
+    <div class="checklist-note">— 写了，又觉得不敢奢望 —</div>
+
+  </div>
+
+</div><!-- /page 2 -->
+
+</body>
+</html>
