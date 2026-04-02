@@ -1,11 +1,8 @@
-/**
- * IndexedDB wrapper for photo storage
- * Photos are stored as blobs keyed by `stage-${stageId}`
- */
+// app/src/utils/photo-store.js
 
-const DB_NAME = 'seventh-cipher-photos'
-const DB_VERSION = 1
-const STORE_NAME = 'photos'
+const DB_NAME = 'ducheng-photos'
+const DB_VERSION = 2
+const CITY_STORES = ['shanghai', 'nanjing', 'hangzhou', 'xian']
 
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -13,8 +10,10 @@ function openDB() {
 
     request.onupgradeneeded = (event) => {
       const db = event.target.result
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME)
+      for (const cityId of CITY_STORES) {
+        if (!db.objectStoreNames.contains(cityId)) {
+          db.createObjectStore(cityId)
+        }
       }
     }
 
@@ -23,16 +22,11 @@ function openDB() {
   })
 }
 
-/**
- * Save a photo blob for a given stage
- * @param {number|string} stageId
- * @param {Blob} blob
- */
-export async function savePhoto(stageId, blob) {
+export async function savePhoto(cityId, stageId, blob) {
   const db = await openDB()
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readwrite')
-    const store = tx.objectStore(STORE_NAME)
+    const tx = db.transaction(cityId, 'readwrite')
+    const store = tx.objectStore(cityId)
     const key = `stage-${stageId}`
     const request = store.put(blob, key)
     request.onsuccess = () => resolve()
@@ -41,16 +35,11 @@ export async function savePhoto(stageId, blob) {
   })
 }
 
-/**
- * Retrieve a photo blob for a given stage
- * @param {number|string} stageId
- * @returns {Promise<Blob|null>}
- */
-export async function getPhoto(stageId) {
+export async function getPhoto(cityId, stageId) {
   const db = await openDB()
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readonly')
-    const store = tx.objectStore(STORE_NAME)
+    const tx = db.transaction(cityId, 'readonly')
+    const store = tx.objectStore(cityId)
     const key = `stage-${stageId}`
     const request = store.get(key)
     request.onsuccess = (event) => resolve(event.target.result || null)
@@ -59,15 +48,11 @@ export async function getPhoto(stageId) {
   })
 }
 
-/**
- * Retrieve all stored photos
- * @returns {Promise<{[key: string]: Blob}>}
- */
-export async function getAllPhotos() {
+export async function getAllPhotos(cityId) {
   const db = await openDB()
   return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readonly')
-    const store = tx.objectStore(STORE_NAME)
+    const tx = db.transaction(cityId, 'readonly')
+    const store = tx.objectStore(cityId)
     const result = {}
     const cursorRequest = store.openCursor()
 
