@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>纸尺 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .ruler-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 20mm 15mm;
+    }
+
+    .ruler-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+      margin-bottom: 10px;
+    }
+
+    /* ── Ruler strip ──────────────────────────────── */
+    .ruler-strip {
+      width: 250mm;
+      height: 30mm;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Top and bottom cut lines */
+    .ruler-strip::before,
+    .ruler-strip::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-top: 1.5px dashed #666;
+    }
+    .ruler-strip::before { top: 0; }
+    .ruler-strip::after { bottom: 0; }
+
+    /* Scissors icons at start of cut lines */
+
+    /* The ruler SVG body */
+    .ruler-svg {
+      display: block;
+      width: 250mm;
+      height: 30mm;
+    }
+
+    /* ── Second ruler strip (rotated/reversed) ─── */
+    .ruler-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #4a3020;
+      text-align: center;
+      letter-spacing: 0.15em;
+      line-height: 1.8;
+    }
+
+    .scissors-icon {
+      font-size: 14px;
+      color: #666;
+      position: absolute;
+      top: -8px;
+      left: -6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page ruler-page">
+
+  <div class="ruler-header">
+    <div class="title">特制纸尺</div>
+    <div class="subtitle">SPECIAL PAPER RULER · 第三站 汇丰银行 专用测量道具</div>
+  </div>
+
+  <div class="instruction-box" style="width:250mm;">
+    <strong>用途：</strong>用于精确测量汇丰银行门口两头铜狮之间的距离。尺上刻度以特殊字符标注，非普通厘米尺。读取距离对应的字符序列即为该站密码要素之一。
+  </div>
+
+  <!-- Primary ruler strip -->
+  <div class="ruler-strip">
+    <span class="scissors-icon">✂</span>
+
+    <svg class="ruler-svg" viewBox="0 0 945 113" xmlns="http://www.w3.org/2000/svg"
+         style="width:250mm;height:30mm;">
+
+      <!-- Ruler body background -->
+      <rect x="0" y="0" width="945" height="113"
+            fill="#f0e4c0" rx="0"/>
+
+      <!-- Subtle wood grain / paper texture lines -->
+      <line x1="0" y1="22" x2="945" y2="22" stroke="rgba(139,101,64,0.15)" stroke-width="0.5"/>
+      <line x1="0" y1="91" x2="945" y2="91" stroke="rgba(139,101,64,0.15)" stroke-width="0.5"/>
+
+      <!-- Top edge rule line -->
+      <line x1="0" y1="18" x2="945" y2="18" stroke="#4a3020" stroke-width="1.5"/>
+      <!-- Bottom edge rule line -->
+      <line x1="0" y1="95" x2="945" y2="95" stroke="#4a3020" stroke-width="1.5"/>
+
+      <!-- Left end cap -->
+      <line x1="2" y1="18" x2="2" y2="95" stroke="#4a3020" stroke-width="2"/>
+      <!-- Right end cap -->
+      <line x1="943" y1="18" x2="943" y2="95" stroke="#4a3020" stroke-width="2"/>
+
+      <!--
+        Major tick marks every 37.8px (= 10mm at 96dpi, ≈ 10mm in SVG scale)
+        Ruler is 250mm = 945px in SVG units
+        10mm intervals = 37.8px each → 25 intervals = 26 marks (0–250mm)
+        Characters placed at each mark — __FIELD__: fill in actual character sequence after fieldwork
+      -->
+
+      <!-- Tick group: major (every 10mm), medium (every 5mm), minor (every 1mm) -->
+      <!-- For clarity, showing 10mm major marks with characters, 5mm medium marks -->
+
+      <!-- 0mm -->
+      <line x1="2" y1="18" x2="2" y2="95" stroke="#4a3020" stroke-width="2"/>
+      <text x="2" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="10" fill="#4a3020">0</text>
+
+      <!-- 5mm medium tick -->
+      <line x1="20" y1="18" x2="20" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 10mm = 37.8px: Character position 1 -->
+      <line x1="38" y1="18" x2="38" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="38" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">10</text>
+      <!-- __FIELD__: 10mm处字符（实地核验后填入） -->
+      <text x="38" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 15mm -->
+      <line x1="57" y1="18" x2="57" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 20mm: Character position 2 -->
+      <line x1="76" y1="18" x2="76" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="76" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">20</text>
+      <!-- __FIELD__: 20mm处字符 -->
+      <text x="76" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 25mm -->
+      <line x1="95" y1="18" x2="95" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 30mm: Character position 3 -->
+      <line x1="113" y1="18" x2="113" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="113" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">30</text>
+      <!-- __FIELD__: 30mm处字符 -->
+      <text x="113" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 35mm -->
+      <line x1="132" y1="18" x2="132" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 40mm: Character position 4 -->
+      <line x1="151" y1="18" x2="151" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="151" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">40</text>
+      <!-- __FIELD__: 40mm处字符 -->
+      <text x="151" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 45mm -->
+      <line x1="170" y1="18" x2="170" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 50mm: Character position 5 -->
+      <line x1="189" y1="18" x2="189" y2="80" stroke="#4a3020" stroke-width="2"/>
+      <text x="189" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="9" fill="#4a3020" font-weight="700">50</text>
+      <!-- __FIELD__: 50mm处字符 -->
+      <text x="189" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 55mm -->
+      <line x1="208" y1="18" x2="208" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 60mm: Character position 6 -->
+      <line x1="227" y1="18" x2="227" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="227" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">60</text>
+      <!-- __FIELD__: 60mm处字符 -->
+      <text x="227" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 65mm -->
+      <line x1="246" y1="18" x2="246" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 70mm: Character position 7 -->
+      <line x1="265" y1="18" x2="265" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="265" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">70</text>
+      <!-- __FIELD__: 70mm处字符 -->
+      <text x="265" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 75mm -->
+      <line x1="284" y1="18" x2="284" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 80mm: Character position 8 -->
+      <line x1="302" y1="18" x2="302" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="302" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">80</text>
+      <!-- __FIELD__: 80mm处字符 -->
+      <text x="302" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 85mm -->
+      <line x1="321" y1="18" x2="321" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 90mm: Character position 9 -->
+      <line x1="340" y1="18" x2="340" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="340" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">90</text>
+      <!-- __FIELD__: 90mm处字符 -->
+      <text x="340" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 95mm -->
+      <line x1="359" y1="18" x2="359" y2="60" stroke="#6b4c2a" stroke-width="1"/>
+
+      <!-- 100mm: Character position 10 -->
+      <line x1="378" y1="18" x2="378" y2="80" stroke="#4a3020" stroke-width="2"/>
+      <text x="378" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="9" fill="#4a3020" font-weight="700">100</text>
+      <!-- __FIELD__: 100mm处字符 -->
+      <text x="378" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 110mm -->
+      <line x1="416" y1="18" x2="416" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="416" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">110</text>
+      <!-- __FIELD__: 110mm处字符 -->
+      <text x="416" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 120mm -->
+      <line x1="454" y1="18" x2="454" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="454" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">120</text>
+      <!-- __FIELD__: 120mm处字符 -->
+      <text x="454" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 130mm -->
+      <line x1="491" y1="18" x2="491" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="491" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">130</text>
+      <!-- __FIELD__: 130mm处字符 -->
+      <text x="491" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 140mm -->
+      <line x1="529" y1="18" x2="529" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="529" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">140</text>
+      <!-- __FIELD__: 140mm处字符 -->
+      <text x="529" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 150mm: Mid-point -->
+      <line x1="567" y1="18" x2="567" y2="80" stroke="#4a3020" stroke-width="2"/>
+      <text x="567" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="9" fill="#4a3020" font-weight="700">150</text>
+      <!-- __FIELD__: 150mm处字符 -->
+      <text x="567" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 160mm -->
+      <line x1="605" y1="18" x2="605" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="605" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">160</text>
+      <!-- __FIELD__: 160mm处字符 -->
+      <text x="605" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 170mm -->
+      <line x1="643" y1="18" x2="643" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="643" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">170</text>
+      <!-- __FIELD__: 170mm处字符 -->
+      <text x="643" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 180mm -->
+      <line x1="680" y1="18" x2="680" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="680" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">180</text>
+      <!-- __FIELD__: 180mm处字符 -->
+      <text x="680" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 190mm -->
+      <line x1="718" y1="18" x2="718" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="718" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">190</text>
+      <!-- __FIELD__: 190mm处字符 -->
+      <text x="718" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 200mm -->
+      <line x1="756" y1="18" x2="756" y2="80" stroke="#4a3020" stroke-width="2"/>
+      <text x="756" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="9" fill="#4a3020" font-weight="700">200</text>
+      <!-- __FIELD__: 200mm处字符 -->
+      <text x="756" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 210mm -->
+      <line x1="794" y1="18" x2="794" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="794" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">210</text>
+      <!-- __FIELD__: 210mm处字符 -->
+      <text x="794" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 220mm -->
+      <line x1="832" y1="18" x2="832" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="832" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">220</text>
+      <!-- __FIELD__: 220mm处字符 -->
+      <text x="832" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 230mm -->
+      <line x1="869" y1="18" x2="869" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="869" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">230</text>
+      <!-- __FIELD__: 230mm处字符 -->
+      <text x="869" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 240mm -->
+      <line x1="907" y1="18" x2="907" y2="72" stroke="#4a3020" stroke-width="1.5"/>
+      <text x="907" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="8" fill="#6b4c2a">240</text>
+      <!-- __FIELD__: 240mm处字符 -->
+      <text x="907" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">？</text>
+
+      <!-- 250mm: End -->
+      <line x1="943" y1="18" x2="943" y2="95" stroke="#4a3020" stroke-width="2"/>
+      <text x="943" y="13" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="9" fill="#4a3020" font-weight="700">250</text>
+      <!-- __FIELD__: 250mm处字符（终端） -->
+      <text x="943" y="85" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="12" font-weight="700" fill="#1a0c05">终</text>
+
+      <!-- Ruler label in center -->
+      <text x="472" y="56" text-anchor="middle"
+            font-family="'Noto Serif SC',serif" font-size="9" fill="rgba(74,48,32,0.35)"
+            letter-spacing="6">鹤影特制纸尺 · 汇丰银行专用</text>
+
+      <!-- Top dashed cut line -->
+      <line x1="0" y1="0" x2="945" y2="0" stroke="#888" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <!-- Bottom dashed cut line -->
+      <line x1="0" y1="113" x2="945" y2="113" stroke="#888" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+    </svg>
+  </div><!-- /ruler-strip -->
+
+  <div class="ruler-note">
+    沿上下虚线剪下 · 对准两狮之间量取距离 · 读取对应刻度字符
+  </div>
+
+  <!-- Usage instructions -->
+  <div class="border-frame" style="width:250mm;">
+    <div style="font-family:'Noto Serif SC',serif;font-size:11px;color:#2a1505;line-height:1.9;">
+      <strong>使用方法（第三站 · 汇丰银行）：</strong><br>
+      ① 将纸尺零刻度端贴紧张嘴铜狮底座外缘<br>
+      ② 直线拉至另一头铜狮底座外缘，读取对应刻度<br>
+      ③ 该刻度对应的<strong>字符</strong>即为本站密码要素<br>
+      ④ 配合屋顶装饰构件计数使用
+      <br>
+      <span style="color:#8b6540;font-size:10px;">
+        <!-- __FIELD__: 实地测量后，将距离值（mm）对应的字符填入刻度线下方"？"处 -->
+        注：所有 ？ 为待实地填入的字符占位符
+      </span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

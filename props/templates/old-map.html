@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>老上海地图格栅 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .map-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .map-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #8b6540;
+      padding-bottom: 8px;
+    }
+
+    .map-title-block {
+      text-align: center;
+      flex: 1;
+    }
+
+    .map-container {
+      position: relative;
+      width: 170mm;
+    }
+
+    /* Vintage map background */
+    .map-bg {
+      width: 170mm;
+      height: 200mm;
+      background-color: #e8d9b5;
+      background-image:
+        radial-gradient(ellipse at 30% 40%, rgba(180,140,70,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 60%, rgba(160,120,60,0.20) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 20%, rgba(200,160,80,0.15) 0%, transparent 40%),
+        radial-gradient(ellipse at 20% 80%, rgba(140,100,50,0.18) 0%, transparent 40%);
+      border: 3px solid #8b6540;
+      box-shadow:
+        inset 0 0 30px rgba(139,101,64,0.2),
+        inset 0 0 60px rgba(139,101,64,0.08);
+      position: relative;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Faded border vignette */
+    .map-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(100,70,30,0.25) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* SVG map sketch overlay (rivers, roads hint) */
+    .map-sketch {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.18;
+    }
+
+    /* Grid overlay */
+    .map-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      padding: 8mm 6mm 6mm 10mm;
+    }
+
+    .grid-table {
+      border-collapse: collapse;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Column header row */
+    .col-header {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #4a3020;
+      text-align: center;
+      padding: 0 0 3px;
+      background: rgba(240,225,190,0.7);
+      letter-spacing: 0.1em;
+    }
+
+    /* Row header cells */
+    .row-header {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #4a3020;
+      text-align: center;
+      padding: 0 4px 0 0;
+      background: rgba(240,225,190,0.7);
+      min-width: 10px;
+    }
+
+    /* Map grid cells */
+    .map-cell {
+      border: 0.5px solid rgba(100,70,30,0.35);
+      width: 20mm;
+      height: 20mm;
+      text-align: center;
+      vertical-align: middle;
+      background: transparent;
+      font-size: 8px;
+      color: rgba(60,40,15,0.3);
+      font-style: italic;
+    }
+
+    /* Compass rose */
+    .compass-rose {
+      position: absolute;
+      bottom: 8mm;
+      right: 8mm;
+      z-index: 4;
+    }
+
+    /* Scale bar */
+    .scale-bar {
+      position: absolute;
+      bottom: 8mm;
+      left: 10mm;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .scale-line {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+    }
+
+    .scale-segment {
+      height: 6px;
+      width: 14mm;
+      border: 1px solid #4a3020;
+    }
+
+    .scale-segment:nth-child(odd) { background: #4a3020; }
+    .scale-segment:nth-child(even) { background: transparent; }
+
+    .scale-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #4a3020;
+      letter-spacing: 0.1em;
+    }
+
+    /* Title cartouche */
+    .map-cartouche {
+      position: absolute;
+      top: 6mm;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      text-align: center;
+      background: rgba(240,225,190,0.85);
+      border: 1.5px solid #8b6540;
+      padding: 4px 14px;
+      min-width: 80mm;
+    }
+
+    .cartouche-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a0c05;
+      letter-spacing: 0.3em;
+    }
+
+    .cartouche-sub {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page map-page">
+
+  <!-- Page header (outside map area) -->
+  <div class="map-header">
+    <div style="font-family:'Noto Serif SC',serif;font-size:10px;color:#6b4c2a;letter-spacing:0.2em;">
+      第七封密电 · 道具
+    </div>
+    <div class="map-title-block">
+      <div class="title" style="font-size:18px;">老上海地图格栅</div>
+      <div class="subtitle">SHANGHAI GRID MAP OVERLAY</div>
+    </div>
+    <div style="font-family:'Noto Serif SC',serif;font-size:10px;color:#6b4c2a;letter-spacing:0.2em;">
+      坐标参考图
+    </div>
+  </div>
+
+  <!-- Map area -->
+  <div class="map-container">
+    <div class="map-bg">
+
+      <!-- Faint sketch of Shanghai streets / Huangpu River -->
+      <svg class="map-sketch" viewBox="0 0 640 755" xmlns="http://www.w3.org/2000/svg">
+        <!-- Huangpu River (right side, flowing S-N) -->
+        <path d="M 580 0 Q 560 200 570 380 Q 575 500 555 755"
+              stroke="#6b9ab8" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <!-- Suzhou Creek (horizontal) -->
+        <path d="M 0 180 Q 200 175 380 185 Q 480 190 580 180"
+              stroke="#6b9ab8" stroke-width="8" fill="none"/>
+        <!-- Nanjing Road hint -->
+        <line x1="0" y1="280" x2="560" y2="280" stroke="#4a3020" stroke-width="3"/>
+        <!-- Huaihai Road hint -->
+        <line x1="0" y1="450" x2="540" y2="450" stroke="#4a3020" stroke-width="2.5"/>
+        <!-- Wukang Road area hint (diagonal) -->
+        <path d="M 100 480 Q 180 500 200 600 Q 210 660 240 720"
+              stroke="#4a3020" stroke-width="2" fill="none"/>
+        <!-- Some cross streets -->
+        <line x1="200" y1="0" x2="200" y2="755" stroke="#4a3020" stroke-width="1.5" opacity="0.5"/>
+        <line x1="380" y1="0" x2="380" y2="755" stroke="#4a3020" stroke-width="1.5" opacity="0.5"/>
+        <!-- Bund area -->
+        <rect x="490" y="180" width="70" height="300" fill="#8b6540" opacity="0.15" rx="2"/>
+        <!-- Park area (Fuxing Park hint) -->
+        <ellipse cx="270" cy="520" rx="40" ry="30" fill="#5a7a40" opacity="0.2"/>
+      </svg>
+
+      <!-- Map title cartouche -->
+      <div class="map-cartouche">
+        <div class="cartouche-title">上　海　略　图</div>
+        <div class="cartouche-sub">1943 · 仅供任务参考使用</div>
+      </div>
+
+      <!-- Grid overlay -->
+      <div class="map-grid">
+        <table class="grid-table">
+          <thead>
+            <tr>
+              <th class="row-header" style="min-width:8px;"></th>
+              <th class="col-header">A</th>
+              <th class="col-header">B</th>
+              <th class="col-header">C</th>
+              <th class="col-header">D</th>
+              <th class="col-header">E</th>
+              <th class="col-header">F</th>
+              <th class="col-header">G</th>
+              <th class="col-header">H</th>
+              <th class="col-header">I</th>
+              <th class="col-header">J</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1 -->
+            <tr>
+              <th class="row-header">1</th>
+              <!-- A1: Suzhou Creek / North area -->
+              <td class="map-cell"><!-- __FIELD__: 苏州河北岸标记 --></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- I1: Near Bund north -->
+              <td class="map-cell"><!-- __FIELD__: 外滩北端 --></td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 2 -->
+            <tr>
+              <th class="row-header">2</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- E2: Peace Hotel area -->
+              <td class="map-cell" style="background:rgba(139,101,64,0.12);font-size:7px;color:#4a3020;"><!-- __FIELD__: 和平饭店区域 -->①</td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- I2: Customs House -->
+              <td class="map-cell" style="background:rgba(139,101,64,0.12);font-size:7px;color:#4a3020;"><!-- __FIELD__: 海关大楼 -->②</td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 3 -->
+            <tr>
+              <th class="row-header">3</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- I3: HSBC -->
+              <td class="map-cell" style="background:rgba(139,101,64,0.12);font-size:7px;color:#4a3020;"><!-- __FIELD__: 汇丰银行 -->③</td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 4 -->
+            <tr>
+              <th class="row-header">4</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 5 -->
+            <tr>
+              <th class="row-header">5</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- C5: Yuyuan area -->
+              <td class="map-cell" style="background:rgba(139,101,64,0.12);font-size:7px;color:#4a3020;"><!-- __FIELD__: 豫园九曲桥 -->④</td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 6 -->
+            <tr>
+              <th class="row-header">6</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- F6: Xintiandi -->
+              <td class="map-cell" style="background:rgba(139,101,64,0.12);font-size:7px;color:#4a3020;"><!-- __FIELD__: 新天地·一大会址 -->⑤</td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 7 -->
+            <tr>
+              <th class="row-header">7</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- F7: Sinan area -->
+              <td class="map-cell" style="background:rgba(139,101,64,0.12);font-size:7px;color:#4a3020;"><!-- __FIELD__: 思南公馆 -->⑥</td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 8 -->
+            <tr>
+              <th class="row-header">8</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 9 -->
+            <tr>
+              <th class="row-header">9</th>
+              <td class="map-cell"></td>
+              <!-- B9: Wukang Building -->
+              <td class="map-cell" style="background:rgba(139,101,64,0.12);font-size:7px;color:#4a3020;"><!-- __FIELD__: 武康大楼 -->⑦</td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+            </tr>
+            <!-- Row 10 -->
+            <tr>
+              <th class="row-header">10</th>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <td class="map-cell"></td>
+              <!-- J10: blank / field -->
+              <td class="map-cell"><!-- __FIELD__: 备用格 --></td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!-- /map-grid -->
+
+      <!-- Compass rose SVG -->
+      <div class="compass-rose">
+        <svg width="40" height="40" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer circle -->
+          <circle cx="40" cy="40" r="36" fill="rgba(240,225,190,0.7)" stroke="#4a3020" stroke-width="1.5"/>
+          <!-- N arrow -->
+          <polygon points="40,8 36,40 44,40" fill="#8b2020" opacity="0.85"/>
+          <!-- S arrow -->
+          <polygon points="40,72 36,40 44,40" fill="#4a3020" opacity="0.7"/>
+          <!-- E arrow -->
+          <polygon points="72,40 40,36 40,44" fill="#4a3020" opacity="0.7"/>
+          <!-- W arrow -->
+          <polygon points="8,40 40,36 40,44" fill="#4a3020" opacity="0.7"/>
+          <!-- Center circle -->
+          <circle cx="40" cy="40" r="5" fill="#4a3020"/>
+          <!-- N label -->
+          <text x="40" y="6" text-anchor="middle" font-family="serif" font-size="10"
+                fill="#8b2020" font-weight="700">N</text>
+        </svg>
+      </div>
+
+      <!-- Scale bar -->
+      <div class="scale-bar">
+        <div class="scale-line">
+          <div class="scale-segment"></div>
+          <div class="scale-segment"></div>
+          <div class="scale-segment"></div>
+          <div class="scale-segment"></div>
+        </div>
+        <div class="scale-label">0 ——— 1km（示意）</div>
+      </div>
+
+    </div><!-- /map-bg -->
+  </div><!-- /map-container -->
+
+  <!-- Legend -->
+  <div class="border-frame" style="width:170mm;margin-top:8px;padding:8px 14px;">
+    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+      <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#4a3020;font-weight:700;">图例：</span>
+      <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#4a3020;">
+        <span style="background:rgba(139,101,64,0.12);border:0.5px solid #8b6540;padding:1px 4px;">①</span> 任务站点
+      </span>
+      <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#6b4c2a;">
+        坐标格 20mm × 20mm（示意尺度，非实际比例）
+      </span>
+      <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#6b4c2a;">
+        <!-- __FIELD__: 实地考察后填入各格坐标数据 -->
+        空白格待实地核验后标注
+      </span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

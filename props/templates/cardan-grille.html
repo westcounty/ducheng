@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>窗格卡（卡尔丹格栅）— 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .grille-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .grille-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+    }
+
+    /* The grille card area */
+    .grille-card-area {
+      position: relative;
+      width: 160mm;
+      height: 120mm;
+      border: 3px double #4a3020;
+      background-color: #e8dfc5;
+      background-image:
+        radial-gradient(ellipse at 20% 30%, rgba(180,140,70,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(140,100,50,0.18) 0%, transparent 50%);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Corner decorations */
+    .grille-corner {
+      position: absolute;
+      width: 12mm;
+      height: 12mm;
+      border-color: #8b6540;
+      border-style: solid;
+    }
+    .grille-corner.tl { top: 3mm; left: 3mm; border-width: 2px 0 0 2px; }
+    .grille-corner.tr { top: 3mm; right: 3mm; border-width: 2px 2px 0 0; }
+    .grille-corner.bl { bottom: 3mm; left: 3mm; border-width: 0 0 2px 2px; }
+    .grille-corner.br { bottom: 3mm; right: 3mm; border-width: 0 2px 2px 0; }
+
+    /* The grid of text cells (mirrors the铭牌 layout) */
+    .grille-text-grid {
+      position: absolute;
+      inset: 14mm;
+      display: grid;
+      /* __FIELD__: grid dimensions should match actual plaque text layout after fieldwork */
+      /* Placeholder: 10 columns × 8 rows */
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      gap: 0;
+    }
+
+    /* Each text cell */
+    .text-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #2a1505;
+      border: 0.5px solid rgba(139,101,64,0.2);
+      background: transparent;
+    }
+
+    /* Cut-out hole cells — these are the "windows" */
+    .text-cell.hole {
+      background: transparent;
+      border: 2px dashed #8b2020;
+      position: relative;
+    }
+
+    /* The actual hole cutout indicator */
+    .text-cell.hole::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid #8b2020;
+    }
+
+    /* Hole letter/number revealed */
+    .text-cell.hole .hole-char {
+      position: relative;
+      z-index: 2;
+      font-weight: 700;
+      color: #8b2020;
+      font-size: 11px;
+    }
+
+    /* Grille title band */
+    .grille-title-band {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 10mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(139,101,64,0.4);
+      background: rgba(232,223,197,0.8);
+    }
+
+    .grille-title-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #1a0c05;
+      letter-spacing: 0.4em;
+    }
+
+    /* Grille bottom band */
+    .grille-bottom-band {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 8mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6mm;
+      border-top: 1px solid rgba(139,101,64,0.4);
+      background: rgba(232,223,197,0.8);
+    }
+
+    /* Alignment marks */
+    .align-mark {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .align-mark span {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #6b4c2a;
+      letter-spacing: 0.1em;
+    }
+
+    .align-triangle {
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 6px solid #8b6540;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page grille-page">
+
+  <div class="grille-header">
+    <div class="title">窗格卡</div>
+    <div class="subtitle">CARDAN GRILLE · 第六站 思南公馆 专用道具</div>
+  </div>
+
+  <div class="instruction-box" style="width:158mm;">
+    <strong>使用方法：</strong>将此卡平放于思南公馆铭牌之上，对准对齐标记（▲）。镂空窗格露出的文字即为有效信息，其余文字为掩护内容，忽略不计。格栅须严格对齐，差一行则信息全错。
+  </div>
+
+  <!-- The grille card -->
+  <div class="grille-card-area">
+
+    <!-- Title band -->
+    <div class="grille-title-band">
+      <span class="grille-title-text">鹤　影　格　栅　卡</span>
+    </div>
+
+    <!-- Corner decorations -->
+    <div class="grille-corner tl"></div>
+    <div class="grille-corner tr"></div>
+    <div class="grille-corner bl"></div>
+    <div class="grille-corner br"></div>
+
+    <!--
+      The text grid represents the铭牌 (plaque) text layout.
+      Cells marked .hole are cut-out windows that reveal text beneath.
+      __FIELD__: After fieldwork at Sinan Mansions, fill in:
+        1. The actual plaque text in non-hole cells
+        2. The positions of holes based on the hidden message
+        3. The hole characters that spell out the secret information
+      Current layout is a placeholder with approximate hole positions.
+    -->
+    <div class="grille-text-grid">
+
+      <!-- Row 1 -->
+      <div class="text-cell">思</div>
+      <div class="text-cell">南</div>
+      <div class="text-cell">路</div>
+      <div class="text-cell">历</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">史</div>
+      <div class="text-cell">文</div>
+      <div class="text-cell">化</div>
+      <div class="text-cell">保</div>
+      <div class="text-cell">护</div>
+
+      <!-- Row 2 -->
+      <div class="text-cell">建</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">筑</div>
+      <div class="text-cell">坐</div>
+      <div class="text-cell">落</div>
+      <div class="text-cell">于</div>
+      <div class="text-cell">上</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">海</div>
+      <div class="text-cell">市</div>
+
+      <!-- Row 3 -->
+      <div class="text-cell">卢</div>
+      <div class="text-cell">湾</div>
+      <div class="text-cell">区</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">思</div>
+      <div class="text-cell">南</div>
+      <div class="text-cell">路</div>
+      <div class="text-cell">四</div>
+      <div class="text-cell">十</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+
+      <!-- Row 4 -->
+      <div class="text-cell">五</div>
+      <div class="text-cell">弄</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">建</div>
+      <div class="text-cell">于</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">民</div>
+      <div class="text-cell">国</div>
+      <div class="text-cell">初</div>
+      <div class="text-cell">年</div>
+
+      <!-- Row 5 -->
+      <div class="text-cell">法</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">式</div>
+      <div class="text-cell">花</div>
+      <div class="text-cell">园</div>
+      <div class="text-cell">洋</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">房</div>
+      <div class="text-cell">群</div>
+      <div class="text-cell">落</div>
+
+      <!-- Row 6 -->
+      <div class="text-cell">梧</div>
+      <div class="text-cell">桐</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">掩</div>
+      <div class="text-cell">映</div>
+      <div class="text-cell">绿</div>
+      <div class="text-cell">荫</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">静</div>
+      <div class="text-cell">谧</div>
+
+      <!-- Row 7 -->
+      <div class="text-cell">幽</div>
+      <div class="text-cell">深</div>
+      <div class="text-cell">为</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">上</div>
+      <div class="text-cell">海</div>
+      <div class="text-cell">市</div>
+      <div class="text-cell">级</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">文</div>
+
+      <!-- Row 8 -->
+      <div class="text-cell">物</div>
+      <div class="text-cell">保</div>
+      <div class="text-cell">护</div>
+      <div class="text-cell">单</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+      <div class="text-cell">位</div>
+      <div class="text-cell">之</div>
+      <div class="text-cell">一</div>
+      <div class="text-cell">○</div>
+      <div class="text-cell hole"><span class="hole-char"><!-- __FIELD__: 镂空字 --></span></div>
+
+    </div><!-- /grille-text-grid -->
+
+    <!-- Bottom alignment band -->
+    <div class="grille-bottom-band">
+      <div class="align-mark">
+        <div class="align-triangle"></div>
+        <span>对齐标记</span>
+      </div>
+      <span style="font-family:'Noto Serif SC',serif;font-size:9px;color:#6b4c2a;letter-spacing:0.2em;">
+        <!-- __FIELD__: 实地核验后确认对齐基准点 -->
+        铭牌左上角对齐
+      </span>
+      <div class="align-mark">
+        <div class="align-triangle"></div>
+        <span>对齐标记</span>
+      </div>
+    </div>
+
+  </div><!-- /grille-card-area -->
+
+  <!-- Hole legend -->
+  <div class="border-frame" style="width:158mm;">
+    <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+      <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#4a3020;font-weight:700;">图例：</span>
+      <span style="display:flex;align-items:center;gap:6px;">
+        <span style="display:inline-block;width:16px;height:16px;border:2px dashed #8b2020;background:rgba(255,255,255,0.6);"></span>
+        <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#4a3020;">镂空窗格（需裁剪）</span>
+      </span>
+      <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#6b4c2a;">
+        <!-- __FIELD__: 镂空格字符在实地核验后填入；打印后用刀将虚线框内纸张裁去 -->
+        ⚠ 打印后沿虚线将镂空格裁去
+      </span>
+    </div>
+  </div>
+
+  <div class="instruction-box" style="width:158mm;font-size:10px;">
+    <strong>制作步骤：</strong>① 打印此页 → ② 沿外边框裁下整张格栅卡 → ③ 用小刀/剪刀将所有虚线框（镂空格）内纸张裁去 → ④ 第六站现场使用
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

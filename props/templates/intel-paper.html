@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>镜像情报纸 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .intel-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .intel-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+    }
+
+    /* ── Main intel content area ────────────────── */
+    .intel-content-area {
+      width: 168mm;
+      min-height: 140mm;
+      position: relative;
+      border: 2px solid #8b6540;
+      background-color: #f0e8d0;
+      background-image:
+        radial-gradient(ellipse at 30% 35%, rgba(180,140,70,0.2) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 65%, rgba(150,110,55,0.18) 0%, transparent 50%);
+      padding: 10mm 12mm;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Faded vignette */
+    .intel-content-area::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(100,70,30,0.15) 100%);
+      pointer-events: none;
+    }
+
+    /* ── The mirrored text block ─────────────────
+       The right half of the page appears as-is.
+       The left half is the mirror image of the right half.
+       When held up to a front-facing camera (mirror mode),
+       the full image becomes readable.
+    ── */
+
+    .mirror-split {
+      display: flex;
+      gap: 0;
+      width: 100%;
+      min-height: 110mm;
+    }
+
+    /* Left panel: mirror-flipped */
+    .mirror-left {
+      flex: 1;
+      transform: scaleX(-1);
+      transform-origin: right center;
+      border-right: 1px dashed rgba(139,101,64,0.5);
+      padding-right: 6mm;
+      overflow: hidden;
+    }
+
+    /* Right panel: normal text, but partially visible / faded */
+    .mirror-right {
+      flex: 1;
+      padding-left: 6mm;
+      opacity: 0.45;
+      /* Partially visible — the rest "completes" when mirrored */
+    }
+
+    .intel-text-block {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 14px;
+      line-height: 2;
+      color: #1a0c05;
+      letter-spacing: 0.05em;
+    }
+
+    .intel-text-block p {
+      margin-bottom: 0.5em;
+    }
+
+    /* Center divider label */
+    .center-fold-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(240,232,208,0.9);
+      border: 1px solid #8b6540;
+      padding: 2px 6px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    /* Secret watermark */
+    .intel-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: rgba(139,101,64,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.2em;
+      z-index: 0;
+      user-select: none;
+    }
+
+    /* Field placeholder for the actual intel content */
+    .intel-field-placeholder {
+      background: rgba(139,101,64,0.08);
+      border: 1px dashed #a08060;
+      border-radius: 3px;
+      padding: 8mm;
+      text-align: center;
+      min-height: 60mm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6mm;
+    }
+
+    .field-icon {
+      font-size: 32px;
+      opacity: 0.3;
+    }
+
+    .field-desc {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #6b4c2a;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    /* Instruction note at bottom of page */
+    .mirror-instruction-badge {
+      background: #2a1505;
+      color: #f0e8d0;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      padding: 5px 16px;
+      text-align: center;
+      margin-top: 8px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page intel-page">
+
+  <div class="intel-header">
+    <div class="title">镜像情报纸</div>
+    <div class="subtitle">MIRROR-DECODE INTELLIGENCE PAPER · 第三站 汇丰银行 专用</div>
+  </div>
+
+  <div class="instruction-box" style="width:166mm;">
+    <strong>解读方式：</strong>将此页面对着手机前置摄像头（镜像模式）。屏幕中显示的反转图像即为完整情报内容。纸面所示为半张镜像信息，另一半须通过镜像还原后方能读取。
+  </div>
+
+  <!-- Main content area -->
+  <div class="intel-content-area">
+
+    <!-- Watermark -->
+    <div class="intel-watermark">机密</div>
+
+    <!--
+      __FIELD__: Mirror-decode content
+      After fieldwork, replace the placeholder below with actual content:
+      1. Photograph or sketch the specific detail from HSBC Building
+         that provides the measurement key (roof ornament count + lion distance)
+      2. Split the image/text vertically down the center
+      3. Place the LEFT half mirrored (transform: scaleX(-1)) in .mirror-left
+      4. Place the RIGHT half as normal faded text in .mirror-right
+      When a player holds the page up to a front camera in mirror mode,
+      the left half "un-mirrors" and the full content becomes readable.
+    -->
+
+    <div class="mirror-split">
+
+      <!-- LEFT panel: mirror-flipped content -->
+      <div class="mirror-left">
+        <div class="intel-field-placeholder">
+          <div class="field-icon">🪞</div>
+          <div class="field-desc">
+            <!-- __FIELD__: 镜像内容左半部分 -->
+            左半内容<br>
+            （镜像翻转显示）<br>
+            实地核验后替换
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER fold indicator -->
+      <div class="center-fold-label">中线</div>
+
+      <!-- RIGHT panel: faded normal content -->
+      <div class="mirror-right">
+        <div class="intel-field-placeholder" style="opacity:0.6;">
+          <div class="field-icon">📄</div>
+          <div class="field-desc">
+            <!-- __FIELD__: 正常内容右半部分（半透明显示） -->
+            右半内容<br>
+            （正常方向，半透明）<br>
+            实地核验后替换
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /mirror-split -->
+
+    <!-- Bottom: partial intel text (visible hint) -->
+    <div class="intel-text-block" style="margin-top:8mm;opacity:0.6;text-align:center;">
+      <p>
+        <!-- __FIELD__: 情报文字内容（部分可见，镜像后完整显示） -->
+        ………屋顶线脚……两狮之间……………
+      </p>
+      <p style="font-size:11px;color:#6b4c2a;">
+        <!-- __FIELD__: 具体情报数据，如测量数值、装饰构件数等 -->
+        [待实地核验后填入具体数据]
+      </p>
+    </div>
+
+  </div><!-- /intel-content-area -->
+
+  <div class="mirror-instruction-badge">
+    ▶ 对准手机前置摄像头（自拍模式）即可解读
+  </div>
+
+  <!-- Technical note for game master -->
+  <div class="border-frame" style="width:166mm;">
+    <div style="font-family:'Noto Serif SC',serif;font-size:10px;color:#4a3020;line-height:1.9;">
+      <strong>制作说明（游戏管理员）：</strong><br>
+      ① 实地拍摄汇丰银行铜狮及屋顶细节照片<br>
+      ② 在图像编辑软件中，将关键信息置于图像中部偏右<br>
+      ③ 水平翻转全图，得到镜像版本<br>
+      ④ 将原图右半（正常）+ 镜像图左半 拼合为此页内容<br>
+      ⑤ 玩家用前置摄像头拍摄时，左半自动"翻正"，完整信息显现<br>
+      <span style="color:#8b6540;">
+        <!-- __FIELD__: 具体情报内容由实地考察结果决定 -->
+        [具体内容待实地核验后填入]
+      </span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

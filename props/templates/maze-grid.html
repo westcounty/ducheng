@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>方格迷宫 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .maze-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .maze-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+      margin-bottom: 6px;
+    }
+
+    .maze-container {
+      position: relative;
+    }
+
+    /* The grid table */
+    .maze-table {
+      border-collapse: collapse;
+      border: 3px solid #4a3020;
+    }
+
+    .maze-cell {
+      width: 11.5mm;
+      height: 11.5mm;
+      border: 1px solid rgba(74,48,32,0.45);
+      text-align: center;
+      vertical-align: middle;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #2a1505;
+      background: transparent;
+      position: relative;
+      cursor: default;
+      /* Slightly aged paper cell bg */
+      background-color: rgba(245,240,232,0.3);
+    }
+
+    /* Start cell */
+    .maze-cell.start {
+      background-color: rgba(139,101,64,0.25);
+      border: 2px solid #8b6540;
+    }
+
+    /* Placeholder cell */
+    .maze-cell.field {
+      color: rgba(74,48,32,0.25);
+      font-style: italic;
+      font-size: 9px;
+    }
+
+    /* Blocked/wall cells (for visual variety) */
+    .maze-cell.wall {
+      background-color: rgba(74,48,32,0.18);
+    }
+
+    /* Row/col coordinate labels */
+    .coord-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #6b4c2a;
+      text-align: center;
+      width: 11.5mm;
+    }
+
+    .row-coord {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #6b4c2a;
+      text-align: right;
+      padding-right: 3px;
+      height: 11.5mm;
+      vertical-align: middle;
+    }
+
+    .maze-instructions {
+      width: 168mm;
+    }
+
+    .instruction-step {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #2a1505;
+      line-height: 1.9;
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .step-num {
+      font-weight: 700;
+      color: #8b6540;
+      min-width: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page maze-page">
+
+  <div class="maze-header">
+    <div class="title">方格迷宫</div>
+    <div class="subtitle">九曲桥谜题 · 豫园站辅助道具</div>
+  </div>
+
+  <div class="instruction-box" style="width:168mm;margin-bottom:8px;">
+    九曲桥共九转。每走一格，记下格内字符。起点为 ★，沿九曲桥方向（左·右·左·右…）行进，将经过的格子字符依次排列，即得密钥骨架。
+  </div>
+
+  <!-- Coordinate header row -->
+  <table style="border-collapse:collapse;margin:0;">
+    <tr>
+      <td style="width:12px;"></td>
+      <td class="coord-label">A</td><td class="coord-label">B</td><td class="coord-label">C</td>
+      <td class="coord-label">D</td><td class="coord-label">E</td><td class="coord-label">F</td>
+      <td class="coord-label">G</td><td class="coord-label">H</td><td class="coord-label">I</td>
+      <td class="coord-label">J</td><td class="coord-label">K</td><td class="coord-label">L</td>
+      <td class="coord-label">M</td><td class="coord-label">N</td><td class="coord-label">O</td>
+    </tr>
+  </table>
+
+  <div style="display:flex;align-items:flex-start;gap:0;">
+    <!-- Row number labels -->
+    <table style="border-collapse:collapse;">
+      <tr><td class="row-coord">1</td></tr>
+      <tr><td class="row-coord">2</td></tr>
+      <tr><td class="row-coord">3</td></tr>
+      <tr><td class="row-coord">4</td></tr>
+      <tr><td class="row-coord">5</td></tr>
+      <tr><td class="row-coord">6</td></tr>
+      <tr><td class="row-coord">7</td></tr>
+      <tr><td class="row-coord">8</td></tr>
+      <tr><td class="row-coord">9</td></tr>
+      <tr><td class="row-coord">10</td></tr>
+      <tr><td class="row-coord">11</td></tr>
+      <tr><td class="row-coord">12</td></tr>
+      <tr><td class="row-coord">13</td></tr>
+      <tr><td class="row-coord">14</td></tr>
+      <tr><td class="row-coord">15</td></tr>
+    </table>
+
+    <!-- 15×15 maze grid -->
+    <div class="maze-container">
+      <table class="maze-table">
+        <!--
+          __FIELD__: All cell characters are placeholders.
+          After fieldwork (walking the Yuyuan Nine-Turn Bridge),
+          fill in the actual character sequence based on turning directions.
+          START cell (row 8, col H) is marked with ★.
+          Wall cells are visually shaded for aesthetics only — the actual
+          maze path must be determined on-site.
+        -->
+
+        <!-- Row 1 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 2 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 3 -->
+        <tr>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+        </tr>
+        <!-- Row 4 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 5 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+        </tr>
+        <!-- Row 6 -->
+        <tr>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 7 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 8 — START ROW: H8 = ★ -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <!-- H8 = START -->
+          <td class="maze-cell start">★</td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 9 -->
+        <tr>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+        </tr>
+        <!-- Row 10 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 11 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+        </tr>
+        <!-- Row 12 -->
+        <tr>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 13 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 14 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+        </tr>
+        <!-- Row 15 -->
+        <tr>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell field"><!-- __FIELD__ --></td>
+          <td class="maze-cell wall"></td>
+        </tr>
+
+      </table>
+    </div><!-- /maze-container -->
+  </div><!-- /flex -->
+
+  <!-- Legend + instructions -->
+  <div class="maze-instructions">
+    <div class="border-frame">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px;">
+        <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#4a3020;display:flex;align-items:center;gap:6px;">
+          <span style="display:inline-block;width:14px;height:14px;background:rgba(139,101,64,0.25);border:1.5px solid #8b6540;"></span>
+          起点 START (★)
+        </span>
+        <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#4a3020;display:flex;align-items:center;gap:6px;">
+          <span style="display:inline-block;width:14px;height:14px;background:rgba(74,48,32,0.18);border:1px solid rgba(74,48,32,0.45);"></span>
+          障碍（不可通行）
+        </span>
+        <span style="font-family:'Noto Serif SC',serif;font-size:10px;color:#6b4c2a;font-style:italic;">
+          <!-- __FIELD__: 实地走桥后，在各格填入字符 -->
+          空白格：实地核验后填入字符
+        </span>
+      </div>
+      <div class="instruction-step">
+        <span class="step-num">①</span>
+        <span>从九曲桥入口（★ 位置，H8格）出发</span>
+      </div>
+      <div class="instruction-step">
+        <span class="step-num">②</span>
+        <span>按实际桥面转角方向行进：记录每步格内字符</span>
+      </div>
+      <div class="instruction-step">
+        <span class="step-num">③</span>
+        <span>九转完毕后，将所记字符按顺序排列 = 密钥骨架</span>
+      </div>
+      <div class="instruction-step">
+        <span class="step-num">④</span>
+        <span>结合屋脊走兽数目 → 完整密钥</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

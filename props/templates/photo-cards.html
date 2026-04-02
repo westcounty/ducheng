@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>照片配对卡 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .photo-cards-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .page-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+      margin-bottom: 14px;
+    }
+
+    /* 2×3 grid for 6 photo cards */
+    .photo-cards-grid {
+      display: grid;
+      grid-template-columns: 70mm 70mm;
+      grid-template-rows: repeat(3, 90mm);
+      gap: 0;
+    }
+
+    .photo-card-wrapper {
+      width: 70mm;
+      height: 90mm;
+      padding: 3.5mm;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Dashed cut guide */
+    .photo-card-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 1mm;
+      border: 1.5px dashed #999;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Scissors marks at corners */
+    .photo-card-wrapper::after {
+      content: '✂';
+      position: absolute;
+      top: -1mm;
+      left: 0;
+      font-size: 10px;
+      color: #999;
+      z-index: 11;
+    }
+
+    /* Photo card body */
+    .photo-card {
+      width: 100%;
+      height: 100%;
+      background-color: #f2e8d0;
+      background-image:
+        radial-gradient(ellipse at 25% 20%, rgba(180,140,70,0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 75% 80%, rgba(150,110,55,0.15) 0%, transparent 50%);
+      border: 1px solid #8b6540;
+      padding: 3mm;
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Photo placeholder area */
+    .photo-placeholder {
+      flex: 1;
+      border: 1.5px solid #a08060;
+      background-color: #e0d4b8;
+      background-image:
+        linear-gradient(45deg, rgba(139,101,64,0.06) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(139,101,64,0.06) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(139,101,64,0.06) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(139,101,64,0.06) 75%);
+      background-size: 8px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3mm;
+      position: relative;
+    }
+
+    .photo-icon {
+      opacity: 0.25;
+    }
+
+    .photo-placeholder-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #6b4c2a;
+      text-align: center;
+      line-height: 1.7;
+      opacity: 0.7;
+    }
+
+    /* Card bottom info bar */
+    .photo-card-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(139,101,64,0.4);
+      padding-top: 1.5mm;
+    }
+
+    .card-letter-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a0c05;
+      line-height: 1;
+    }
+
+    .card-location-hint {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #6b4c2a;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    /* Small secret number (hidden, faint) */
+    .card-hidden-number {
+      position: absolute;
+      bottom: 1.5mm;
+      right: 1.5mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: rgba(107,76,42,0.2);
+    }
+
+    /* Instructions panel below grid */
+    .photo-instructions {
+      width: 138mm;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page photo-cards-page">
+
+  <div class="page-header">
+    <div class="title" style="font-size:16px;">照片配对卡</div>
+    <div class="subtitle">PHOTO MATCHING CARDS · 第五站 新天地 · 共六张 · 沿虚线剪下</div>
+  </div>
+
+  <div class="photo-cards-grid">
+
+    <!-- Card A -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <!-- __FIELD__: 新天地石库门建筑照片A——实地拍摄后替换此占位符 -->
+          <svg class="photo-icon" viewBox="0 0 60 50" width="36" height="30" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="8" width="56" height="38" rx="2" fill="none" stroke="#6b4c2a" stroke-width="2"/>
+            <circle cx="30" cy="28" r="10" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+            <circle cx="30" cy="28" r="4" fill="#6b4c2a" opacity="0.3"/>
+            <rect x="20" y="2" width="20" height="6" rx="1" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+          </svg>
+          <div class="photo-placeholder-text">
+            石库门建筑<br>
+            <!-- __FIELD__: 实地拍摄照片后粘贴 -->
+            （照片待填入）
+          </div>
+          <div class="card-hidden-number"><!-- __FIELD__: 隐藏编号 -->·</div>
+        </div>
+        <div class="photo-card-info">
+          <div class="card-letter-label">A</div>
+          <div class="card-location-hint">
+            <!-- __FIELD__: 对应建筑门牌号 -->
+            门牌号：待填<br>
+            单/双号：待验
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card B -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <!-- __FIELD__: 新天地石库门建筑照片B——实地拍摄后替换此占位符 -->
+          <svg class="photo-icon" viewBox="0 0 60 50" width="36" height="30" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="8" width="56" height="38" rx="2" fill="none" stroke="#6b4c2a" stroke-width="2"/>
+            <circle cx="30" cy="28" r="10" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+            <circle cx="30" cy="28" r="4" fill="#6b4c2a" opacity="0.3"/>
+            <rect x="20" y="2" width="20" height="6" rx="1" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+          </svg>
+          <div class="photo-placeholder-text">
+            石库门建筑<br>
+            <!-- __FIELD__: 实地拍摄照片后粘贴 -->
+            （照片待填入）
+          </div>
+          <div class="card-hidden-number"><!-- __FIELD__: 隐藏编号 -->·</div>
+        </div>
+        <div class="photo-card-info">
+          <div class="card-letter-label">B</div>
+          <div class="card-location-hint">
+            <!-- __FIELD__: 对应建筑门牌号 -->
+            门牌号：待填<br>
+            单/双号：待验
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card C -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <!-- __FIELD__: 新天地石库门建筑照片C——实地拍摄后替换此占位符 -->
+          <svg class="photo-icon" viewBox="0 0 60 50" width="36" height="30" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="8" width="56" height="38" rx="2" fill="none" stroke="#6b4c2a" stroke-width="2"/>
+            <circle cx="30" cy="28" r="10" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+            <circle cx="30" cy="28" r="4" fill="#6b4c2a" opacity="0.3"/>
+            <rect x="20" y="2" width="20" height="6" rx="1" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+          </svg>
+          <div class="photo-placeholder-text">
+            石库门建筑<br>
+            （照片待填入）
+          </div>
+          <div class="card-hidden-number">·</div>
+        </div>
+        <div class="photo-card-info">
+          <div class="card-letter-label">C</div>
+          <div class="card-location-hint">
+            门牌号：待填<br>
+            单/双号：待验
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card D -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <!-- __FIELD__: 新天地石库门建筑照片D——实地拍摄后替换此占位符 -->
+          <svg class="photo-icon" viewBox="0 0 60 50" width="36" height="30" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="8" width="56" height="38" rx="2" fill="none" stroke="#6b4c2a" stroke-width="2"/>
+            <circle cx="30" cy="28" r="10" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+            <circle cx="30" cy="28" r="4" fill="#6b4c2a" opacity="0.3"/>
+            <rect x="20" y="2" width="20" height="6" rx="1" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+          </svg>
+          <div class="photo-placeholder-text">
+            石库门建筑<br>
+            （照片待填入）
+          </div>
+          <div class="card-hidden-number">·</div>
+        </div>
+        <div class="photo-card-info">
+          <div class="card-letter-label">D</div>
+          <div class="card-location-hint">
+            门牌号：待填<br>
+            单/双号：待验
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card E -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <!-- __FIELD__: 新天地石库门建筑照片E——实地拍摄后替换此占位符 -->
+          <svg class="photo-icon" viewBox="0 0 60 50" width="36" height="30" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="8" width="56" height="38" rx="2" fill="none" stroke="#6b4c2a" stroke-width="2"/>
+            <circle cx="30" cy="28" r="10" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+            <circle cx="30" cy="28" r="4" fill="#6b4c2a" opacity="0.3"/>
+            <rect x="20" y="2" width="20" height="6" rx="1" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+          </svg>
+          <div class="photo-placeholder-text">
+            石库门建筑<br>
+            （照片待填入）
+          </div>
+          <div class="card-hidden-number">·</div>
+        </div>
+        <div class="photo-card-info">
+          <div class="card-letter-label">E</div>
+          <div class="card-location-hint">
+            门牌号：待填<br>
+            单/双号：待验
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card F -->
+    <div class="photo-card-wrapper">
+      <div class="photo-card">
+        <div class="photo-placeholder">
+          <!-- __FIELD__: 新天地石库门建筑照片F——实地拍摄后替换此占位符 -->
+          <svg class="photo-icon" viewBox="0 0 60 50" width="36" height="30" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="8" width="56" height="38" rx="2" fill="none" stroke="#6b4c2a" stroke-width="2"/>
+            <circle cx="30" cy="28" r="10" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+            <circle cx="30" cy="28" r="4" fill="#6b4c2a" opacity="0.3"/>
+            <rect x="20" y="2" width="20" height="6" rx="1" fill="none" stroke="#6b4c2a" stroke-width="1.5"/>
+          </svg>
+          <div class="photo-placeholder-text">
+            石库门建筑<br>
+            （照片待填入）
+          </div>
+          <div class="card-hidden-number">·</div>
+        </div>
+        <div class="photo-card-info">
+          <div class="card-letter-label">F</div>
+          <div class="card-location-hint">
+            门牌号：待填<br>
+            单/双号：待验
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /photo-cards-grid -->
+
+  <!-- Instructions -->
+  <div class="photo-instructions">
+    <div class="border-frame">
+      <div style="font-family:'Noto Serif SC',serif;font-size:10px;color:#2a1505;line-height:1.9;">
+        <strong>使用方法（第五站 · 新天地）：</strong><br>
+        ① 将六张照片卡与现场实际石库门建筑一一对照<br>
+        ② 依据门洞比例、砖缝间距、铁门样式进行匹配<br>
+        ③ 找出石门楣铁艺卷草纹中的隐藏人脸位置<br>
+        ④ 确认各卡对应建筑门牌号的奇偶规律<br>
+        <span style="color:#8b6540;"><!-- __FIELD__: 实地核验后在各卡补全门牌号与匹配结果 --></span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

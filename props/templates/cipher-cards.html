@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密码碎片卡 — 第七封密电</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .cards-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .cards-page-title {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+      margin-bottom: 12px;
+    }
+
+    /* Card grid layout: 2 columns */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 85mm 85mm;
+      grid-template-rows: repeat(4, 55mm);
+      gap: 0;
+    }
+
+    /* Individual card wrapper */
+    .card-wrapper {
+      width: 85mm;
+      height: 55mm;
+      padding: 3mm;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Dashed cut border around each card */
+    .card-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 1mm;
+      border: 1.5px dashed #888;
+      pointer-events: none;
+    }
+
+    /* Front face of card */
+    .card-front {
+      width: 100%;
+      height: 100%;
+      background-color: #f0e8d4;
+      background-image:
+        radial-gradient(ellipse at 20% 25%, rgba(180,140,70,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 75%, rgba(140,100,50,0.15) 0%, transparent 50%);
+      border: 1.5px solid #8b6540;
+      padding: 3mm 4mm;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(139,101,64,0.4);
+      padding-bottom: 2mm;
+      margin-bottom: 2mm;
+    }
+
+    .card-station {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #6b4c2a;
+      letter-spacing: 0.15em;
+      border: 1px solid #8b6540;
+      padding: 1px 4px;
+    }
+
+    .card-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a0c05;
+      line-height: 1;
+    }
+
+    /* Handwriting area for fragment */
+    .fragment-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3mm;
+    }
+
+    .fragment-lines {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 5mm;
+    }
+
+    .fragment-line {
+      border-bottom: 1px solid rgba(139,101,64,0.35);
+      height: 5mm;
+      width: 100%;
+    }
+
+    .fragment-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(107,76,42,0.5);
+      letter-spacing: 0.2em;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* Secret eye-of-needle at bottom-right */
+    .card-secret-corner {
+      position: absolute;
+      bottom: 2mm;
+      right: 3mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: rgba(139,101,64,0.35);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── BACK side — page 2 ────────────────────── */
+    .card-back {
+      width: 100%;
+      height: 100%;
+      background-color: #ede3c8;
+      background-image:
+        radial-gradient(ellipse at 70% 30%, rgba(160,120,60,0.2) 0%, transparent 50%);
+      border: 1.5px solid #6b4c2a;
+      padding: 2mm 3mm;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .back-building-area {
+      flex: 1;
+      border: 1px dashed rgba(107,76,42,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgba(245,240,230,0.3);
+    }
+
+    .building-placeholder {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(107,76,42,0.35);
+      text-align: center;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* SVG building outline hint */
+    .building-outline-svg {
+      position: absolute;
+      opacity: 0.12;
+    }
+
+    .back-number {
+      position: absolute;
+      bottom: 2.5mm;
+      right: 3mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a3020;
+      opacity: 0.6;
+    }
+
+    .back-station-dot {
+      position: absolute;
+      top: 2mm;
+      left: 3mm;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #8b6540;
+      opacity: 0.5;
+    }
+
+    /* Page 2 instructions note */
+    .back-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: rgba(74,48,32,0.5);
+      text-align: center;
+      margin-top: 1mm;
+      letter-spacing: 0.1em;
+    }
+
+    /* Scissors hint row between cut cards */
+    .cut-hint {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #888;
+      letter-spacing: 0.2em;
+      padding: 1mm 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ PAGE 1: CARD FRONTS ════ -->
+<div class="page cards-page">
+
+  <div class="cards-page-title">
+    <div class="title" style="font-size:16px;">密码碎片卡 — 正面</div>
+    <div class="subtitle">CIPHER FRAGMENT CARDS (FRONT) · 沿虚线剪下 · 共七张</div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点一 · Station 1</span>
+          <span class="card-number">① 一</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-lines">
+            <div class="fragment-line"></div>
+            <div class="fragment-line"></div>
+            <!-- __FIELD__: 现场手写填入第一站密码碎片 -->
+          </div>
+          <div class="fragment-label">和平饭店 · Peace Hotel</div>
+        </div>
+        <div class="card-secret-corner">鹤影</div>
+      </div>
+    </div>
+
+    <!-- Card 2 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点二 · Station 2</span>
+          <span class="card-number">② 二</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-lines">
+            <div class="fragment-line"></div>
+            <div class="fragment-line"></div>
+            <!-- __FIELD__: 现场手写填入第二站密码碎片 -->
+          </div>
+          <div class="fragment-label">海关大楼 · Customs House</div>
+        </div>
+        <div class="card-secret-corner">鹤影</div>
+      </div>
+    </div>
+
+    <!-- Card 3 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点三 · Station 3</span>
+          <span class="card-number">③ 三</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-lines">
+            <div class="fragment-line"></div>
+            <div class="fragment-line"></div>
+            <!-- __FIELD__: 现场手写填入第三站密码碎片 -->
+          </div>
+          <div class="fragment-label">汇丰银行 · HSBC Building</div>
+        </div>
+        <div class="card-secret-corner">鹤影</div>
+      </div>
+    </div>
+
+    <!-- Card 4 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点四 · Station 4</span>
+          <span class="card-number">④ 四</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-lines">
+            <div class="fragment-line"></div>
+            <div class="fragment-line"></div>
+            <!-- __FIELD__: 现场手写填入第四站密码碎片 -->
+          </div>
+          <div class="fragment-label">豫园九曲桥 · Zigzag Bridge</div>
+        </div>
+        <div class="card-secret-corner">鹤影</div>
+      </div>
+    </div>
+
+    <!-- Card 5 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点五 · Station 5</span>
+          <span class="card-number">⑤ 五</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-lines">
+            <div class="fragment-line"></div>
+            <div class="fragment-line"></div>
+            <!-- __FIELD__: 现场手写填入第五站密码碎片 -->
+          </div>
+          <div class="fragment-label">新天地 · Xintiandi</div>
+        </div>
+        <div class="card-secret-corner">鹤影</div>
+      </div>
+    </div>
+
+    <!-- Card 6 Front -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点六 · Station 6</span>
+          <span class="card-number">⑥ 六</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-lines">
+            <div class="fragment-line"></div>
+            <div class="fragment-line"></div>
+            <!-- __FIELD__: 现场手写填入第六站密码碎片 -->
+          </div>
+          <div class="fragment-label">思南公馆 · Sinan Mansions</div>
+        </div>
+        <div class="card-secret-corner">鹤影</div>
+      </div>
+    </div>
+
+    <!-- Card 7 Front (single, spans col 1) -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-station">站点七 · Station 7</span>
+          <span class="card-number">⑦ 七</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-label">密码碎片 · Cipher Fragment</div>
+          <div class="fragment-lines">
+            <div class="fragment-line"></div>
+            <div class="fragment-line"></div>
+            <!-- __FIELD__: 现场手写填入第七站密码碎片（武康大楼最终站） -->
+          </div>
+          <div class="fragment-label">武康大楼 · Wukang Building</div>
+        </div>
+        <div class="card-secret-corner">鹤影</div>
+      </div>
+    </div>
+
+    <!-- Empty placeholder for grid symmetry -->
+    <div class="card-wrapper" style="opacity:0;pointer-events:none;"></div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 1 -->
+
+<!-- ════ PAGE 2: CARD BACKS ════ -->
+<div class="page cards-page">
+
+  <div class="cards-page-title">
+    <div class="title" style="font-size:16px;">密码碎片卡 — 背面</div>
+    <div class="subtitle">CIPHER FRAGMENT CARDS (BACK) · 翻面对齐后剪下</div>
+  </div>
+
+  <div class="instruction-box" style="width:168mm;margin-bottom:10px;font-size:10px;">
+    背面含大楼轮廓局部图（待实地补全），右下角小数字为读取顺序编号。将七张卡背面朝上，按数字顺序拼合，还原武康大楼全貌轮廓，即得最终密码读取顺序。
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-building-area">
+          <!-- __FIELD__: 武康大楼轮廓局部图（片段1）——实地拍照后绘制 -->
+          <svg class="building-outline-svg" viewBox="0 0 200 120" width="90%" height="90%">
+            <rect x="10" y="20" width="180" height="90" fill="none" stroke="#4a3020" stroke-width="2"/>
+            <line x1="10" y1="60" x2="190" y2="60" stroke="#4a3020" stroke-width="1"/>
+            <rect x="80" y="20" width="40" height="20" fill="none" stroke="#4a3020" stroke-width="1.5"/>
+          </svg>
+          <div class="building-placeholder">
+            大楼轮廓局部<br>
+            <!-- __FIELD__: 补充实地建筑线稿 -->
+            （待实地绘制）
+          </div>
+        </div>
+        <div class="back-note">拼合七片 → 还原武康大楼全貌</div>
+        <div class="back-number"><!-- __FIELD__: 读取顺序数字 -->?</div>
+      </div>
+    </div>
+
+    <!-- Card 2 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-building-area">
+          <!-- __FIELD__: 武康大楼轮廓局部图（片段2）——实地拍照后绘制 -->
+          <svg class="building-outline-svg" viewBox="0 0 200 120" width="90%" height="90%">
+            <path d="M10,110 L10,20 Q40,10 100,15 Q160,10 190,20 L190,110" fill="none" stroke="#4a3020" stroke-width="2"/>
+            <line x1="10" y1="70" x2="190" y2="70" stroke="#4a3020" stroke-width="1"/>
+          </svg>
+          <div class="building-placeholder">大楼轮廓局部<br>（待实地绘制）</div>
+        </div>
+        <div class="back-note">拼合七片 → 还原武康大楼全貌</div>
+        <div class="back-number">?</div>
+      </div>
+    </div>
+
+    <!-- Card 3 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-building-area">
+          <!-- __FIELD__: 武康大楼轮廓局部图（片段3）——实地拍照后绘制 -->
+          <svg class="building-outline-svg" viewBox="0 0 200 120" width="90%" height="90%">
+            <rect x="20" y="10" width="160" height="100" fill="none" stroke="#4a3020" stroke-width="2" rx="5"/>
+            <rect x="60" y="10" width="80" height="30" fill="none" stroke="#4a3020" stroke-width="1.5"/>
+          </svg>
+          <div class="building-placeholder">大楼轮廓局部<br>（待实地绘制）</div>
+        </div>
+        <div class="back-note">拼合七片 → 还原武康大楼全貌</div>
+        <div class="back-number">?</div>
+      </div>
+    </div>
+
+    <!-- Card 4 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-building-area">
+          <!-- __FIELD__: 武康大楼轮廓局部图（片段4）——实地拍照后绘制 -->
+          <svg class="building-outline-svg" viewBox="0 0 200 120" width="90%" height="90%">
+            <path d="M100,5 L190,110 L10,110 Z" fill="none" stroke="#4a3020" stroke-width="2"/>
+            <line x1="100" y1="40" x2="155" y2="110" stroke="#4a3020" stroke-width="1"/>
+          </svg>
+          <div class="building-placeholder">大楼轮廓局部<br>（待实地绘制）</div>
+        </div>
+        <div class="back-note">拼合七片 → 还原武康大楼全貌</div>
+        <div class="back-number">?</div>
+      </div>
+    </div>
+
+    <!-- Card 5 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-building-area">
+          <!-- __FIELD__: 武康大楼轮廓局部图（片段5）——实地拍照后绘制 -->
+          <svg class="building-outline-svg" viewBox="0 0 200 120" width="90%" height="90%">
+            <ellipse cx="100" cy="60" rx="80" ry="50" fill="none" stroke="#4a3020" stroke-width="2"/>
+            <line x1="30" y1="60" x2="170" y2="60" stroke="#4a3020" stroke-width="1"/>
+          </svg>
+          <div class="building-placeholder">大楼轮廓局部<br>（待实地绘制）</div>
+        </div>
+        <div class="back-note">拼合七片 → 还原武康大楼全貌</div>
+        <div class="back-number">?</div>
+      </div>
+    </div>
+
+    <!-- Card 6 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-building-area">
+          <!-- __FIELD__: 武康大楼轮廓局部图（片段6）——实地拍照后绘制 -->
+          <svg class="building-outline-svg" viewBox="0 0 200 120" width="90%" height="90%">
+            <rect x="10" y="30" width="180" height="80" fill="none" stroke="#4a3020" stroke-width="2"/>
+            <rect x="40" y="10" width="40" height="20" fill="none" stroke="#4a3020" stroke-width="1.5"/>
+            <rect x="120" y="10" width="40" height="20" fill="none" stroke="#4a3020" stroke-width="1.5"/>
+          </svg>
+          <div class="building-placeholder">大楼轮廓局部<br>（待实地绘制）</div>
+        </div>
+        <div class="back-note">拼合七片 → 还原武康大楼全貌</div>
+        <div class="back-number">?</div>
+      </div>
+    </div>
+
+    <!-- Card 7 Back -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-station-dot"></div>
+        <div class="back-building-area">
+          <!-- __FIELD__: 武康大楼轮廓局部图（片段7·船头）——实地拍照后绘制 -->
+          <svg class="building-outline-svg" viewBox="0 0 200 120" width="90%" height="90%">
+            <!-- Ship prow shape (Wukang Building is boat-shaped, prow faces north) -->
+            <path d="M 100,5 L 190,110 L 10,110 Z" fill="none" stroke="#4a3020" stroke-width="2.5"/>
+            <path d="M 100,5 L 100,110" stroke="#4a3020" stroke-width="1" stroke-dasharray="4,3"/>
+          </svg>
+          <div class="building-placeholder">大楼轮廓局部<br>船头（武康路尖角）<br>（待实地绘制）</div>
+        </div>
+        <div class="back-note">拼合七片 → 还原武康大楼全貌</div>
+        <div class="back-number">?</div>
+      </div>
+    </div>
+
+    <!-- Spacer -->
+    <div class="card-wrapper" style="opacity:0;pointer-events:none;"></div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 2 -->
+
+</body>
+</html>
