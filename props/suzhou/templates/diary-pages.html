@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日记页 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ── Suzhou palette overrides ─────────────────────────── */
+    :root {
+      --sz-red:       #C85A5A;
+      --sz-bg:        #F5F0E8;
+      --sz-text:      #3A3226;
+      --sz-secondary: #8B7E6A;
+      --sz-gold:      #D4A574;
+      --sz-ink:       rgba(58,50,38,0.85);
+    }
+
+    /* ── Seal stamp ──────────────────────────────────────── */
+    .jiejing-seal {
+      display: inline-block;
+      border: 2px double var(--sz-red);
+      color: var(--sz-red);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      transform: rotate(-4deg);
+      opacity: 0.72;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .page-seal-corner {
+      position: absolute;
+      top: 14mm;
+      right: 14mm;
+    }
+
+    /* ── Shared page header ──────────────────────────────── */
+    .diary-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--sz-red);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+
+    .station-tag {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: var(--sz-secondary);
+      border: 1px solid var(--sz-red);
+      padding: 3px 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .location-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--sz-text);
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .opera-ref {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      text-align: right;
+      font-style: italic;
+      line-height: 1.8;
+    }
+
+    /* ── Cut/fold line footer ────────────────────────────── */
+    .diary-footer {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1.5px dashed var(--sz-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(139,126,106,0.6);
+      letter-spacing: 0.15em;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE 1 — 场记 (Stage directions, typewriter)
+       ════════════════════════════════════════════════════════ */
+    .p1-body {
+      font-family: 'Courier New', 'Courier', monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: var(--sz-text);
+      letter-spacing: 0.04em;
+    }
+
+    .p1-stage-dir {
+      font-size: 11px;
+      color: var(--sz-secondary);
+      font-style: italic;
+      border-left: 3px solid var(--sz-red);
+      padding-left: 10px;
+      margin: 10px 0;
+    }
+
+    .p1-para {
+      margin-bottom: 0.8em;
+      text-indent: 0;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE 2 — 唱词旁批 (Two-column: lyrics + annotations)
+       ════════════════════════════════════════════════════════ */
+    .p2-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid rgba(200,90,90,0.25);
+    }
+
+    .p2-left {
+      padding: 12px 14px;
+      border-right: 1.5px solid var(--sz-red);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      line-height: 2.4;
+      color: rgba(58,50,38,0.55);
+      letter-spacing: 0.1em;
+    }
+
+    .p2-right {
+      padding: 12px 14px;
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 13px;
+      line-height: 2.4;
+      color: var(--sz-text);
+      letter-spacing: 0.06em;
+    }
+
+    .p2-col-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.2em;
+      border-bottom: 1px solid rgba(200,90,90,0.3);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .p2-lyric-line {
+      display: block;
+      margin-bottom: 0.3em;
+    }
+
+    .p2-annotation {
+      display: block;
+      margin-bottom: 0.3em;
+      color: var(--sz-text);
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE 3 — 妆台碎语 (Scattered layout, mirror element)
+       ════════════════════════════════════════════════════════ */
+    .p3-scatter {
+      position: relative;
+      min-height: 180mm;
+    }
+
+    .p3-mirror {
+      width: 60mm;
+      height: 75mm;
+      border: 2px solid var(--sz-red);
+      border-radius: 50% 50% 45% 45%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at center, rgba(245,240,232,0.8) 0%, rgba(212,165,116,0.15) 100%);
+      position: relative;
+    }
+
+    .p3-mirror-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: rgba(200,90,90,0.5);
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+
+    .p3-frag {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--sz-text);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .p3-frag-sm {
+      font-size: 11px;
+      color: var(--sz-secondary);
+      transform: rotate(-1.2deg);
+      display: inline-block;
+    }
+
+    .p3-frag-lg {
+      font-size: 17px;
+      color: var(--sz-text);
+    }
+
+    .p3-rotate-right {
+      transform: rotate(1.5deg);
+      display: inline-block;
+      margin-left: 12px;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE 4 — 未寄信 (Formal letter format)
+       ════════════════════════════════════════════════════════ */
+    .p4-letter-wrap {
+      border: 1.5px solid rgba(200,90,90,0.4);
+      padding: 12mm 14mm;
+      background: rgba(245,240,232,0.5);
+      position: relative;
+    }
+
+    .p4-letter-wrap::before {
+      content: '◆';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 12px;
+      color: var(--sz-gold);
+      background: #F5F0E8;
+      padding: 0 4px;
+    }
+
+    .p4-letter-wrap::after {
+      content: '◆';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 12px;
+      color: var(--sz-gold);
+      background: #F5F0E8;
+      padding: 0 4px;
+    }
+
+    .p4-letterhead {
+      text-align: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--sz-red);
+    }
+
+    .p4-letterhead-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sz-text);
+      letter-spacing: 0.35em;
+    }
+
+    .p4-letterhead-date {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.15em;
+      margin-top: 4px;
+    }
+
+    .p4-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.3;
+      color: var(--sz-text);
+      letter-spacing: 0.06em;
+    }
+
+    .p4-body p {
+      margin-bottom: 0.5em;
+      text-indent: 2em;
+    }
+
+    .p4-sig {
+      margin-top: 20px;
+      text-align: right;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: var(--sz-text);
+      line-height: 2;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE 5 — 账册夹注 (Ledger grid with marginalia)
+       ════════════════════════════════════════════════════════ */
+    .p5-ledger {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+    }
+
+    .p5-ledger th {
+      border: 1.5px solid var(--sz-red);
+      padding: 6px 8px;
+      background: rgba(200,90,90,0.07);
+      color: var(--sz-text);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .p5-ledger td {
+      border: 1px solid rgba(139,126,106,0.45);
+      padding: 7px 10px;
+      color: var(--sz-text);
+      line-height: 1.8;
+      vertical-align: top;
+    }
+
+    .p5-ledger tr:nth-child(even) td {
+      background: rgba(212,165,116,0.06);
+    }
+
+    .p5-num-col {
+      text-align: center;
+      font-weight: 700;
+      color: var(--sz-red);
+      width: 24px;
+    }
+
+    .p5-marginalia {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      font-style: italic;
+      letter-spacing: 0.08em;
+    }
+
+    .p5-marginalia-row td {
+      border-top: none !important;
+      border-bottom: 1px solid rgba(139,126,106,0.3) !important;
+      padding: 2px 10px 6px !important;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE 6 — 园中独白 (Full-width prose, night section)
+       ════════════════════════════════════════════════════════ */
+    .p6-night-section {
+      background: rgba(58,50,38,0.06);
+      border-left: 3px solid var(--sz-red);
+      padding: 14px 18px;
+      margin: 14px 0;
+    }
+
+    .p6-prose {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 16px;
+      line-height: 2.6;
+      color: var(--sz-text);
+      letter-spacing: 0.08em;
+    }
+
+    .p6-prose p {
+      margin-bottom: 0.5em;
+      text-indent: 2em;
+    }
+
+    .p6-night-prose {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.5;
+      color: rgba(58,50,38,0.9);
+      letter-spacing: 0.1em;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       PAGE 7 — 空白页 (Minimal, powerful)
+       ════════════════════════════════════════════════════════ */
+    .p7-minimal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 220mm;
+      text-align: center;
+    }
+
+    .p7-quote {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 18px;
+      line-height: 3;
+      color: var(--sz-text);
+      letter-spacing: 0.25em;
+    }
+
+    .p7-subquote {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.2em;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     日记页 第一页 — 盘门·吴门桥
+     格式：场记（打字机体、舞台指示）
+     ════════════════════════════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;background-color:#F5F0E8;">
+
+  <div class="page-seal-corner">
+    <div class="jiejing-seal">站点一<br>STATION 1</div>
+  </div>
+
+  <div class="diary-hdr">
+    <div class="station-tag">第一站 · Station 1</div>
+    <div class="location-title">盘门·吴门桥</div>
+    <div class="opera-ref">琵琶记·赵五娘<br>场记存档</div>
+  </div>
+
+  <div class="p1-body">
+    <div class="p1-stage-dir">【场记 第一卷 · 乾隆四十二年春 · 盘门堂会】</div>
+    <p class="p1-para">赵五娘从桥东上，走到桥心停住——</p>
+    <div class="p1-stage-dir">（低头，看水。停顿三拍。）</div>
+    <p class="p1-para">这段戏要演得慢，脚步不能急。水里有另一个她。</p>
+    <div class="p1-stage-dir">（注：沈云筝旁注——「借这座桥走一遍台位。」）</div>
+    <p class="p1-para">借这座桥走一遍台位。赵五娘从桥东上，走到桥心停住——低头看水，水里有另一个她。这段戏要演得慢，脚步不能急。我站在吴门桥上，替她走了一遍。水里也有另一个我。那个人不用唱戏。</p>
+    <div class="p1-stage-dir">（场散后备注：她在水里看见过另一个自己，那个不用唱戏的自己。）</div>
+  </div>
+
+  <hr class="cut-line" style="margin-top:auto;">
+  <div class="diary-footer">
+    <span>✂ 沿此线裁下</span>
+    <span>日记页 · 姑苏折子 · 第一站</span>
+    <span>借景 · 一</span>
+  </div>
+
+</div><!-- /page 1 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     日记页 第二页 — 苏州文庙
+     格式：唱词旁批（双栏：印刷唱词 + 手写批注）
+     ════════════════════════════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;background-color:#F5F0E8;">
+
+  <div class="page-seal-corner">
+    <div class="jiejing-seal">站点二<br>STATION 2</div>
+  </div>
+
+  <div class="diary-hdr">
+    <div class="station-tag">第二站 · Station 2</div>
+    <div class="location-title">苏州文庙</div>
+    <div class="opera-ref">桃花扇·李香君<br>唱词旁批</div>
+  </div>
+
+  <div class="p2-columns">
+    <div class="p2-left">
+      <span class="p2-col-label">唱词（刻印本）</span>
+      <span class="p2-lyric-line">血溅桃花扇，</span>
+      <span class="p2-lyric-line">情根难断。</span>
+      <span class="p2-lyric-line">碑上的字会模糊，</span>
+      <span class="p2-lyric-line">树的年轮不会。</span>
+      <span class="p2-lyric-line">把血溅在扇面上，</span>
+      <span class="p2-lyric-line">我把字藏在星星里。</span>
+      <span class="p2-lyric-line">文庙的柏树比碑还老。</span>
+    </div>
+    <div class="p2-right">
+      <span class="p2-col-label">旁批（沈云筝手书）</span>
+      <span class="p2-annotation">景致再好也要记在碑上才算数——</span>
+      <span class="p2-annotation">这是李香君教我的。</span>
+      <span class="p2-annotation">她把血溅在扇面上，</span>
+      <span class="p2-annotation">我把字藏在星星里。</span>
+      <span class="p2-annotation">文庙的柏树比碑还老。</span>
+      <span class="p2-annotation">碑上的字会模糊，</span>
+      <span class="p2-annotation">树的年轮不会。</span>
+    </div>
+  </div>
+
+  <hr class="cut-line" style="margin-top:auto;">
+  <div class="diary-footer">
+    <span>✂ 沿此线裁下</span>
+    <span>日记页 · 姑苏折子 · 第二站</span>
+    <span>借景 · 二</span>
+  </div>
+
+</div><!-- /page 2 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     日记页 第三页 — 双塔·定慧寺巷
+     格式：妆台碎语（散落布局，镜形元素，旋转文字）
+     ════════════════════════════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;background-color:#F5F0E8;">
+
+  <div class="page-seal-corner">
+    <div class="jiejing-seal">站点三<br>STATION 3</div>
+  </div>
+
+  <div class="diary-hdr">
+    <div class="station-tag">第三站 · Station 3</div>
+    <div class="location-title">双塔·定慧寺巷</div>
+    <div class="opera-ref">牡丹亭·杜丽娘<br>妆台碎语</div>
+  </div>
+
+  <div class="p3-scatter">
+
+    <!-- Mirror element (centered) -->
+    <div class="p3-mirror">
+      <div class="p3-mirror-text">铜镜所见<br>左右相反</div>
+    </div>
+
+    <div class="p3-frag">
+      <span class="p3-frag-sm">入了妆就不是自己了。</span>
+    </div>
+
+    <div class="p3-frag">
+      <span class="p3-frag-lg">杜丽娘的粉要薄，像刚睡醒。</span>
+    </div>
+
+    <div class="p3-frag">
+      她是真的在梦里见过那个人，还是自己编的？
+      <span class="p3-rotate-right p3-frag-sm">（台上那个是我，还是台下这个是我？）</span>
+    </div>
+
+    <div class="p3-frag" style="margin-top:10px;">
+      梦里的那个人长得和她一模一样，只是左右反了。
+    </div>
+
+    <div class="p3-frag p3-frag-sm" style="text-align:right;margin-top:14px;">
+      两座塔站在一起，像一个人和她的影子。
+    </div>
+
+  </div>
+
+  <hr class="cut-line" style="margin-top:auto;">
+  <div class="diary-footer">
+    <span>✂ 沿此线裁下</span>
+    <span>日记页 · 姑苏折子 · 第三站</span>
+    <span>借景 · 三</span>
+  </div>
+
+</div><!-- /page 3 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     日记页 第四页 — 耦园外·仓街水巷
+     格式：未寄信（正式信函格式，手写体）
+     ════════════════════════════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;background-color:#F5F0E8;">
+
+  <div class="page-seal-corner">
+    <div class="jiejing-seal">站点四<br>STATION 4</div>
+  </div>
+
+  <div class="diary-hdr">
+    <div class="station-tag">第四站 · Station 4</div>
+    <div class="location-title">耦园外·仓街水巷</div>
+    <div class="opera-ref">西厢记·崔莺莺<br>未寄信</div>
+  </div>
+
+  <div class="p4-letter-wrap">
+
+    <div class="p4-letterhead">
+      <div class="p4-letterhead-title">未　寄</div>
+      <div class="p4-letterhead-date">乾隆四十二年 某月某日 · 耦园外</div>
+    </div>
+
+    <div class="p4-body">
+      <p>你大概不记得了。那天在沧浪亭演《西厢》，你坐在第三排。</p>
+      <p>散戏后你站起来，我在台上还没卸妆。</p>
+      <p>梦里隔着墙听见有人念书。我站在耦园墙外，透过漏窗看见里面的绿。崔莺莺也是这样——隔着墙听见张生的琴声。</p>
+      <p>够不着的最好看，够着了就是戏散了。</p>
+    </div>
+
+    <div class="p4-sig">
+      ——未寄出<br>
+      <span style="font-size:11px;color:#8B7E6A;">（此信藏于耦园花窗夹层，寄信人不详）</span>
+    </div>
+
+  </div>
+
+  <hr class="cut-line" style="margin-top:auto;">
+  <div class="diary-footer">
+    <span>✂ 沿此线裁下</span>
+    <span>日记页 · 姑苏折子 · 第四站</span>
+    <span>借景 · 四</span>
+  </div>
+
+</div><!-- /page 4 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     日记页 第五页 — 平江路·悬桥巷
+     格式：账册夹注（账目表格，行间斜体旁注）
+     ════════════════════════════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;background-color:#F5F0E8;">
+
+  <div class="page-seal-corner">
+    <div class="jiejing-seal">站点五<br>STATION 5</div>
+  </div>
+
+  <div class="diary-hdr">
+    <div class="station-tag">第五站 · Station 5</div>
+    <div class="location-title">平江路·悬桥巷</div>
+    <div class="opera-ref">玉簪记·陈妙常<br>账册夹注</div>
+  </div>
+
+  <table class="p5-ledger">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>日期</th>
+        <th>事项</th>
+        <th>包银</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="p5-num-col">一</td>
+        <td>三月初九</td>
+        <td>沧浪亭堂会</td>
+        <td>二两四钱</td>
+      </tr>
+      <tr class="p5-marginalia-row">
+        <td></td>
+        <td colspan="3"><span class="p5-marginalia">旁注：今日路过悬桥巷，有一扇门是杨妃的颜色。</span></td>
+      </tr>
+      <tr>
+        <td class="p5-num-col">二</td>
+        <td>三月十五</td>
+        <td>桃花坞堂会</td>
+        <td>一两八钱</td>
+      </tr>
+      <tr class="p5-marginalia-row">
+        <td></td>
+        <td colspan="3"><span class="p5-marginalia">旁注：桂花糕，二文。茶点自备。</span></td>
+      </tr>
+      <tr>
+        <td class="p5-num-col">三</td>
+        <td>三月廿三</td>
+        <td>文庙堂会</td>
+        <td>二两</td>
+      </tr>
+      <tr class="p5-marginalia-row">
+        <td></td>
+        <td colspan="3"><span class="p5-marginalia">旁注：戏班账册，茶点自备。——戏散后在柏树下站了很久。</span></td>
+      </tr>
+      <tr>
+        <td class="p5-num-col">四</td>
+        <td>四月初二</td>
+        <td>山塘街堂会</td>
+        <td>二两六钱</td>
+      </tr>
+      <tr class="p5-marginalia-row">
+        <td></td>
+        <td colspan="3"><span class="p5-marginalia">旁注：戏演完了，别鼓掌。安安静静走就好。</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:14px;font-family:'ZCOOL XiaoWei','KaiTi',cursive;font-size:14px;line-height:2.2;color:#3A3226;">
+    戏班账册，三月初九，沧浪亭堂会，包银二两四钱，茶点自备。——今日路过悬桥巷，有一扇门是杨妃的颜色。桂花糕，二文。
+  </div>
+
+  <hr class="cut-line" style="margin-top:auto;">
+  <div class="diary-footer">
+    <span>✂ 沿此线裁下</span>
+    <span>日记页 · 姑苏折子 · 第五站</span>
+    <span>借景 · 五</span>
+  </div>
+
+</div><!-- /page 5 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     日记页 第六页 — 桃花坞
+     格式：园中独白（宽行距衬线，夜晚氛围深色区块）
+     ════════════════════════════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;background-color:#F5F0E8;">
+
+  <div class="page-seal-corner">
+    <div class="jiejing-seal">站点六<br>STATION 6</div>
+  </div>
+
+  <div class="diary-hdr">
+    <div class="station-tag">第六站 · Station 6</div>
+    <div class="location-title">桃花坞</div>
+    <div class="opera-ref">长生殿·杨玉环<br>园中独白</div>
+  </div>
+
+  <div class="p6-prose">
+    <p>如果不是这身道袍，陈妙常大概早就跑了。但她穿着它，只好把心事藏在袖子里。</p>
+    <p>桃花坞的年画红得发烫、绿得冒烟。我散场后走到这里，满眼的颜色像打翻了妆奁。</p>
+  </div>
+
+  <div class="p6-night-section">
+    <div class="p6-night-prose">
+      唱戏要淡，做人要浓——我搞反了一辈子。
+    </div>
+  </div>
+
+  <div class="p6-prose">
+    <p>那些颜色是她们的。我只会把颜色穿在身上，却不知道怎么把颜色留下来。</p>
+    <p>如果我不唱戏，我会做什么？大概也是在桃花坞里，把颜色记在纸上。</p>
+  </div>
+
+  <hr class="cut-line" style="margin-top:auto;">
+  <div class="diary-footer">
+    <span>✂ 沿此线裁下</span>
+    <span>日记页 · 姑苏折子 · 第六站</span>
+    <span>借景 · 六</span>
+  </div>
+
+</div><!-- /page 6 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     日记页 第七页 — 山塘街·星桥
+     格式：空白页（极简，留白，最少文字，最大力量）
+     ════════════════════════════════════════════════════════ -->
+<div class="page" style="display:flex;flex-direction:column;background-color:#F5F0E8;">
+
+  <div class="page-seal-corner">
+    <div class="jiejing-seal">站点七<br>STATION 7</div>
+  </div>
+
+  <div class="diary-hdr" style="border-bottom-color:rgba(200,90,90,0.3);">
+    <div class="station-tag">第七站 · Station 7</div>
+    <div class="location-title">山塘街·星桥</div>
+    <div class="opera-ref">（无戏）· 沈云筝</div>
+  </div>
+
+  <div class="p7-minimal">
+
+    <div class="p7-quote">
+      你走完了我走过的路。
+    </div>
+
+    <div class="p7-quote" style="font-size:14px;color:#8B7E6A;margin-top:32px;">
+      都是偷来的。
+    </div>
+
+    <div class="p7-quote" style="font-size:16px;margin-top:32px;">
+      但你走进来了——
+    </div>
+
+    <div class="p7-quote" style="font-size:20px;color:#C85A5A;letter-spacing:0.3em;margin-top:12px;">
+      就算有人来过。
+    </div>
+
+    <div class="p7-subquote">
+      ——沈云筝 · 乾隆四十二年 · 借景入梦戏如真
+    </div>
+
+  </div>
+
+  <!-- Acrostic reveal -->
+  <div class="border-frame" style="margin-top:auto;border-color:#C85A5A;text-align:center;">
+    <div class="handwriting" style="font-size:12px;letter-spacing:0.3em;color:#C85A5A;">
+      七页首字连读：借 景 入 梦 戏 如 真
+    </div>
+  </div>
+
+  <hr class="cut-line">
+  <div class="diary-footer">
+    <span>✂ 沿此线裁下</span>
+    <span>日记页 · 姑苏折子 · 第七站</span>
+    <span>借景 · 七</span>
+  </div>
+
+</div><!-- /page 7 -->
+
+</body>
+</html>
