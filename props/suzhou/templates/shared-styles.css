@@ -1,0 +1,228 @@
+/* ============================================================
+   姑苏折子 — Shared Suzhou Garden Styles
+   Used by all printable prop templates (Suzhou edition)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap');
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Page Setup ─────────────────────────────────────────── */
+@page {
+  size: A4 portrait;
+  margin: 15mm;
+}
+
+html, body {
+  font-family: 'Noto Serif SC', 'SimSun', serif;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #3A3226;
+  background: #D8CFC0;
+}
+
+/* ── .page — A4 page simulation ─────────────────────────── */
+.page {
+  width: 210mm;
+  min-height: 277mm;
+  margin: 0 auto 20px;
+  padding: 18mm 20mm 18mm 20mm;
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+
+  /* Moon-white parchment texture */
+  background-color: #F5F0E8;
+  background-image:
+    radial-gradient(ellipse at 15% 20%, rgba(200,90,90,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(180,160,120,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(160,140,100,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse at 90% 10%, rgba(140,110,70,0.07) 0%, transparent 40%),
+    radial-gradient(ellipse at 10% 85%, rgba(200,90,90,0.04) 0%, transparent 45%);
+
+  border: 1px solid rgba(200,90,90,0.20);
+  box-shadow:
+    inset 0 0 40px rgba(180,160,120,0.08),
+    2px 3px 8px rgba(0,0,0,0.12);
+}
+
+/* ── .page-a5 — A5 page simulation ──────────────────────── */
+.page-a5 {
+  width: 148mm;
+  min-height: 210mm;
+  margin: 0 auto 20px;
+  padding: 14mm 16mm;
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+
+  background-color: #F5F0E8;
+  background-image:
+    radial-gradient(ellipse at 20% 25%, rgba(200,90,90,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(180,160,120,0.07) 0%, transparent 50%);
+
+  border: 1px solid rgba(200,90,90,0.20);
+  box-shadow:
+    inset 0 0 30px rgba(180,160,120,0.07),
+    2px 3px 8px rgba(0,0,0,0.12);
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+.handwriting {
+  font-family: 'ZCOOL XiaoWei', 'KaiTi', 'STKaiti', cursive;
+  font-size: 15px;
+  line-height: 2;
+  color: #3A3226;
+  letter-spacing: 0.05em;
+}
+
+h1, h2, h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  color: #3A3226;
+}
+
+/* ── .title — Main page title ───────────────────────────── */
+.title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-align: center;
+  color: #C85A5A;
+  margin-bottom: 4px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+}
+
+/* ── .subtitle — Secondary heading ──────────────────────── */
+.subtitle {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-align: center;
+  color: #8A7060;
+  margin-bottom: 12px;
+}
+
+/* ── .border-frame — Decorative ruled box ───────────────── */
+.border-frame {
+  border: 2px solid #C85A5A;
+  border-radius: 2px;
+  padding: 12px 16px;
+  position: relative;
+  margin: 12px 0;
+}
+
+.border-frame::before,
+.border-frame::after {
+  content: '◇';
+  position: absolute;
+  top: -10px;
+  font-size: 12px;
+  color: #C85A5A;
+  background: #F5F0E8;
+  padding: 0 4px;
+}
+
+.border-frame::before { left: 16px; }
+.border-frame::after  { right: 16px; }
+
+/* ── .stamp — Official-looking stamp block ──────────────── */
+.stamp {
+  display: inline-block;
+  border: 3px double #C85A5A;
+  color: #C85A5A;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 6px 14px;
+  transform: rotate(-4deg);
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* ── .divider — Horizontal rule ─────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid #C85A5A;
+  margin: 12px 0;
+  opacity: 0.35;
+}
+
+/* ── .cut-line — Dashed scissors cut guide ──────────────── */
+.cut-line {
+  border: none;
+  border-top: 1.5px dashed #AAA;
+  margin: 8px 0;
+  position: relative;
+}
+
+.cut-line::before {
+  content: '✂';
+  position: absolute;
+  left: -4px;
+  top: -10px;
+  font-size: 14px;
+  color: #AAA;
+  background: transparent;
+}
+
+/* ── .field-placeholder — __FIELD__ marker styling ──────── */
+.field-placeholder {
+  background: rgba(200,90,90,0.08);
+  border: 1px dashed #C85A5A;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: #C85A5A;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+/* ── .instruction-box — Player instructions ─────────────── */
+.instruction-box {
+  background: rgba(200,90,90,0.06);
+  border-left: 3px solid #C85A5A;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #5A3A30;
+  margin: 12px 0;
+}
+
+/* ── .page-corner-stamp ──────────────────────────────────── */
+.page-corner-stamp {
+  position: absolute;
+  top: 14mm;
+  right: 16mm;
+}
+
+/* ── .no-print — Hidden in print mode ───────────────────── */
+.no-print {
+  /* visible on screen */
+}
+
+/* ── Print Media Query ───────────────────────────────────── */
+@media print {
+  html, body {
+    background: white;
+  }
+
+  .page, .page-a5 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

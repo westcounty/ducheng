@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年画底版·桃花坞 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    body {
+      background: #E8E0D0;
+    }
+
+    .woodblock-page {
+      width: 148mm;
+      min-height: 210mm;
+      margin: 0 auto 20px;
+      padding: 8mm;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      background-color: #FAFAF5;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(0,0,0,0.012) 3px,
+          rgba(0,0,0,0.012) 4px
+        );
+      border: 1px solid #AAA;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Alignment marks ── */
+    .reg-mark {
+      position: absolute;
+      width: 6mm;
+      height: 6mm;
+    }
+
+    .reg-mark::before,
+    .reg-mark::after {
+      content: '';
+      position: absolute;
+      background: #333;
+    }
+
+    /* Horizontal bar of cross */
+    .reg-mark::before {
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 0.8px;
+      transform: translateY(-50%);
+    }
+
+    /* Vertical bar of cross */
+    .reg-mark::after {
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 0.8px;
+      transform: translateX(-50%);
+    }
+
+    .reg-mark.tl { top: 3mm; left: 3mm; }
+    .reg-mark.tr { top: 3mm; right: 3mm; }
+    .reg-mark.bl { bottom: 3mm; left: 3mm; }
+    .reg-mark.br { bottom: 3mm; right: 3mm; }
+
+    /* ── Title banner ── */
+    .woodblock-title-banner {
+      text-align: center;
+      margin-bottom: 4mm;
+      padding: 3mm 0 2mm;
+      border-top: 2px solid #333;
+      border-bottom: 1.5px solid #333;
+    }
+
+    .woodblock-title-main {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1A1A1A;
+      letter-spacing: 0.35em;
+    }
+
+    .woodblock-title-sub {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #555;
+      letter-spacing: 0.25em;
+      margin-top: 1mm;
+    }
+
+    /* ── Main illustration area ── */
+    .woodblock-illustration {
+      position: relative;
+      border: 2px solid #333;
+      margin: 0 2mm;
+    }
+
+    /* ── SVG line art ── */
+    .woodblock-svg {
+      display: block;
+      width: 100%;
+    }
+
+    /* ── Color layer text within SVG ── */
+    .layer-red   { fill: #E8788A; }
+    .layer-green { fill: #6B8E6B; }
+    .layer-blue  { fill: #5B7BA5; }
+
+    /* ── Border ornaments ── */
+    .woodblock-border-top,
+    .woodblock-border-bottom {
+      height: 5mm;
+      background-image: repeating-linear-gradient(
+        90deg,
+        #333 0px, #333 2px,
+        transparent 2px, transparent 6px,
+        #333 6px, #333 7px,
+        transparent 7px, transparent 14mm
+      );
+      opacity: 0.15;
+      margin: 0 2mm;
+    }
+
+    .woodblock-border-top {
+      border-top: 1.5px solid #333;
+    }
+
+    .woodblock-border-bottom {
+      border-bottom: 1.5px solid #333;
+    }
+
+    /* ── Instructions footer ── */
+    .woodblock-footer {
+      margin-top: 4mm;
+      padding: 3mm 4mm;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.03);
+    }
+
+    .woodblock-instructions {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #444;
+      line-height: 1.8;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    /* ── Color legend (no-print) ── */
+    .color-legend {
+      display: flex;
+      gap: 6mm;
+      justify-content: center;
+      margin-top: 3mm;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #555;
+    }
+
+    .legend-swatch {
+      width: 4mm;
+      height: 4mm;
+      border-radius: 1px;
+      border: 0.5px solid rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div class="woodblock-page">
+
+  <!-- Corner registration marks -->
+  <div class="reg-mark tl"></div>
+  <div class="reg-mark tr"></div>
+  <div class="reg-mark bl"></div>
+  <div class="reg-mark br"></div>
+
+  <!-- Title Banner -->
+  <div class="woodblock-title-banner">
+    <div class="woodblock-title-main">年画底版·桃花坞</div>
+    <div class="woodblock-title-sub">TAOHUAWU NEW YEAR PRINT · 姑苏折子 · 站六谜题</div>
+  </div>
+
+  <div class="woodblock-border-top"></div>
+
+  <!-- Main illustration — SVG line art with color layers -->
+  <div class="woodblock-illustration">
+    <svg class="woodblock-svg" viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg"
+         style="-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+
+      <!-- ── Background wash ── -->
+      <rect width="400" height="520" fill="#FAFAF5"/>
+
+      <!-- ══ Black outlines — traditional 桃花坞 motifs ══ -->
+
+      <!-- Outer decorative border — double line -->
+      <rect x="8" y="8" width="384" height="504" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+      <rect x="14" y="14" width="372" height="492" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+
+      <!-- Corner flower ornaments (four corners) -->
+      <!-- Top-left -->
+      <circle cx="22" cy="22" r="4" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <line x1="16" y1="22" x2="28" y2="22" stroke="#1A1A1A" stroke-width="0.8"/>
+      <line x1="22" y1="16" x2="22" y2="28" stroke="#1A1A1A" stroke-width="0.8"/>
+      <!-- Top-right -->
+      <circle cx="378" cy="22" r="4" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <line x1="372" y1="22" x2="384" y2="22" stroke="#1A1A1A" stroke-width="0.8"/>
+      <line x1="378" y1="16" x2="378" y2="28" stroke="#1A1A1A" stroke-width="0.8"/>
+      <!-- Bottom-left -->
+      <circle cx="22" cy="498" r="4" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <line x1="16" y1="498" x2="28" y2="498" stroke="#1A1A1A" stroke-width="0.8"/>
+      <line x1="22" y1="492" x2="22" y2="504" stroke="#1A1A1A" stroke-width="0.8"/>
+      <!-- Bottom-right -->
+      <circle cx="378" cy="498" r="4" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <line x1="372" y1="498" x2="384" y2="498" stroke="#1A1A1A" stroke-width="0.8"/>
+      <line x1="378" y1="492" x2="378" y2="504" stroke="#1A1A1A" stroke-width="0.8"/>
+
+      <!-- ── Top panel: Phoenix motif ── -->
+      <!-- Phoenix body -->
+      <ellipse cx="200" cy="90" rx="40" ry="25" fill="none" stroke="#1A1A1A" stroke-width="1.8"/>
+      <!-- Phoenix head -->
+      <circle cx="230" cy="75" r="12" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Crown plumes -->
+      <path d="M225 64 Q228 54 233 48 Q230 58 235 52 Q232 62 237 56" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <!-- Beak -->
+      <path d="M241 74 L248 72 L241 77 Z" fill="#1A1A1A"/>
+      <!-- Eye -->
+      <circle cx="235" cy="73" r="2" fill="#1A1A1A"/>
+      <!-- Long tail feathers -->
+      <path d="M168 95 Q145 110 130 130 Q125 150 135 160" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+      <path d="M165 100 Q140 120 128 145 Q123 165 133 172" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <path d="M163 106 Q135 128 126 158 Q121 178 131 183" fill="none" stroke="#1A1A1A" stroke-width="1.0"/>
+      <!-- Wing sweep -->
+      <path d="M185 75 Q175 55 185 40 Q195 55 205 65" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+      <path d="M210 70 Q205 50 215 38 Q220 52 218 68" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+      <!-- Feather details on body -->
+      <path d="M175 88 Q180 82 190 85 Q185 92 175 88Z" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+      <path d="M190 90 Q196 84 206 87 Q200 94 190 90Z" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+      <path d="M205 88 Q212 83 220 86 Q215 93 205 88Z" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+
+      <!-- ── Horizontal divider band ── -->
+      <line x1="20" y1="175" x2="380" y2="175" stroke="#1A1A1A" stroke-width="1.5"/>
+      <line x1="20" y1="180" x2="380" y2="180" stroke="#1A1A1A" stroke-width="0.6"/>
+
+      <!-- ── Middle panel: Garden scene ── -->
+
+      <!-- Garden pavilion (亭) — center background -->
+      <!-- Roof -->
+      <path d="M190 210 L200 195 L210 210 Z" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+      <line x1="185" y1="210" x2="215" y2="210" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Pillars -->
+      <line x1="190" y1="210" x2="190" y2="240" stroke="#1A1A1A" stroke-width="1.5"/>
+      <line x1="210" y1="210" x2="210" y2="240" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Base -->
+      <line x1="186" y1="240" x2="214" y2="240" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Roof finial -->
+      <circle cx="200" cy="193" r="2" fill="#1A1A1A"/>
+
+      <!-- Rockery (叠石) — left side -->
+      <path d="M60 280 Q55 265 65 255 Q75 245 80 260 Q90 250 95 265 Q100 255 108 265 Q112 280 105 285 Q95 290 80 288 Q65 292 60 280Z" fill="none" stroke="#1A1A1A" stroke-width="1.8"/>
+      <path d="M65 275 Q70 268 78 272 Q73 279 65 275Z" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+      <path d="M85 262 Q92 256 98 261 Q93 268 85 262Z" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+      <path d="M72 280 Q80 275 88 278 Q82 285 72 280Z" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+
+      <!-- Lotus in pond — bottom left area -->
+      <circle cx="80" cy="340" r="18" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Petal outlines -->
+      <path d="M80 322 Q72 328 70 340 Q74 330 80 322Z" fill="none" stroke="#1A1A1A" stroke-width="0.9"/>
+      <path d="M80 322 Q88 328 90 340 Q86 330 80 322Z" fill="none" stroke="#1A1A1A" stroke-width="0.9"/>
+      <path d="M62 340 Q68 332 80 330 Q70 336 62 340Z" fill="none" stroke="#1A1A1A" stroke-width="0.9"/>
+      <path d="M98 340 Q92 332 80 330 Q90 336 98 340Z" fill="none" stroke="#1A1A1A" stroke-width="0.9"/>
+      <!-- Center seedpod -->
+      <circle cx="80" cy="340" r="7" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <!-- Stem -->
+      <line x1="80" y1="358" x2="80" y2="378" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Leaf -->
+      <ellipse cx="65" cy="372" rx="16" ry="9" fill="none" stroke="#1A1A1A" stroke-width="1.2" transform="rotate(-20 65 372)"/>
+
+      <!-- Leaky window (漏窗) — right side -->
+      <rect x="295" y="220" width="60" height="60" fill="none" stroke="#1A1A1A" stroke-width="2"/>
+      <!-- Cross-hatching pattern inside window -->
+      <line x1="295" y1="240" x2="355" y2="240" stroke="#1A1A1A" stroke-width="0.8"/>
+      <line x1="295" y1="260" x2="355" y2="260" stroke="#1A1A1A" stroke-width="0.8"/>
+      <line x1="315" y1="220" x2="315" y2="280" stroke="#1A1A1A" stroke-width="0.8"/>
+      <line x1="335" y1="220" x2="335" y2="280" stroke="#1A1A1A" stroke-width="0.8"/>
+      <!-- Decorative circles at intersections -->
+      <circle cx="315" cy="240" r="3" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+      <circle cx="335" cy="240" r="3" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+      <circle cx="315" cy="260" r="3" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+      <circle cx="335" cy="260" r="3" fill="none" stroke="#1A1A1A" stroke-width="0.8"/>
+
+      <!-- Plum branch — upper right -->
+      <path d="M300 70 Q320 60 340 80 Q350 100 330 110" fill="none" stroke="#1A1A1A" stroke-width="1.8"/>
+      <path d="M325 65 Q330 50 340 55" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+      <path d="M340 78 Q355 72 360 82" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+      <!-- Plum blossoms -->
+      <circle cx="342" cy="55" r="5" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+      <circle cx="339" cy="48" r="3.5" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+      <circle cx="347" cy="49" r="3" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+      <circle cx="360" cy="83" r="5" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+      <circle cx="357" cy="76" r="3" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+      <circle cx="365" cy="79" r="3.5" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+
+      <!-- ── Second horizontal divider ── -->
+      <line x1="20" y1="395" x2="380" y2="395" stroke="#1A1A1A" stroke-width="1.5"/>
+      <line x1="20" y1="400" x2="380" y2="400" stroke="#1A1A1A" stroke-width="0.6"/>
+
+      <!-- ══ COLOR LAYERS — hidden text/symbols ══ -->
+
+      <!-- ── RED LAYER (#E8788A) — visible; hidden when red overlay applied ── -->
+      <!-- Scattered characters and symbols in red, woven into design -->
+      <text x="55" y="210" class="layer-red" font-family="Noto Serif SC, serif" font-size="11"
+            transform="rotate(-12 55 210)">__FIELD_RED_TEXT__</text>
+      <text x="265" y="310" class="layer-red" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(8 265 310)">春</text>
+      <text x="155" y="255" class="layer-red" font-family="Noto Serif SC, serif" font-size="11"
+            transform="rotate(-5 155 255)">花</text>
+      <text x="120" y="310" class="layer-red" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(15 120 310)">开</text>
+      <!-- Red decorative dots (part of pattern but also layer markers) -->
+      <circle cx="145" cy="190" r="3" fill="#E8788A"/>
+      <circle cx="255" cy="190" r="3" fill="#E8788A"/>
+      <circle cx="145" cy="390" r="3" fill="#E8788A"/>
+      <circle cx="255" cy="390" r="3" fill="#E8788A"/>
+
+      <!-- ── GREEN LAYER (#6B8E6B) — hidden when green overlay applied ── -->
+      <text x="245" y="255" class="layer-green" font-family="Noto Serif SC, serif" font-size="11"
+            transform="rotate(6 245 255)">__FIELD_GREEN_TEXT__</text>
+      <text x="138" y="350" class="layer-green" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(-8 138 350)">柳</text>
+      <text x="315" y="165" class="layer-green" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(3 315 165)">深</text>
+      <text x="60" y="170" class="layer-green" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(-6 60 170)">处</text>
+      <!-- Green triangle markers -->
+      <polygon points="200,182 205,192 195,192" fill="#6B8E6B" opacity="0.7"/>
+      <polygon points="200,398 205,408 195,408" fill="#6B8E6B" opacity="0.7"/>
+
+      <!-- ── BLUE LAYER (#5B7BA5) — hidden when blue overlay applied ── -->
+      <text x="165" y="360" class="layer-blue" font-family="Noto Serif SC, serif" font-size="11"
+            transform="rotate(-10 165 360)">__FIELD_BLUE_TEXT__</text>
+      <text x="290" y="355" class="layer-blue" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(5 290 355)">月</text>
+      <text x="105" y="240" class="layer-blue" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(-3 105 240)">色</text>
+      <text x="320" y="130" class="layer-blue" font-family="Noto Serif SC, serif" font-size="10"
+            transform="rotate(10 320 130)">如</text>
+      <!-- Blue diamond markers -->
+      <polygon points="200,22 207,29 200,36 193,29" fill="#5B7BA5" opacity="0.6"/>
+      <polygon points="200,498 207,505 200,512 193,505" fill="#5B7BA5" opacity="0.6"/>
+
+      <!-- ── Lower panel: figure and text band ── -->
+
+      <!-- Stylized female figure (旦角) — center lower -->
+      <!-- Head -->
+      <circle cx="200" cy="430" r="14" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Hair ornament -->
+      <path d="M192 420 Q200 412 208 420" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <circle cx="196" cy="413" r="2.5" fill="#1A1A1A"/>
+      <circle cx="204" cy="413" r="2.5" fill="#1A1A1A"/>
+      <!-- Face features -->
+      <path d="M195 428 Q200 432 205 428" fill="none" stroke="#1A1A1A" stroke-width="0.9"/>
+      <circle cx="195" cy="425" r="1.5" fill="#1A1A1A"/>
+      <circle cx="205" cy="425" r="1.5" fill="#1A1A1A"/>
+      <!-- Robe body -->
+      <path d="M190 444 Q185 460 182 480 L218 480 Q215 460 210 444 Z" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+      <!-- Collar -->
+      <path d="M190 444 Q200 450 210 444" fill="none" stroke="#1A1A1A" stroke-width="1.2"/>
+      <!-- Sleeve lines -->
+      <path d="M185 450 Q170 458 165 470" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+      <path d="M215 450 Q230 458 235 470" fill="none" stroke="#1A1A1A" stroke-width="1.3"/>
+      <!-- Robe hem decorative line -->
+      <line x1="182" y1="478" x2="218" y2="478" stroke="#1A1A1A" stroke-width="0.8"/>
+
+      <!-- Bottom text cartouche -->
+      <rect x="30" y="488" width="340" height="20" fill="none" stroke="#1A1A1A" stroke-width="1"/>
+      <text x="200" y="502" font-family="Noto Serif SC, serif" font-size="9" fill="#1A1A1A"
+            text-anchor="middle" letter-spacing="3">姑苏折子·桃花坞版印·站六谜题道具</text>
+
+    </svg>
+  </div><!-- /woodblock-illustration -->
+
+  <div class="woodblock-border-bottom"></div>
+
+  <!-- Instructions footer -->
+  <div class="woodblock-footer">
+    <div class="woodblock-instructions">
+      配合三色透明片使用：依次叠加红、绿、蓝透明片，每叠一层记录新浮现的文字。
+    </div>
+    <!-- Color legend (no-print) -->
+    <div class="color-legend no-print">
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#E8788A;"></div>
+        <span>红层 (Red layer)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#6B8E6B;"></div>
+        <span>绿层 (Green layer)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:#5B7BA5;"></div>
+        <span>蓝层 (Blue layer)</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /woodblock-page -->
+
+</body>
+</html>

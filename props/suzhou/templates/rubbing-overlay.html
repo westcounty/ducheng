@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>碑文拓片 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    body {
+      background: #1A1A1A;
+    }
+
+    /* ── Rubbing page: dark charcoal ── */
+    .rubbing-page {
+      width: 148mm;
+      min-height: 210mm;
+      margin: 0 auto 20px;
+      padding: 0;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      background-color: #2A2A2A;
+      background-image:
+        radial-gradient(ellipse at 30% 20%, rgba(60,60,60,0.6) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(40,40,40,0.8) 0%, transparent 50%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(255,255,255,0.008) 3px,
+          rgba(255,255,255,0.008) 4px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 5px,
+          rgba(255,255,255,0.005) 5px,
+          rgba(255,255,255,0.005) 6px
+        );
+      border: none;
+      box-shadow: 2px 3px 10px rgba(0,0,0,0.5);
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Title strip ── */
+    .rubbing-title-strip {
+      background: #1A1A1A;
+      border-bottom: 2px solid #444;
+      padding: 5mm 8mm 4mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6mm;
+      position: relative;
+    }
+
+    .rubbing-title-strip::before,
+    .rubbing-title-strip::after {
+      content: '— ◆ —';
+      font-size: 9px;
+      color: #555;
+      letter-spacing: 0.2em;
+    }
+
+    .rubbing-title-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #C0B090;
+      letter-spacing: 0.4em;
+      text-align: center;
+    }
+
+    /* ── Character field — the dense rubbing area ── */
+    .rubbing-field {
+      padding: 6mm 7mm 5mm;
+      position: relative;
+      line-height: 1;
+    }
+
+    /* Common character style */
+    .rubbing-field .char {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      display: inline;
+      letter-spacing: 0.02em;
+    }
+
+    /* Red layer — disappears under 桃红 overlay */
+    .char-red {
+      color: #C85A5A;
+    }
+    .char-red-2 {
+      color: #D4736A;
+    }
+    .char-red-3 {
+      color: #B5494F;
+    }
+
+    /* Gray layer — revealed under 桃红 overlay */
+    .char-gray {
+      color: #888888;
+    }
+    .char-gray-2 {
+      color: #999999;
+    }
+
+    /* The rubbing text block — dense, multi-column layout */
+    .rubbing-columns {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      gap: 0;
+      padding: 4mm 5mm;
+    }
+
+    .rubbing-cell {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      font-size: 13px;
+      text-align: center;
+      height: 9mm;
+      line-height: 9mm;
+      position: relative;
+    }
+
+    /* ── Placeholder for hidden message ── */
+    .hidden-message-placeholder {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    /* ── Worn/eroded texture overlaid on top ── */
+    .rubbing-wear {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse at 15% 35%, rgba(0,0,0,0.25) 0%, transparent 30%),
+        radial-gradient(ellipse at 85% 20%, rgba(0,0,0,0.20) 0%, transparent 25%),
+        radial-gradient(ellipse at 50% 65%, rgba(0,0,0,0.15) 0%, transparent 35%),
+        radial-gradient(ellipse at 75% 80%, rgba(0,0,0,0.22) 0%, transparent 28%);
+      pointer-events: none;
+    }
+
+    /* ── Vertical ruled lines (traditional stele style) ── */
+    .ruled-lines {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent calc(100% / 14 - 1px),
+        rgba(255,255,255,0.04) calc(100% / 14 - 1px),
+        rgba(255,255,255,0.04) calc(100% / 14)
+      );
+      pointer-events: none;
+    }
+
+    /* ── Footer instructions ── */
+    .rubbing-footer {
+      background: #1A1A1A;
+      border-top: 2px solid #444;
+      padding: 4mm 8mm;
+    }
+
+    .rubbing-instructions {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #777;
+      line-height: 1.8;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    /* ── Hidden message note (for GM reference) ── */
+    .gm-note {
+      margin-top: 20px;
+      padding: 8px 14px;
+      background: rgba(200,90,90,0.07);
+      border: 1px dashed #C85A5A;
+      border-radius: 3px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #C85A5A;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      text-align: center;
+      width: 148mm;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="rubbing-page">
+
+  <!-- Title Strip -->
+  <div class="rubbing-title-strip">
+    <div class="rubbing-title-text">碑文拓片·文庙宋碑</div>
+  </div>
+
+  <!-- Main rubbing field -->
+  <div class="rubbing-field">
+    <div class="ruled-lines"></div>
+
+    <!-- Dense character grid — 14 columns × ~16 rows -->
+    <!-- Red chars will be hidden by 桃红 overlay; gray chars will be revealed -->
+    <div class="rubbing-columns">
+
+      <!-- Row 1 -->
+      <div class="rubbing-cell char char-red">元</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">祐</div>
+      <div class="rubbing-cell char char-red-3">三</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">年</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">仲</div>
+      <div class="rubbing-cell char char-red">春</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">朔</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">日</div>
+      <div class="rubbing-cell char char-red-2">立</div>
+
+      <!-- Row 2 -->
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">苏</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-3">州</div>
+      <div class="rubbing-cell char char-red">文</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">庙</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">重</div>
+      <div class="rubbing-cell char char-red-3">修</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">记</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">碑</div>
+
+      <!-- Row 3 -->
+      <div class="rubbing-cell char char-red">庙</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-3">学</div>
+      <div class="rubbing-cell char char-red">合</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">一</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">肇</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">自</div>
+      <div class="rubbing-cell char char-red">范</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">文</div>
+      <div class="rubbing-cell char char-red">正</div>
+
+      <!-- Row 4 — gray chars spell hidden message segment -->
+      <div class="rubbing-cell char char-red-3">公</div>
+      <div class="rubbing-cell char char-gray">借</div>
+      <div class="rubbing-cell char char-red">庆</div>
+      <div class="rubbing-cell char char-red-2">历</div>
+      <div class="rubbing-cell char char-gray-2">景</div>
+      <div class="rubbing-cell char char-red">四</div>
+      <div class="rubbing-cell char char-red-3">年</div>
+      <div class="rubbing-cell char char-gray">入</div>
+      <div class="rubbing-cell char char-red-2">拓</div>
+      <div class="rubbing-cell char char-red">地</div>
+      <div class="rubbing-cell char char-gray-2">梦</div>
+      <div class="rubbing-cell char char-red-3">建</div>
+      <div class="rubbing-cell char char-red">学</div>
+      <div class="rubbing-cell char char-gray">戏</div>
+
+      <!-- Row 5 -->
+      <div class="rubbing-cell char char-red">宫</div>
+      <div class="rubbing-cell char char-gray-2">如</div>
+      <div class="rubbing-cell char char-red-2">殿</div>
+      <div class="rubbing-cell char char-red">廊</div>
+      <div class="rubbing-cell char char-gray">真</div>
+      <div class="rubbing-cell char char-red-3">庑</div>
+      <div class="rubbing-cell char char-red">之</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">制</div>
+      <div class="rubbing-cell char char-red">历</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">代</div>
+      <div class="rubbing-cell char char-red-3">增</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+
+      <!-- Row 6 -->
+      <div class="rubbing-cell char char-red-2">修</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">至</div>
+      <div class="rubbing-cell char char-red-3">宋</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">元</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">丰</div>
+      <div class="rubbing-cell char char-red-3">间</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">规</div>
+      <div class="rubbing-cell char char-red-2">模</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">大</div>
+
+      <!-- Row 7 -->
+      <div class="rubbing-cell char char-red">备</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">府</div>
+      <div class="rubbing-cell char char-red">学</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">生</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">员</div>
+      <div class="rubbing-cell char char-red-2">额</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">至</div>
+      <div class="rubbing-cell char char-red-3">三</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">百</div>
+
+      <!-- Row 8 -->
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">藏</div>
+      <div class="rubbing-cell char char-red-3">书</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">楼</div>
+      <div class="rubbing-cell char char-red">阁</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">书</div>
+      <div class="rubbing-cell char char-red-2">目</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">千</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">卷</div>
+      <div class="rubbing-cell char char-red-2">时</div>
+
+      <!-- Row 9 -->
+      <div class="rubbing-cell char char-red-3">人</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">称</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">东</div>
+      <div class="rubbing-cell char char-red">南</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">第</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">一</div>
+      <div class="rubbing-cell char char-red-2">学</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">府</div>
+      <div class="rubbing-cell char char-red-3">云</div>
+
+      <!-- Row 10 -->
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">嘉</div>
+      <div class="rubbing-cell char char-red-2">靖</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">间</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">知</div>
+      <div class="rubbing-cell char char-red-2">府</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">林</div>
+      <div class="rubbing-cell char char-red-3">应</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">训</div>
+      <div class="rubbing-cell char char-red">重</div>
+
+      <!-- Row 11 -->
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">辟</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">雍</div>
+      <div class="rubbing-cell char char-red-2">门</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">以</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-3">壮</div>
+      <div class="rubbing-cell char char-red">观</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">瞻</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">崇</div>
+
+      <!-- Row 12 -->
+      <div class="rubbing-cell char char-red-3">文</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">重</div>
+      <div class="rubbing-cell char char-red-2">教</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-3">化</div>
+      <div class="rubbing-cell char char-red">民</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">成</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">俗</div>
+      <div class="rubbing-cell char char-red-3">之</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">意</div>
+
+      <!-- Row 13 -->
+      <div class="rubbing-cell char char-red">也</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-3">今</div>
+      <div class="rubbing-cell char char-red">元</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-2">祐</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">重</div>
+      <div class="rubbing-cell char char-red-3">修</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">告</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">竣</div>
+      <div class="rubbing-cell char char-red">勒</div>
+
+      <!-- Row 14 -->
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">石</div>
+      <div class="rubbing-cell char char-red">以</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">志</div>
+      <div class="rubbing-cell char char-red">之</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">是</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">为</div>
+      <div class="rubbing-cell char char-red-2">记</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">谨</div>
+      <div class="rubbing-cell char char-red-3">识</div>
+
+      <!-- Row 15 -->
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">守</div>
+      <div class="rubbing-cell char char-red-2">臣</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">苏</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">州</div>
+      <div class="rubbing-cell char char-red-2">知</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">府</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-3">孙</div>
+      <div class="rubbing-cell char char-red-2">觉</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+
+      <!-- Row 16 -->
+      <div class="rubbing-cell char char-red">撰</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">文</div>
+      <div class="rubbing-cell char char-red-3">并</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red">书</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red-2">丹</div>
+      <div class="rubbing-cell char char-red">□</div>
+      <div class="rubbing-cell char char-gray-2">□</div>
+      <div class="rubbing-cell char char-red-3">□</div>
+      <div class="rubbing-cell char char-gray">□</div>
+      <div class="rubbing-cell char char-red">□</div>
+      <div class="rubbing-cell char char-red-2">□</div>
+
+    </div><!-- /rubbing-columns -->
+
+    <div class="rubbing-wear"></div>
+
+    <!-- Hidden message placeholder (invisible, for GM reference) -->
+    <div class="hidden-message-placeholder" aria-hidden="true">__FIELD_HIDDEN_MESSAGE__</div>
+
+  </div><!-- /rubbing-field -->
+
+  <!-- Footer -->
+  <div class="rubbing-footer">
+    <div class="rubbing-instructions">
+      配合桃红色卡（卡片2）使用：将透明色卡覆盖在此页上，灰色文字即为隐藏信息。
+    </div>
+  </div>
+
+</div><!-- /rubbing-page -->
+
+<!-- GM Reference note (no-print) -->
+<div class="gm-note no-print">
+  <strong>GM说明：</strong>灰色字（行4、5）从左至右读取可见字符，即藏头词：借·景·入·梦·戏·如·真。
+  实际隐藏信息字段：<code>__FIELD_HIDDEN_MESSAGE__</code>
+</div>
+
+</body>
+</html>
