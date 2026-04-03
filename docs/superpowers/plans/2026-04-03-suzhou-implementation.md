@@ -8,6 +8,17 @@
 
 **Tech Stack:** Vue 3, JavaScript (ES modules), HTML/CSS (print-ready prop templates), Markdown (content files), Puppeteer (PDF generation)
 
+## 2026-04-03 当前状态
+
+- 苏州城市注册、跨城线程、`puzzles.js`、`narrative.js`、`content/suzhou/*`、`props/suzhou/templates/*` 已全部存在于仓库。
+- 当前文档的主要价值已从“绿地实施计划”转为“后续核查与收尾清单”。
+- 剩余核心问题：
+  - app 实现层仍有 21 个 `__FIELD__`
+  - `props/suzhou/templates/` 仍有 1 个 `__FIELD__`
+  - 第1站“吴门桥单孔/多孔”表述与旧稿存在冲突，需现场统一
+  - 第3/4/5站的可视锚点稳定性仍需现场拍板
+- 下文创建/注册类任务保留作实施记录；若与现状冲突，以仓库现有文件为准。
+
 ---
 
 ## File Map

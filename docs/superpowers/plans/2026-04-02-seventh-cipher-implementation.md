@@ -10,6 +10,14 @@
 
 **Spec:** `docs/superpowers/specs/2026-04-02-shanghai-spy-puzzle-game-design.md`
 
+## 2026-04-03 当前状态
+
+- 本计划对应的上海 app、content、props 已基本落地，不再是从零实施文档。
+- 当前仓库已有 `app/src/data/cities/shanghai/*`、`content/shanghai/*`、`props/templates/*` 与归档页/跨城线索实现。
+- 剩余工作以事实核查和占位补全为主：上海实现层仍有 24 个 `__FIELD__`，`content/shanghai/riddles-and-clues.md` 仍有 2 个。
+- 与旧计划相比，实际落地差异最大的是第5站已改为“盾形徽记 + 涡卷计数”，第6站已改为“梧桐编号牌 + 指定树序 + 地砖图案”。
+- 下文任务清单保留为历史实施记录；若与现状冲突，应以现有仓库文件为准。
+
 ---
 
 ## File Structure

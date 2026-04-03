@@ -8,6 +8,16 @@
 
 **Tech Stack:** Markdown (content), HTML/CSS (prop templates), Vue 3 + Pinia (Easter egg UI)
 
+## 2026-04-03 当前状态
+
+- 南京、杭州、西安三城的 app 数据、content、props 与跨城线索已落地到仓库，不再是“新建三城内容”的状态。
+- 跨城闭环当前实现为 `shanghai → nanjing → hangzhou → xian → suzhou → shanghai`，已不是本计划撰写时的四城结构。
+- 当前剩余占位以现场参数和史实名单为主：
+  - 南京：app 25，content 7，props 36
+  - 杭州：app 36，content 0，props 5
+  - 西安：app 21，content 0，props 7
+- 因此，本计划后续更适合作为“文档对齐 + 实地核查 backlog”，而不是继续按“创建文件/模板/UI”的措辞执行。
+
 **文件结构概览：**
 
 ```
