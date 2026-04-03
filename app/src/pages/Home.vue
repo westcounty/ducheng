@@ -5,8 +5,8 @@
       <div class="title-stamp animate-stamp">
         <span class="stamp stamp--accent">机密档案</span>
       </div>
-      <h1 class="home-title">第七封密电</h1>
-      <p class="home-subtitle text-secondary">上海·1943</p>
+      <h1 class="home-title text-display">{{ cityInfo?.scriptName || '读城' }}</h1>
+      <p class="home-subtitle text-secondary">{{ cityInfo?.name }}{{ cityInfo?.tagline ? '·' + cityInfo.tagline : '' }}</p>
     </header>
 
     <hr class="divider" />
@@ -54,7 +54,7 @@
         </div>
 
         <div v-if="game.isFinished" class="finished-note text-accent">
-          任务档案已完成 — 前往鹤影档案
+          任务档案已完成 — 前往档案室
         </div>
       </div>
 
@@ -64,7 +64,7 @@
           class="btn-primary action-btn"
           @click="goToArchive"
         >
-          查看鹤影档案
+          查看档案
         </button>
         <button v-else class="btn-primary action-btn" @click="continueGame">
           继续任务
@@ -83,12 +83,14 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGameStore } from '../stores/game.js'
 import { useCityData } from '../data/cities/useCityData.js'
+import { getCity } from '../data/cities/index.js'
 import NarrativeText from '../components/NarrativeText.vue'
 
 const props = defineProps({ cityId: { type: String, required: true } })
 
 const game = useGameStore(props.cityId)
 const router = useRouter()
+const cityInfo = computed(() => getCity(props.cityId))
 const { cityData, loading } = useCityData(computed(() => props.cityId))
 const INTRO_STORY = computed(() => cityData.value?.introStory ?? '')
 

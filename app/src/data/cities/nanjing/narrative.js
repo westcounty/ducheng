@@ -104,15 +104,87 @@ export const FINALE = {
 // Shared between Finale and Archive pages
 // ──────────────────────────────────────────────────────────────────────────
 
-/** 陆鸣远's 7 names — the checklist items shown in Finale and Archive */
+/**
+ * 陆鸣远's 7 names — the real people whose names survive in Nanjing's stone, wood, and paper.
+ *
+ * Verification status:
+ *   ★★★★★ = Documented in museum/archive, fully confirmed
+ *   ★★★☆☆ = Referenced in archaeological/heritage records, needs field photo
+ *   ★★☆☆☆ = Category confirmed (records exist), specific name needs field visit
+ *
+ * Sources:
+ *   1. 骆羊孙 — 南京城墙博物馆砖铭展品，宁国府南陵县窑匠，铭文79字
+ *   2. 待实地确认 — 老门东保护整治工程档案，明代民居门框工匠签名
+ *   3. 待实地确认 — 科举博物馆康熙52年恩科题名碑，约100位举人姓名
+ *   4. 陆世荣 — 国家级非遗"秦淮灯彩"传承谱系，灯匠家族创始人
+ *   5. 待实地确认 — 鸡鸣寺功德碑供养人名录
+ *   6. 潘受七 — 城墙修缮砖铭考古记录（未查证，需实地确认）
+ *   7. 王叙 — 安徽省博物院藏万历40年黄册底籍，休宁县匠籍户主（未查证，需实地确认）
+ */
 export const HEYING_CHECKLIST = [
-  '__FIELD__', // 中华门城砖铭文上的窑匠
-  '__FIELD__', // 老门东某处门框上的木匠落款
-  '__FIELD__', // 江南贡院碑刻上的一位考生
-  '__FIELD__', // 秦淮灯会记载中的一位扎灯艺人
-  '__FIELD__', // 鸡鸣寺还愿铭文中的一位香客
-  '__FIELD__', // 台城城墙修缮记录中的一位民夫
-  '__FIELD__'  // 玄武湖黄册库户籍档案中的一位普通户主
+  {
+    stage: 1,
+    name: '骆羊孙',
+    role: '窑匠',
+    era: '明洪武年间',
+    source: '南京城墙博物馆·砖铭',
+    detail: '宁国府南陵县窑匠。砖铭七十九字，记录了他的名字、籍贯和同窑十人。',
+    verified: true
+  },
+  {
+    stage: 2,
+    name: '__FIELD__',
+    role: '木匠',
+    era: '明代',
+    source: '老门东·门框落款',
+    detail: '老门东修缮工程中记录的明代民居门框工匠签名。需实地考察确认。',
+    verified: false
+  },
+  {
+    stage: 3,
+    name: '__FIELD__',
+    role: '考生',
+    era: '清康熙五十二年',
+    source: '科举博物馆·恩科题名碑',
+    detail: '康熙五十二年(1713)恩科题名碑上约一百位举人之一。需实地拍照确认。',
+    verified: false
+  },
+  {
+    stage: 4,
+    name: '陆世荣',
+    role: '灯匠',
+    era: '清末',
+    source: '国家级非遗档案·秦淮灯彩',
+    detail: '秦淮灯彩陆氏家族早期传承人。其孙陆有昌为国家级非遗传承人。',
+    verified: true
+  },
+  {
+    stage: 5,
+    name: '__FIELD__',
+    role: '香客',
+    era: '明/清',
+    source: '鸡鸣寺·功德碑',
+    detail: '鸡鸣寺功德碑供养人名录中的普通信众。需实地考察确认。',
+    verified: false
+  },
+  {
+    stage: 6,
+    name: '潘受七',
+    role: '修缮工匠',
+    era: '明代',
+    source: '城墙砖铭考古记录',
+    detail: '台城段城墙修缮用砖铭文上的工匠名。需实地考察确认具体文献来源。',
+    verified: false
+  },
+  {
+    stage: 7,
+    name: '王叙',
+    role: '匠籍户主',
+    era: '明万历四十年',
+    source: '安徽省博物院·黄册底籍 / 玄武湖黄册库遗址展馆',
+    detail: '休宁县二十七都五图匠籍户主，充当万历四十九年分里长。需实地考察确认。',
+    verified: false
+  }
 ]
 
 /** Location name for each stage (index 0 = stage 1) */
@@ -151,7 +223,7 @@ export const PHOTO_DIARY_PAIRS = [
   },
   {
     stage: 3,
-    prompt: '拍下这间小屋——曾有人在1.3米宽的空间里写下改变命运的文章',
+    prompt: '拍下这间小屋——曾有人在不足一米宽的空间里写下改变命运的文章',
     diary: '有人在号舍墙上刻了"娘，儿必中"。字刻得很深，指甲断了也不停。',
     diaryExcerpt:
       '有人在号舍墙上刻了字。不是诗，不是经，是一句"娘，儿必中"。字刻得很深，指甲断了也不停。我是来验砖的，不该管墙上的字。但我在那四个字前面站了很久。后来我也在墙角刻了一行——不是给谁看的，就是想在这里留点什么。'

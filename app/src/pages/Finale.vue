@@ -101,7 +101,7 @@
       ══════════════════════════════════════════ -->
       <div v-else-if="phase === 3" key="phase3" class="phase phase-3">
         <header class="finale-header">
-          <h1 class="finale-title">鹤影的心愿</h1>
+          <h1 class="finale-title">心愿清单</h1>
         </header>
 
         <hr class="divider" />
@@ -157,14 +157,28 @@
               <div v-if="showFinalMsg" class="final-message animate-fade-in">
                 <hr class="divider" />
                 <p class="final-text text-handwriting cipher-card cipher-card--accent">
-                  「任务档案」已自动更名为「鹤影档案」。
+                  任务完成。档案已永久封存。
                 </p>
+
+                <!-- Badge unlock -->
+                <BadgeDisplay title="城市徽章" :show-ultimate="true" />
 
                 <div class="action-area" style="padding-top: var(--spacing-xl)">
                   <button class="btn-primary action-btn" @click="goToArchive">
-                    查看鹤影档案
+                    查看档案
+                  </button>
+                  <button class="btn-secondary action-btn" @click="showShareCard = true">
+                    生成分享卡片
                   </button>
                 </div>
+
+                <!-- Share card overlay -->
+                <ShareCard
+                  :visible="showShareCard"
+                  :city-id="cityId"
+                  :photos-count="Object.keys(photos).length"
+                  @close="showShareCard = false"
+                />
               </div>
             </transition>
           </div>
@@ -182,6 +196,8 @@ import { usePlatformStore } from '../stores/platform.js'
 import { useCityData } from '../data/cities/useCityData.js'
 import { getPhoto } from '../utils/photo-store.js'
 import NarrativeText from '../components/NarrativeText.vue'
+import BadgeDisplay from '../components/BadgeDisplay.vue'
+import ShareCard from '../components/ShareCard.vue'
 
 const props = defineProps({ cityId: { type: String, required: true } })
 
@@ -196,37 +212,38 @@ const FINALE = computed(() => cityData.value?.finale ?? {})
 
 // ── Static data ─────────────────────────────────────────────────────────────
 
-const ACROSTIC_ITEMS = [
-  { stageId: 1, char: '你' },
-  { stageId: 2, char: '走' },
-  { stageId: 3, char: '过' },
-  { stageId: 4, char: '的' },
-  { stageId: 5, char: '每' },
-  { stageId: 6, char: '一' },
-  { stageId: 7, char: '步' }
-]
+const ACROSTIC_ITEMS = computed(() => {
+  const ac = FINALE.value?.acrostic
+  if (!ac?.characters) return []
+  return ac.characters.map((char, i) => ({ stageId: i + 1, char }))
+})
 
-const ACROSTIC_PHRASE = '你走过的每一步'
+const ACROSTIC_PHRASE = computed(() => FINALE.value?.acrostic?.hiddenMessage ?? '')
 
-const acrosticPrompt =
-  '鹤影在每一站的日记中都藏了一个字。\n\n回头看看——\n每一篇日记残页正文的第一个字。'
+const acrosticPrompt = computed(() =>
+  '在每一站的日记中都藏了一个字。\n\n回头看看——\n每一篇日记残页正文的第一个字。'
+)
 
-const envelopeIntro = '现在，打开那个信封。'
+const envelopeIntro = computed(() => FINALE.value?.envelopePrompt ?? '现在，打开那个信封。')
 
-const LETTER_TEXT = `如果你正在读这封信，说明有人走完了我最后走过的路。
+const LETTER_TEXT = computed(() => FINALE.value?.completionMessage ?? '')
 
-我必须对你坦白——没有什么军事密电。从来没有。
-
-我知道自己活不过这个冬天。我只是想把这条路留下来。我想让一个人——哪怕是一个素不相识的人，在很多年以后——走一遍我最后看过的上海。从饭店的绿塔，到钟楼的谎言，到狮子的沉默，到九曲桥的弯道，到石库门的脸，到梧桐树的阴影，到那艘永远不会开走的船。
-
-这些地方不会记住我，但如果你今天认真看了它们，那你的记忆里就有了我看过的东西。
-
-这样的话，我就没有真的消失。
-
-——鹤影
-1943年秋，上海`
-
-const CHECKLIST = computed(() => HEYING_CHECKLIST.value)
+const CHECKLIST = computed(() => {
+  const raw = HEYING_CHECKLIST.value
+  if (!raw || !Array.isArray(raw)) return []
+  // Handle both string[] and object[] formats
+  return raw.map(item => {
+    if (typeof item === 'string') return item
+    if (item && typeof item === 'object') {
+      // Nanjing format: { name, role, detail, ... }
+      if (item.name && item.role) return `${item.name}，${item.role}。${item.detail || ''}`
+      // Other cities: { stage, dish, note, ... }
+      if (item.dish) return item.note || item.dish
+      return item.detail || item.name || JSON.stringify(item)
+    }
+    return String(item)
+  })
+})
 
 // ── Phase state ──────────────────────────────────────────────────────────────
 
@@ -246,6 +263,7 @@ const checklistRevealed = ref(0)
 const showPhotos = ref(false)
 const showFinalMsg = ref(false)
 const photos = ref({})
+const showShareCard = ref(false)
 
 // ── Phase 1 logic ────────────────────────────────────────────────────────────
 
@@ -257,7 +275,7 @@ function onPromptComplete() {
 }
 
 function revealAcrosticChars() {
-  const total = ACROSTIC_ITEMS.length
+  const total = ACROSTIC_ITEMS.value.length
   let i = 0
   function next() {
     if (i < total) {

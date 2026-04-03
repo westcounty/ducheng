@@ -16,6 +16,7 @@
   /* Typography */
   --font-body: 'Noto Serif SC', serif;
   --font-handwriting: 'ZCOOL XiaoWei', cursive;
+  --font-display: 'Noto Serif SC', serif; /* overridden per city */
 
   /* Spacing */
   --spacing-xs: 4px;
@@ -302,6 +303,10 @@ body {
   font-family: var(--font-handwriting);
 }
 
+.text-display {
+  font-family: var(--font-display);
+}
+
 .text-accent {
   color: var(--accent);
 }
@@ -377,6 +382,7 @@ body {
   --border: #c4b59a;
   --success: #4a7c59;
   --error: #8b2500;
+  --font-display: 'ZCOOL QingKe HuangYou', sans-serif;
   --paper-texture:
     radial-gradient(ellipse at 20% 30%, rgba(139, 69, 19, 0.03) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 70%, rgba(92, 74, 58, 0.04) 0%, transparent 50%),
@@ -395,6 +401,7 @@ body {
   --border: #5a4a3a;
   --success: #5a8a4a;
   --error: #cc3333;
+  --font-display: 'Ma Shan Zheng', cursive;
   --paper-texture:
     radial-gradient(ellipse at 30% 40%, rgba(139, 26, 26, 0.04) 0%, transparent 60%),
     radial-gradient(ellipse at 70% 60%, rgba(90, 74, 58, 0.05) 0%, transparent 50%);
@@ -412,6 +419,7 @@ body {
   --border: #c8c0b4;
   --success: #5a8a5a;
   --error: #8b3a3a;
+  --font-display: 'LXGW WenKai', serif;
   --paper-texture:
     radial-gradient(ellipse at 40% 30%, rgba(122, 158, 126, 0.04) 0%, transparent 60%),
     radial-gradient(ellipse at 60% 70%, rgba(200, 192, 180, 0.06) 0%, transparent 50%);
@@ -429,12 +437,31 @@ body {
   --border: #5a3a2a;
   --success: #6a8a4a;
   --error: #cc4444;
+  --font-display: 'Zhi Mang Xing', cursive;
   --paper-texture:
     radial-gradient(ellipse at 25% 35%, rgba(212, 160, 32, 0.04) 0%, transparent 60%),
     radial-gradient(ellipse at 75% 65%, rgba(90, 58, 42, 0.05) 0%, transparent 50%);
   --shadow-sm: 0 1px 3px rgba(30, 18, 16, 0.25);
   --shadow-md: 0 4px 12px rgba(30, 18, 16, 0.3);
   --shadow-lg: 0 8px 24px rgba(30, 18, 16, 0.35);
+}
+
+.theme-suzhou {
+  --bg-primary: #f8f5f0;
+  --bg-secondary: #f0ebe3;
+  --text-primary: #2d2926;
+  --text-secondary: #6b5e54;
+  --accent: #4a6fa5;
+  --border: #c8bfb4;
+  --success: #5a8a5a;
+  --error: #8b3a3a;
+  --font-display: 'Liu Jian Mao Cao', cursive;
+  --paper-texture:
+    radial-gradient(ellipse at 35% 25%, rgba(74, 111, 165, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse at 65% 75%, rgba(200, 191, 180, 0.05) 0%, transparent 50%);
+  --shadow-sm: 0 1px 3px rgba(45, 41, 38, 0.1);
+  --shadow-md: 0 4px 12px rgba(45, 41, 38, 0.12);
+  --shadow-lg: 0 8px 24px rgba(45, 41, 38, 0.15);
 }
 
 .theme-default {
@@ -446,6 +473,7 @@ body {
   --border: #3a3a3a;
   --success: #4a7c59;
   --error: #8b2500;
+  --font-display: 'Noto Serif SC', serif;
   --paper-texture: none;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);

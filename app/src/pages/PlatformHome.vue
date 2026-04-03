@@ -46,6 +46,9 @@
       </div>
     </div>
 
+    <!-- Badge collection -->
+    <BadgeDisplay title="城市徽章" :show-ultimate="true" />
+
     <footer class="platform-footer">
       <p class="footer-text text-secondary">
         读城 v0.2.0
@@ -58,6 +61,7 @@
 import { useRouter } from 'vue-router'
 import { CITIES } from '../data/cities/index.js'
 import { useGameStore } from '../stores/game.js'
+import BadgeDisplay from '../components/BadgeDisplay.vue'
 
 const router = useRouter()
 
@@ -184,6 +188,7 @@ function enterCity(city) {
 .city-accent--nanjing { border-left: 4px solid #8b1a1a; }
 .city-accent--hangzhou { border-left: 4px solid #7a9e7e; }
 .city-accent--xian { border-left: 4px solid #d4a020; }
+.city-accent--suzhou { border-left: 4px solid #4a6fa5; }
 
 .platform-footer {
   text-align: center;

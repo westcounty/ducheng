@@ -6,9 +6,9 @@
     <template v-else>
     <header class="archive-header">
       <div class="stamp stamp--accent animate-stamp">永久封存</div>
-      <h1 class="archive-title">鹤影档案</h1>
+      <h1 class="archive-title text-display">任务档案</h1>
       <p class="archive-subtitle text-handwriting text-accent">
-        此生未能再见，但你走过的每一条路，我都提前走过一遍。
+        {{ FINALE?.fullMessage ? '「' + FINALE.acrostic?.hiddenMessage + '」' : '' }}
       </p>
     </header>
 
@@ -59,7 +59,7 @@
         <!-- Wish text (checklist item) -->
         <div class="entry-wish">
           <span class="wish-label text-accent">心愿存档</span>
-          <p class="wish-text"><s>{{ HEYING_CHECKLIST[pair.stage - 1] }}</s></p>
+          <p class="wish-text"><s>{{ formatChecklistItem(HEYING_CHECKLIST[pair.stage - 1]) }}</s></p>
         </div>
 
         <!-- Diary quote -->
@@ -90,13 +90,32 @@
       </p>
     </section>
 
+    <!-- Badges & Share -->
+    <section class="badge-share-section">
+      <BadgeDisplay title="城市徽章" :show-ultimate="true" />
+      <div style="display: flex; justify-content: center; padding: var(--spacing-md) 0;">
+        <button class="btn-secondary" @click="showShareCard = true">
+          生成分享卡片
+        </button>
+      </div>
+      <ShareCard
+        :visible="showShareCard"
+        :city-id="cityId"
+        :duration="timing ? timing.total : ''"
+        :photos-count="Object.keys(photos).length"
+        @close="showShareCard = false"
+      />
+    </section>
+
+    <hr class="divider" />
+
     <!-- Footer -->
     <footer class="archive-footer cipher-card cipher-card--accent">
       <p class="footer-acrostic text-handwriting">
         每一篇日记的第一个字，串成了那句话：
       </p>
       <p class="footer-phrase text-handwriting text-accent">
-        「你走过的每一步」
+        「{{ FINALE?.acrostic?.hiddenMessage || '' }}」
       </p>
 
       <!-- Timing section -->
@@ -128,6 +147,8 @@ import { getPhoto } from '../utils/photo-store.js'
 import { useGameStore } from '../stores/game.js'
 import { usePlatformStore } from '../stores/platform.js'
 import { getVisibleThreads } from '../data/cross-city-threads.js'
+import BadgeDisplay from '../components/BadgeDisplay.vue'
+import ShareCard from '../components/ShareCard.vue'
 
 const props = defineProps({ cityId: { type: String, required: true } })
 
@@ -140,6 +161,17 @@ const { cityData, loading } = useCityData(computed(() => props.cityId))
 const PHOTO_DIARY_PAIRS = computed(() => cityData.value?.photoDiaryPairs ?? [])
 const HEYING_CHECKLIST = computed(() => cityData.value?.heyingChecklist ?? [])
 const STAGE_LOCATIONS = computed(() => cityData.value?.stageLocations ?? [])
+const FINALE = computed(() => cityData.value?.finale ?? {})
+const showShareCard = ref(false)
+
+/** Format checklist item that can be string, object with dish/note, or object with name/role */
+function formatChecklistItem(item) {
+  if (!item) return ''
+  if (typeof item === 'string') return item
+  if (item.name && item.role) return `${item.name}，${item.role}`
+  if (item.dish) return item.note || item.dish
+  return item.detail || item.name || ''
+}
 
 const visibleThreads = computed(() =>
   getVisibleThreads(platformStore.completedCities, props.cityId)
