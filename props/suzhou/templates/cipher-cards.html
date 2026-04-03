@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>密电碎片卡 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .cards-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .cards-page-title {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #C85A5A;
+      margin-bottom: 12px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 85mm 85mm;
+      grid-template-rows: repeat(4, 55mm);
+      gap: 0;
+    }
+
+    .card-wrapper {
+      width: 85mm;
+      height: 55mm;
+      padding: 3mm;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .card-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 1mm;
+      border: 1.5px dashed #8B7E6A;
+      pointer-events: none;
+    }
+
+    /* ── FRONT ─────────────────────────────────── */
+    .card-front {
+      width: 100%;
+      height: 100%;
+      background-color: #F5F0E8;
+      background-image:
+        radial-gradient(ellipse at 20% 25%, rgba(200,90,90,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 75%, rgba(212,165,116,0.10) 0%, transparent 50%);
+      border: 1.5px solid #C85A5A;
+      padding: 3mm 4mm 0 4mm;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(200,90,90,0.35);
+      padding-bottom: 1.5mm;
+      margin-bottom: 1.5mm;
+    }
+
+    .card-opera {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8B7E6A;
+      letter-spacing: 0.12em;
+      border: 1px solid #C85A5A;
+      padding: 1px 4px;
+    }
+
+    .card-number {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #C85A5A;
+      line-height: 1;
+    }
+
+    .fragment-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5mm;
+    }
+
+    .fragment-role {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 600;
+      color: #3A3226;
+      letter-spacing: 0.18em;
+    }
+
+    .fragment-lyric {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 12px;
+      color: #3A3226;
+      text-align: center;
+      line-height: 1.6;
+      letter-spacing: 0.08em;
+      font-style: italic;
+      opacity: 0.7;
+    }
+
+    /* Bottom color strip — inline style per card */
+    .card-color-strip {
+      height: 4mm;
+      margin: 0 -4mm;
+      opacity: 0.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── BACK ──────────────────────────────────── */
+    .card-back {
+      width: 100%;
+      height: 100%;
+      background-color: #EDE8DE;
+      background-image:
+        radial-gradient(ellipse at 70% 30%, rgba(200,90,90,0.08) 0%, transparent 50%);
+      border: 1.5px solid #C85A5A;
+      padding: 2mm 3mm;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .back-number-large {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: rgba(200,90,90,0.18);
+      line-height: 1;
+      user-select: none;
+    }
+
+    .back-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .back-fragment {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 11px;
+      color: #3A3226;
+      letter-spacing: 0.15em;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin-top: 8mm;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .back-content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .back-cipher-text {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 11.5px;
+      color: #3A3226;
+      letter-spacing: 0.18em;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .back-garden-quote {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(58,50,38,0.55);
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin-top: 2mm;
+      position: relative;
+      z-index: 2;
+    }
+
+    .back-seal {
+      position: absolute;
+      bottom: 2.5mm;
+      right: 3mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      font-weight: 700;
+      color: rgba(200,90,90,0.65);
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(200,90,90,0.45);
+      padding: 1px 3px;
+      transform: rotate(3deg);
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .back-number-corner {
+      position: absolute;
+      top: 2.5mm;
+      right: 3mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #C85A5A;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ PAGE 1: CARD FRONTS ════ -->
+<div class="page cards-page">
+
+  <div class="cards-page-title">
+    <div class="title" style="font-size:16px;color:#C85A5A;">密电碎片卡 — 正面</div>
+    <div class="subtitle" style="color:#8B7E6A;">CIPHER FRAGMENT CARDS (FRONT) · 沿虚线剪下 · 共七张</div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Front — 琵琶记·赵五娘 -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-opera">琵琶记 · 赵五娘</span>
+          <span class="card-number">① 一</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-role">盘门·吴门桥</div>
+          <div class="fragment-lyric">「千里孤坟，无处话凄凉」</div>
+        </div>
+        <div class="card-color-strip" style="background:#7D8B8A;"></div>
+      </div>
+    </div>
+
+    <!-- Card 2 Front — 桃花扇·李香君 -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-opera">桃花扇 · 李香君</span>
+          <span class="card-number">② 二</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-role">苏州文庙</div>
+          <div class="fragment-lyric">「血溅桃花扇，情根难断」</div>
+        </div>
+        <div class="card-color-strip" style="background:#E8788A;"></div>
+      </div>
+    </div>
+
+    <!-- Card 3 Front — 西厢记·崔莺莺 -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-opera">西厢记 · 崔莺莺</span>
+          <span class="card-number">③ 三</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-role">双塔·定慧寺巷</div>
+          <div class="fragment-lyric">「碧云天，黄花地，西风紧」</div>
+        </div>
+        <div class="card-color-strip" style="background:#F0E68C;"></div>
+      </div>
+    </div>
+
+    <!-- Card 4 Front — 牡丹亭·杜丽娘 -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-opera">牡丹亭 · 杜丽娘</span>
+          <span class="card-number">④ 四</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-role">耦园外·仓街水巷</div>
+          <div class="fragment-lyric">「原来姹紫嫣红开遍，似这般都付与断井颓垣」</div>
+        </div>
+        <div class="card-color-strip" style="background:#F2E4E1;"></div>
+      </div>
+    </div>
+
+    <!-- Card 5 Front — 玉簪记·陈妙常 -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-opera">玉簪记 · 陈妙常</span>
+          <span class="card-number">⑤ 五</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-role">平江路·悬桥巷</div>
+          <div class="fragment-lyric">「道袍遮不住，一缕情丝难断」</div>
+        </div>
+        <div class="card-color-strip" style="background:#C85A5A;"></div>
+      </div>
+    </div>
+
+    <!-- Card 6 Front — 长生殿·杨玉环 -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-opera">长生殿 · 杨玉环</span>
+          <span class="card-number">⑥ 六</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-role">桃花坞</div>
+          <div class="fragment-lyric">「天长地久有时尽，此恨绵绵无绝期」</div>
+        </div>
+        <div class="card-color-strip" style="background:#F5C542;"></div>
+      </div>
+    </div>
+
+    <!-- Card 7 Front — 沈云筝 -->
+    <div class="card-wrapper">
+      <div class="card-front">
+        <div class="card-header">
+          <span class="card-opera">（无戏）· 沈云筝</span>
+          <span class="card-number">⑦ 七</span>
+        </div>
+        <div class="fragment-area">
+          <div class="fragment-role">山塘街·星桥</div>
+          <div class="fragment-lyric">「戏演完了，别鼓掌」</div>
+        </div>
+        <div class="card-color-strip" style="background:#E8ECF0;"></div>
+      </div>
+    </div>
+
+    <!-- Spacer -->
+    <div class="card-wrapper" style="opacity:0;pointer-events:none;"></div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 1 -->
+
+<!-- ════ PAGE 2: CARD BACKS ════ -->
+<div class="page cards-page">
+
+  <div class="cards-page-title">
+    <div class="title" style="font-size:16px;color:#C85A5A;">密电碎片卡 — 背面</div>
+    <div class="subtitle" style="color:#8B7E6A;">CIPHER FRAGMENT CARDS (BACK) · 翻面对齐后剪下</div>
+  </div>
+
+  <div class="instruction-box" style="width:168mm;margin-bottom:10px;font-size:10px;border-color:#C85A5A;color:#8B7E6A;">
+    背面为园林元素纹样局部，右上角朱砂数字为读取顺序编号。将七张卡按背面数字1→7排列，正面碎片文字拼合即得完整密电。
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Back — 水·盘门护城河 -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-number-large">一</div>
+        <div class="back-content-area">
+          <svg viewBox="0 0 200 100" width="85%" height="70%" opacity="0.15">
+            <!-- Water ripples -->
+            <ellipse cx="100" cy="50" rx="85" ry="30" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+            <ellipse cx="100" cy="50" rx="60" ry="20" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <ellipse cx="100" cy="50" rx="35" ry="11" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <ellipse cx="100" cy="50" rx="15" ry="5" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <line x1="100" y1="20" x2="100" y2="80" stroke="#C85A5A" stroke-width="0.8" stroke-dasharray="3,3"/>
+          </svg>
+          <div class="back-cipher-text">台上的人散了</div>
+          <div class="back-garden-quote">水——够映一个人的影子就行</div>
+        </div>
+        <div class="back-number-corner">1</div>
+        <div class="back-seal">借<br>景</div>
+      </div>
+    </div>
+
+    <!-- Card 2 Back — 石·文庙碑石 -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-number-large">二</div>
+        <div class="back-content-area">
+          <svg viewBox="0 0 200 100" width="85%" height="70%" opacity="0.15">
+            <!-- Stone stele -->
+            <rect x="65" y="10" width="70" height="80" rx="8" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+            <rect x="75" y="20" width="50" height="60" fill="none" stroke="#C85A5A" stroke-width="0.8"/>
+            <line x1="100" y1="25" x2="100" y2="75" stroke="#C85A5A" stroke-width="0.5" stroke-dasharray="2,2"/>
+            <text x="100" y="95" text-anchor="middle" font-size="9" fill="#C85A5A" font-family="serif">碑·文庙</text>
+          </svg>
+          <div class="back-cipher-text">台下那个人也散了</div>
+          <div class="back-garden-quote">石——只刻一个人站过的位置</div>
+        </div>
+        <div class="back-number-corner">2</div>
+        <div class="back-seal">借<br>景</div>
+      </div>
+    </div>
+
+    <!-- Card 3 Back — 漏窗·耦园 -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-number-large">三</div>
+        <div class="back-content-area">
+          <svg viewBox="0 0 200 100" width="85%" height="70%" opacity="0.15">
+            <!-- Lattice window -->
+            <rect x="50" y="10" width="100" height="80" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+            <line x1="50" y1="36" x2="150" y2="36" stroke="#C85A5A" stroke-width="0.8"/>
+            <line x1="50" y1="62" x2="150" y2="62" stroke="#C85A5A" stroke-width="0.8"/>
+            <line x1="83" y1="10" x2="83" y2="90" stroke="#C85A5A" stroke-width="0.8"/>
+            <line x1="116" y1="10" x2="116" y2="90" stroke="#C85A5A" stroke-width="0.8"/>
+            <circle cx="100" cy="50" r="8" fill="none" stroke="#C85A5A" stroke-width="1"/>
+          </svg>
+          <div class="back-cipher-text">但这座园是我的</div>
+          <div class="back-garden-quote">漏窗——看得见又够不着</div>
+        </div>
+        <div class="back-number-corner">3</div>
+        <div class="back-seal">借<br>景</div>
+      </div>
+    </div>
+
+    <!-- Card 4 Back — 窗·双塔 -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-number-large">四</div>
+        <div class="back-content-area">
+          <svg viewBox="0 0 200 100" width="85%" height="70%" opacity="0.15">
+            <!-- Two towers -->
+            <rect x="55" y="15" width="30" height="75" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+            <rect x="115" y="15" width="30" height="75" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+            <polygon points="70,8 55,15 85,15" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+            <polygon points="130,8 115,15 145,15" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+            <line x1="85" y1="52" x2="115" y2="52" stroke="#C85A5A" stroke-width="0.8" stroke-dasharray="3,3"/>
+          </svg>
+          <div class="back-cipher-text">窗是偷的</div>
+          <div class="back-garden-quote">窗——从这边看是真的，从那边看是梦里的</div>
+        </div>
+        <div class="back-number-corner">4</div>
+        <div class="back-seal">借<br>景</div>
+      </div>
+    </div>
+
+    <!-- Card 5 Back — 叠石·桃花坞 -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-number-large">五</div>
+        <div class="back-content-area">
+          <svg viewBox="0 0 200 100" width="85%" height="70%" opacity="0.15">
+            <!-- Stacked stones -->
+            <ellipse cx="100" cy="82" rx="38" ry="10" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+            <ellipse cx="100" cy="65" rx="28" ry="9" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+            <ellipse cx="97" cy="50" rx="20" ry="8" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <ellipse cx="102" cy="36" rx="14" ry="7" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <ellipse cx="100" cy="23" rx="9" ry="6" fill="none" stroke="#C85A5A" stroke-width="0.8"/>
+          </svg>
+          <div class="back-cipher-text">石是借的</div>
+          <div class="back-garden-quote">叠石——像人终于站起来了</div>
+        </div>
+        <div class="back-number-corner">5</div>
+        <div class="back-seal">借<br>景</div>
+      </div>
+    </div>
+
+    <!-- Card 6 Back — 花木·桂花 -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-number-large">六</div>
+        <div class="back-content-area">
+          <svg viewBox="0 0 200 100" width="85%" height="70%" opacity="0.15">
+            <!-- Osmanthus branch -->
+            <line x1="100" y1="90" x2="100" y2="30" stroke="#C85A5A" stroke-width="2"/>
+            <line x1="100" y1="70" x2="65" y2="45" stroke="#C85A5A" stroke-width="1.2"/>
+            <line x1="100" y1="60" x2="135" y2="38" stroke="#C85A5A" stroke-width="1.2"/>
+            <line x1="100" y1="50" x2="72" y2="30" stroke="#C85A5A" stroke-width="1"/>
+            <circle cx="62" cy="43" r="4" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <circle cx="137" cy="36" r="4" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <circle cx="70" cy="27" r="3" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <circle cx="100" cy="27" r="3" fill="none" stroke="#C85A5A" stroke-width="1"/>
+          </svg>
+          <div class="back-cipher-text">水是梦里的</div>
+          <div class="back-garden-quote">花木——秋天满园都是甜的</div>
+        </div>
+        <div class="back-number-corner">6</div>
+        <div class="back-seal">借<br>景</div>
+      </div>
+    </div>
+
+    <!-- Card 7 Back — 亭·星桥 -->
+    <div class="card-wrapper">
+      <div class="card-back">
+        <div class="back-number-large">七</div>
+        <div class="back-content-area">
+          <svg viewBox="0 0 200 100" width="85%" height="70%" opacity="0.15">
+            <!-- Pavilion silhouette -->
+            <polygon points="100,8 50,32 150,32" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+            <rect x="60" y="32" width="80" height="8" fill="none" stroke="#C85A5A" stroke-width="1"/>
+            <line x1="65" y1="40" x2="65" y2="88" stroke="#C85A5A" stroke-width="1.2"/>
+            <line x1="135" y1="40" x2="135" y2="88" stroke="#C85A5A" stroke-width="1.2"/>
+            <line x1="50" y1="88" x2="150" y2="88" stroke="#C85A5A" stroke-width="1.5"/>
+          </svg>
+          <div class="back-cipher-text">你走进来就算有人来过</div>
+          <div class="back-garden-quote">亭——谁来了就坐坐，走了也不必说</div>
+        </div>
+        <div class="back-number-corner">7</div>
+        <div class="back-seal">借<br>景</div>
+      </div>
+    </div>
+
+    <!-- Spacer -->
+    <div class="card-wrapper" style="opacity:0;pointer-events:none;"></div>
+
+  </div><!-- /cards-grid -->
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

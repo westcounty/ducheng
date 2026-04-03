@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>园林底图 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .garden-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .garden-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .garden-header-center {
+      flex: 1;
+      text-align: center;
+    }
+
+    .garden-corner-seal {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #C85A5A;
+      border: 2px double #C85A5A;
+      padding: 5px 8px;
+      letter-spacing: 0.1em;
+      text-align: center;
+      transform: rotate(-3deg);
+      opacity: 0.72;
+      line-height: 1.6;
+      white-space: nowrap;
+    }
+
+    .garden-map-container {
+      width: 100%;
+      flex: 1;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    /* Faded center title — grass script style */
+    .garden-faded-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 26px;
+      color: rgba(200,90,90,0.10);
+      letter-spacing: 0.35em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .station-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .station-row {
+      display: grid;
+      grid-template-columns: 28mm 32mm 1fr;
+      gap: 6px;
+      align-items: baseline;
+      padding: 3px 6px;
+      border-bottom: 1px solid rgba(200,90,90,0.12);
+    }
+
+    .station-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #C85A5A;
+      letter-spacing: 0.08em;
+    }
+
+    .station-feature {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #3A3226;
+      letter-spacing: 0.05em;
+    }
+
+    .station-write-line {
+      border-bottom: 1px solid rgba(58,50,38,0.40);
+      min-height: 18px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(139,126,106,0.55);
+      letter-spacing: 0.06em;
+      line-height: 2;
+    }
+
+    .bottom-instruction {
+      margin-top: 8px;
+      padding: 7px 12px;
+      background: rgba(200,90,90,0.04);
+      border: 1px solid rgba(200,90,90,0.25);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10.5px;
+      color: #5A3A30;
+      letter-spacing: 0.08em;
+      line-height: 1.9;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page garden-page">
+
+  <div class="garden-header">
+    <div style="width: 44px;"></div>
+    <div class="garden-header-center">
+      <div class="title">园林底图</div>
+      <div class="subtitle">GARDEN BLUEPRINT · 沈云筝的园 · 姑苏折子</div>
+    </div>
+    <div class="garden-corner-seal">借<br>景</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="garden-map-container">
+    <div class="garden-faded-title">沈云筝的园</div>
+
+    <svg viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;height:auto;position:relative;z-index:1;font-family:'Noto Serif SC',serif;">
+
+      <!-- === BACKGROUND WASH === -->
+      <rect x="0" y="0" width="520" height="240" fill="rgba(245,240,232,0.30)"/>
+
+      <!-- === GARDEN OUTER WALL (irregular, organic) === -->
+      <path d="M30,30 Q60,18 140,22 Q220,18 290,25 Q370,18 440,28 Q490,35 495,80
+               Q498,130 490,175 Q485,215 430,220 Q350,228 260,222
+               Q170,228 90,218 Q40,212 28,175 Q18,130 22,80 Q22,50 30,30 Z"
+            fill="none" stroke="#3A3226" stroke-width="1.8" opacity="0.70"/>
+
+      <!-- Inner wall hint -->
+      <path d="M50,45 Q120,35 260,38 Q400,35 470,48 Q478,90 475,165
+               Q470,200 390,208 Q260,215 130,208 Q55,200 48,165 Q40,100 50,45 Z"
+            fill="rgba(245,240,232,0.20)" stroke="#3A3226" stroke-width="0.7"
+            stroke-dasharray="4,3" opacity="0.35"/>
+
+      <!-- === ORGANIC STONE PATHS (dotted, winding) === -->
+      <!-- Entrance path from bottom-center -->
+      <path d="M260,222 Q258,198 255,178" fill="none" stroke="#8B7E6A"
+            stroke-width="2.5" stroke-dasharray="4,4" opacity="0.55"/>
+      <!-- Path: 水池 → 碑石 -->
+      <path d="M255,178 Q240,158 200,148" fill="none" stroke="#8B7E6A"
+            stroke-width="2" stroke-dasharray="4,4" opacity="0.50"/>
+      <!-- Path: 碑石 → 花窗 -->
+      <path d="M200,148 Q220,130 260,118" fill="none" stroke="#8B7E6A"
+            stroke-width="2" stroke-dasharray="4,4" opacity="0.50"/>
+      <!-- Path: 花窗 → 漏窗 -->
+      <path d="M260,118 Q295,108 330,118" fill="none" stroke="#8B7E6A"
+            stroke-width="2" stroke-dasharray="4,4" opacity="0.50"/>
+      <!-- Path: 漏窗 → 桂花树 -->
+      <path d="M330,118 Q310,98 275,85" fill="none" stroke="#8B7E6A"
+            stroke-width="2" stroke-dasharray="4,4" opacity="0.50"/>
+      <!-- Path: 桂花树 → 太湖石 -->
+      <path d="M275,85 Q230,78 190,88" fill="none" stroke="#8B7E6A"
+            stroke-width="2" stroke-dasharray="4,4" opacity="0.50"/>
+      <!-- Path: 太湖石 → 亭 -->
+      <path d="M190,88 Q168,70 155,55" fill="none" stroke="#8B7E6A"
+            stroke-width="2" stroke-dasharray="4,4" opacity="0.50"/>
+
+      <!-- === POSITION 1: 入口 水池 (oval pool, south-center) === -->
+      <g transform="translate(260,188)">
+        <!-- Oval pool -->
+        <ellipse cx="0" cy="0" rx="22" ry="14" fill="rgba(122,172,203,0.25)"
+                 stroke="#3A3226" stroke-width="1.2"/>
+        <!-- Water ripple -->
+        <ellipse cx="0" cy="0" rx="12" ry="7" fill="none" stroke="#7AACCB"
+                 stroke-width="0.7" opacity="0.60"/>
+        <text x="0" y="-20" text-anchor="middle" font-size="9" fill="#3A3226" font-weight="700">入口·水池</text>
+      </g>
+
+      <!-- === POSITION 2: 正厅 碑石 (rectangular stele, south-west) === -->
+      <g transform="translate(200,145)">
+        <!-- Stele shape -->
+        <rect x="-10" y="-20" width="20" height="32" rx="2"
+              fill="rgba(139,126,106,0.20)" stroke="#3A3226" stroke-width="1.2"/>
+        <rect x="-7"  y="-17" width="14" height="22"
+              fill="none" stroke="#3A3226" stroke-width="0.7" opacity="0.5"/>
+        <text x="0" y="-26" text-anchor="middle" font-size="9" fill="#3A3226" font-weight="700">正厅·碑石</text>
+      </g>
+
+      <!-- === POSITION 3: 东廊 花窗 (corridor east, center) === -->
+      <g transform="translate(260,118)">
+        <!-- Corridor with window shapes -->
+        <rect x="-28" y="-10" width="56" height="20" fill="rgba(245,240,232,0.60)"
+              stroke="#3A3226" stroke-width="1.2"/>
+        <!-- Window openings in corridor -->
+        <rect x="-20" y="-7" width="10" height="14" fill="none" stroke="#3A3226" stroke-width="0.8"/>
+        <rect x="-3"  y="-7" width="10" height="14" fill="none" stroke="#3A3226" stroke-width="0.8"/>
+        <rect x="13"  y="-7" width="10" height="14" fill="none" stroke="#3A3226" stroke-width="0.8"/>
+        <!-- Window lattice cross in center one -->
+        <line x1="-3" y1="-7" x2="7" y2="7"   stroke="#3A3226" stroke-width="0.5" opacity="0.6"/>
+        <line x1="7"  y1="-7" x2="-3" y2="7"  stroke="#3A3226" stroke-width="0.5" opacity="0.6"/>
+        <text x="0" y="-16" text-anchor="middle" font-size="9" fill="#3A3226" font-weight="700">东廊·花窗</text>
+      </g>
+
+      <!-- === POSITION 4: 西墙 漏窗 (wall west with lattice, center-east) === -->
+      <g transform="translate(338,118)">
+        <!-- Wall segment -->
+        <rect x="-6" y="-25" width="12" height="50" fill="rgba(139,126,106,0.15)"
+              stroke="#3A3226" stroke-width="1.2"/>
+        <!-- Lattice openings in wall -->
+        <rect x="-4" y="-20" width="8" height="10" fill="none" stroke="#3A3226" stroke-width="0.8"/>
+        <line x1="-4" y1="-20" x2="4" y2="-10" stroke="#3A3226" stroke-width="0.5" opacity="0.6"/>
+        <line x1="4"  y1="-20" x2="-4" y2="-10" stroke="#3A3226" stroke-width="0.5" opacity="0.6"/>
+        <rect x="-4" y="-4"  width="8" height="10" fill="none" stroke="#3A3226" stroke-width="0.8"/>
+        <rect x="-4" y="12"  width="8" height="10" fill="none" stroke="#3A3226" stroke-width="0.8"/>
+        <text x="0" y="-31" text-anchor="middle" font-size="9" fill="#3A3226" font-weight="700">西墙·漏窗</text>
+      </g>
+
+      <!-- === POSITION 5: 中庭 桂花树 (circular canopy, upper-center) === -->
+      <g transform="translate(276,82)">
+        <!-- Tree trunk -->
+        <line x1="0" y1="18" x2="0" y2="8" stroke="#3A3226" stroke-width="2"/>
+        <!-- Canopy circle -->
+        <circle cx="0" cy="0" r="20" fill="rgba(180,160,90,0.18)"
+                stroke="#3A3226" stroke-width="1.2"/>
+        <!-- Canopy inner texture -->
+        <circle cx="0" cy="0" r="13" fill="none" stroke="#3A3226"
+                stroke-width="0.7" stroke-dasharray="3,3" opacity="0.45"/>
+        <!-- Small flower dots -->
+        <circle cx="-8" cy="-5" r="2" fill="rgba(212,165,116,0.70)"/>
+        <circle cx="8"  cy="-8" r="2" fill="rgba(212,165,116,0.70)"/>
+        <circle cx="4"  cy="6"  r="2" fill="rgba(212,165,116,0.70)"/>
+        <circle cx="-5" cy="8"  r="2" fill="rgba(212,165,116,0.70)"/>
+        <circle cx="0"  cy="-12" r="2" fill="rgba(212,165,116,0.70)"/>
+        <text x="0" y="-27" text-anchor="middle" font-size="9" fill="#3A3226" font-weight="700">中庭·桂花树</text>
+      </g>
+
+      <!-- === POSITION 6: 后院 太湖石 (irregular rock, upper-west-center) === -->
+      <g transform="translate(188,88)">
+        <!-- Taihu rock (irregular polygon) -->
+        <path d="M0,-22 Q8,-18 14,-8 Q18,2 12,12 Q8,20 0,22
+                 Q-8,20 -14,10 Q-16,2 -10,-10 Q-6,-18 0,-22 Z"
+              fill="rgba(139,126,106,0.20)" stroke="#3A3226" stroke-width="1.3"/>
+        <!-- Rock texture holes (Taihu style) -->
+        <ellipse cx="3"  cy="-4" rx="4" ry="6" fill="none" stroke="#3A3226"
+                 stroke-width="0.8" opacity="0.55"/>
+        <ellipse cx="-5" cy="8"  rx="3" ry="4" fill="none" stroke="#3A3226"
+                 stroke-width="0.7" opacity="0.45"/>
+        <ellipse cx="8"  cy="5"  rx="3" ry="3" fill="none" stroke="#3A3226"
+                 stroke-width="0.6" opacity="0.40"/>
+        <text x="0" y="-28" text-anchor="middle" font-size="9" fill="#3A3226" font-weight="700">后院·太湖石</text>
+      </g>
+
+      <!-- === POSITION 7: 尽头 亭 (pavilion outline, northwest) === -->
+      <g transform="translate(152,52)">
+        <!-- Pavilion: roof triangle + eave curve + pillars + base -->
+        <polygon points="0,-22 22,-8 -22,-8" fill="rgba(200,90,90,0.10)"
+                 stroke="#3A3226" stroke-width="1.3"/>
+        <!-- Eave curve -->
+        <path d="M-22,-8 Q0,-4 22,-8" fill="none" stroke="#3A3226" stroke-width="0.8"/>
+        <!-- Roof ridge detail -->
+        <line x1="-22" y1="-8" x2="-28" y2="-4" stroke="#3A3226" stroke-width="0.8" opacity="0.6"/>
+        <line x1="22" y1="-8"  x2="28"  y2="-4" stroke="#3A3226" stroke-width="0.8" opacity="0.6"/>
+        <!-- Pillars -->
+        <line x1="-16" y1="-8" x2="-16" y2="16" stroke="#3A3226" stroke-width="1.2"/>
+        <line x1="16"  y1="-8" x2="16"  y2="16" stroke="#3A3226" stroke-width="1.2"/>
+        <!-- Base beam -->
+        <line x1="-20" y1="16" x2="20"  y2="16" stroke="#3A3226" stroke-width="1.5"/>
+        <!-- Platform steps -->
+        <line x1="-14" y1="20" x2="14"  y2="20" stroke="#3A3226" stroke-width="1"/>
+        <text x="0" y="-28" text-anchor="middle" font-size="9" fill="#3A3226" font-weight="700">尽头·亭</text>
+      </g>
+
+      <!-- === COMPASS / DIRECTION === -->
+      <text x="495" y="25" text-anchor="end" font-size="8" fill="#8B7E6A" opacity="0.6">北 ↑</text>
+
+      <!-- === DECORATIVE BORDER DETAILS IN CORNERS === -->
+      <line x1="30" y1="30" x2="50" y2="30" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+      <line x1="30" y1="30" x2="30" y2="50" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+      <line x1="490" y1="30" x2="470" y2="30" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+      <line x1="490" y1="30" x2="490" y2="50" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+      <line x1="30" y1="220" x2="50" y2="220" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+      <line x1="30" y1="220" x2="30" y2="200" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+      <line x1="490" y1="220" x2="470" y2="220" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+      <line x1="490" y1="220" x2="490" y2="200" stroke="#C85A5A" stroke-width="1" opacity="0.25"/>
+
+    </svg>
+  </div>
+
+  <!-- Station write-in table -->
+  <div class="station-list">
+
+    <div class="station-row" style="grid-template-columns:28mm 32mm 1fr;
+         background:rgba(200,90,90,0.04);font-weight:700;">
+      <div class="station-label" style="font-size:9px;color:#8B7E6A;">位置</div>
+      <div class="station-feature" style="font-size:9px;color:#8B7E6A;">景物</div>
+      <div style="font-family:'Noto Serif SC',serif;font-size:9px;color:#8B7E6A;letter-spacing:0.06em;">
+        借景片段（填写收集的文字）
+      </div>
+    </div>
+
+    <div class="station-row">
+      <div class="station-label">入口</div>
+      <div class="station-feature">水池</div>
+      <div class="station-write-line">（站一·盘门吴门桥）</div>
+    </div>
+
+    <div class="station-row">
+      <div class="station-label">正厅</div>
+      <div class="station-feature">碑石</div>
+      <div class="station-write-line">（站二·苏州文庙）</div>
+    </div>
+
+    <div class="station-row">
+      <div class="station-label">东廊</div>
+      <div class="station-feature">花窗</div>
+      <div class="station-write-line">（站三·双塔）</div>
+    </div>
+
+    <div class="station-row">
+      <div class="station-label">西墙</div>
+      <div class="station-feature">漏窗</div>
+      <div class="station-write-line">（站四·耦园）</div>
+    </div>
+
+    <div class="station-row">
+      <div class="station-label">中庭</div>
+      <div class="station-feature">桂花树</div>
+      <div class="station-write-line">（站五·平江路）</div>
+    </div>
+
+    <div class="station-row">
+      <div class="station-label">后院</div>
+      <div class="station-feature">太湖石</div>
+      <div class="station-write-line">（站六·桃花坞）</div>
+    </div>
+
+    <div class="station-row">
+      <div class="station-label">尽头</div>
+      <div class="station-feature">亭</div>
+      <div class="station-write-line">（站七·山塘街）</div>
+    </div>
+
+  </div><!-- /station-list -->
+
+  <div class="bottom-instruction">
+    将七站收集的借景片段填入对应位置，拼出这座不可能的园。
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

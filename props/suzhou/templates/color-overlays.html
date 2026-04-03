@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三色透明片 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    body {
+      background: #C8C8C8;
+    }
+
+    /* ── Overlay page — each A5 ── */
+    .overlay-page {
+      width: 148mm;
+      min-height: 210mm;
+      margin: 0 auto 20px;
+      padding: 0;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      border: 1px solid #999;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Color fill layer at 70% opacity ── */
+    .overlay-fill {
+      position: absolute;
+      inset: 0;
+      opacity: 0.70;
+    }
+
+    /* ── Top label band ── */
+    .overlay-header {
+      position: relative;
+      z-index: 10;
+      background: rgba(0,0,0,0.55);
+      padding: 5mm 8mm 4mm;
+      text-align: center;
+      border-bottom: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .overlay-label-zh {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.5em;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .overlay-label-en {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.3em;
+      margin-top: 2mm;
+    }
+
+    /* ── Overlay number badge ── */
+    .overlay-badge {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 25mm;
+    }
+
+    .overlay-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.30);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      line-height: 1;
+    }
+
+    /* ── Corner registration marks ── */
+    .reg-mark {
+      position: absolute;
+      width: 8mm;
+      height: 8mm;
+      z-index: 20;
+    }
+
+    .reg-mark::before,
+    .reg-mark::after {
+      content: '';
+      position: absolute;
+      background: rgba(255,255,255,0.85);
+    }
+
+    .reg-mark::before {
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      transform: translateY(-50%);
+    }
+
+    .reg-mark::after {
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      transform: translateX(-50%);
+    }
+
+    /* Small outer ring around crosshair */
+    .reg-ring {
+      position: absolute;
+      width: 5mm;
+      height: 5mm;
+      border-radius: 50%;
+      border: 0.8px solid rgba(255,255,255,0.7);
+      z-index: 21;
+    }
+
+    .reg-mark.tl { top: 4mm; left: 4mm; }
+    .reg-mark.tr { top: 4mm; right: 4mm; }
+    .reg-mark.bl { bottom: 4mm; left: 4mm; }
+    .reg-mark.br { bottom: 4mm; right: 4mm; }
+
+    .reg-ring.tl { top: 5.5mm; left: 5.5mm; }
+    .reg-ring.tr { top: 5.5mm; right: 5.5mm; }
+    .reg-ring.bl { bottom: 5.5mm; left: 5.5mm; }
+    .reg-ring.br { bottom: 5.5mm; right: 5.5mm; }
+
+    /* ── Center body — usage hint ── */
+    .overlay-body {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10mm;
+      gap: 6mm;
+    }
+
+    .overlay-usage-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: rgba(255,255,255,0.80);
+      letter-spacing: 0.12em;
+      line-height: 2;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .overlay-step-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    /* ── Instructions box on first page only ── */
+    .overlay-instructions-box {
+      position: relative;
+      z-index: 10;
+      margin: 0 8mm;
+      padding: 4mm 5mm;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(0,0,0,0.25);
+    }
+
+    .overlay-instructions-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.1em;
+      line-height: 1.9;
+      text-align: center;
+    }
+
+    /* ── Footer band ── */
+    .overlay-footer {
+      position: relative;
+      z-index: 10;
+      background: rgba(0,0,0,0.45);
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding: 3mm 8mm;
+      text-align: center;
+    }
+
+    .overlay-footer-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.2em;
+    }
+
+    /* ── Flex layout for overlay-page ── */
+    .overlay-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .overlay-spacer {
+      flex: 1;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ── Color swatch reference strip on each page ── */
+    .color-ref-strip {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3mm;
+      padding: 3mm 8mm;
+      background: rgba(0,0,0,0.30);
+    }
+
+    .swatch-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(255,255,255,0.70);
+      letter-spacing: 0.15em;
+    }
+
+    .swatch-box {
+      width: 8mm;
+      height: 5mm;
+      border: 0.8px solid rgba(255,255,255,0.5);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════ -->
+<!-- Page 1: Red Overlay 红色透明片         -->
+<!-- ══════════════════════════════════════ -->
+<div class="overlay-page">
+
+  <!-- Color fill -->
+  <div class="overlay-fill" style="background-color:#E8788A;"></div>
+
+  <!-- Registration marks -->
+  <div class="reg-mark tl"></div>
+  <div class="reg-mark tr"></div>
+  <div class="reg-mark bl"></div>
+  <div class="reg-mark br"></div>
+  <div class="reg-ring tl"></div>
+  <div class="reg-ring tr"></div>
+  <div class="reg-ring bl"></div>
+  <div class="reg-ring br"></div>
+
+  <!-- Header -->
+  <div class="overlay-header">
+    <div class="overlay-label-zh">红色透明片</div>
+    <div class="overlay-label-en">RED OVERLAY · 第一层 · 姑苏折子</div>
+  </div>
+
+  <!-- Badge -->
+  <div class="overlay-badge">
+    <div class="overlay-num">一</div>
+  </div>
+
+  <!-- Instructions (first page only) -->
+  <div class="overlay-instructions-box">
+    <div class="overlay-instructions-text">
+      请使用OHP投影胶片或透明打印纸打印此页。<br>
+      打印后裁切至与年画底版相同尺寸，对齐角标使用。<br>
+      依次叠加红、绿、蓝透明片，每叠一层记录新浮现的文字。
+    </div>
+  </div>
+
+  <div class="overlay-spacer"></div>
+
+  <!-- Body -->
+  <div class="overlay-body">
+    <div class="overlay-step-label">叠加第一片</div>
+    <div class="overlay-usage-text">
+      将此片对齐年画底版角标后覆盖<br>
+      红色文字将消隐，记录此时浮现的新字
+    </div>
+  </div>
+
+  <!-- Color reference strip -->
+  <div class="color-ref-strip">
+    <div class="swatch-label">此片色值</div>
+    <div class="swatch-box" style="background-color:#E8788A;"></div>
+    <div class="swatch-label">#E8788A · 桃夭</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="overlay-footer">
+    <div class="overlay-footer-text">三色透明片 — 姑苏折子 · 站六道具 · 1/3</div>
+  </div>
+
+</div><!-- /page 1 red -->
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- Page 2: Green Overlay 绿色透明片       -->
+<!-- ══════════════════════════════════════ -->
+<div class="overlay-page">
+
+  <!-- Color fill -->
+  <div class="overlay-fill" style="background-color:#6B8E6B;"></div>
+
+  <!-- Registration marks -->
+  <div class="reg-mark tl"></div>
+  <div class="reg-mark tr"></div>
+  <div class="reg-mark bl"></div>
+  <div class="reg-mark br"></div>
+  <div class="reg-ring tl"></div>
+  <div class="reg-ring tr"></div>
+  <div class="reg-ring bl"></div>
+  <div class="reg-ring br"></div>
+
+  <!-- Header -->
+  <div class="overlay-header">
+    <div class="overlay-label-zh">绿色透明片</div>
+    <div class="overlay-label-en">GREEN OVERLAY · 第二层 · 姑苏折子</div>
+  </div>
+
+  <!-- Badge -->
+  <div class="overlay-badge">
+    <div class="overlay-num">二</div>
+  </div>
+
+  <div class="overlay-spacer"></div>
+
+  <!-- Body -->
+  <div class="overlay-body">
+    <div class="overlay-step-label">叠加第二片</div>
+    <div class="overlay-usage-text">
+      在红片之上继续叠加此绿片<br>
+      绿色文字将消隐，记录此时浮现的新字
+    </div>
+  </div>
+
+  <!-- Color reference strip -->
+  <div class="color-ref-strip">
+    <div class="swatch-label">此片色值</div>
+    <div class="swatch-box" style="background-color:#6B8E6B;"></div>
+    <div class="swatch-label">#6B8E6B · 石绿</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="overlay-footer">
+    <div class="overlay-footer-text">三色透明片 — 姑苏折子 · 站六道具 · 2/3</div>
+  </div>
+
+</div><!-- /page 2 green -->
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- Page 3: Blue Overlay 蓝色透明片        -->
+<!-- ══════════════════════════════════════ -->
+<div class="overlay-page">
+
+  <!-- Color fill -->
+  <div class="overlay-fill" style="background-color:#5B7BA5;"></div>
+
+  <!-- Registration marks -->
+  <div class="reg-mark tl"></div>
+  <div class="reg-mark tr"></div>
+  <div class="reg-mark bl"></div>
+  <div class="reg-mark br"></div>
+  <div class="reg-ring tl"></div>
+  <div class="reg-ring tr"></div>
+  <div class="reg-ring bl"></div>
+  <div class="reg-ring br"></div>
+
+  <!-- Header -->
+  <div class="overlay-header">
+    <div class="overlay-label-zh">蓝色透明片</div>
+    <div class="overlay-label-en">BLUE OVERLAY · 第三层 · 姑苏折子</div>
+  </div>
+
+  <!-- Badge -->
+  <div class="overlay-badge">
+    <div class="overlay-num">三</div>
+  </div>
+
+  <div class="overlay-spacer"></div>
+
+  <!-- Body -->
+  <div class="overlay-body">
+    <div class="overlay-step-label">叠加第三片</div>
+    <div class="overlay-usage-text">
+      在红片与绿片之上叠加此蓝片<br>
+      蓝色文字将消隐，三层合并即为完整谜底
+    </div>
+  </div>
+
+  <!-- Color reference strip -->
+  <div class="color-ref-strip">
+    <div class="swatch-label">此片色值</div>
+    <div class="swatch-box" style="background-color:#5B7BA5;"></div>
+    <div class="swatch-label">#5B7BA5 · 靛蓝</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="overlay-footer">
+    <div class="overlay-footer-text">三色透明片 — 姑苏折子 · 站六道具 · 3/3</div>
+  </div>
+
+</div><!-- /page 3 blue -->
+
+</body>
+</html>

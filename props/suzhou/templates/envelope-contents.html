@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信封内容 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ── Suzhou palette ───────────────────────────────────── */
+    :root {
+      --sz-red:       #C85A5A;
+      --sz-bg:        #F5F0E8;
+      --sz-text:      #3A3226;
+      --sz-secondary: #8B7E6A;
+      --sz-gold:      #D4A574;
+    }
+
+    /* ── Letter page (Page 1) ─────────────────────────────── */
+    .letter-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--sz-red);
+    }
+
+    .letter-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: var(--sz-red);
+      margin-bottom: 6px;
+    }
+
+    .letter-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.15em;
+      font-style: italic;
+    }
+
+    .letter-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 16px;
+      line-height: 2.5;
+      color: var(--sz-text);
+      letter-spacing: 0.08em;
+      flex: 1;
+      padding: 8px 4px;
+    }
+
+    .letter-body p {
+      margin-bottom: 0.6em;
+      text-indent: 2em;
+    }
+
+    .letter-signature {
+      margin-top: 28px;
+      text-align: right;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 15px;
+      color: var(--sz-text);
+      line-height: 2;
+    }
+
+    /* Seal stamp (corner) */
+    .jiejing-seal-corner {
+      position: absolute;
+      top: 14mm;
+      right: 14mm;
+      display: inline-block;
+      border: 2px double var(--sz-red);
+      color: var(--sz-red);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 6px 12px;
+      transform: rotate(-4deg);
+      opacity: 0.72;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── Blueprint page (Page 2) ──────────────────────────── */
+    .blueprint-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blueprint-header {
+      text-align: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--sz-red);
+    }
+
+    .blueprint-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: var(--sz-red);
+      margin-bottom: 4px;
+    }
+
+    .blueprint-subtitle {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.2em;
+    }
+
+    /* Garden map SVG wrapper */
+    .garden-map-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    /* Garden element entries below the map */
+    .garden-elements-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 20px;
+      margin-top: 14px;
+    }
+
+    .garden-el {
+      border: 1px solid rgba(200,90,90,0.3);
+      padding: 8px 12px;
+      background: rgba(245,240,232,0.6);
+      position: relative;
+    }
+
+    .garden-el-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--sz-red);
+      letter-spacing: 0.15em;
+      margin-bottom: 3px;
+    }
+
+    .garden-el-origin {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .garden-el-quote {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 12px;
+      color: var(--sz-text);
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+      font-style: italic;
+    }
+
+    .blueprint-coda {
+      margin-top: 18px;
+      text-align: center;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.12em;
+      font-style: italic;
+      border-top: 1px dashed rgba(200,90,90,0.35);
+      padding-top: 12px;
+    }
+
+    /* ── Ticket page (Page 3) ─────────────────────────────── */
+    .ticket-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ticket-wrap {
+      width: 140mm;
+      border: 3px double var(--sz-red);
+      padding: 8mm 10mm;
+      background: rgba(245,240,232,0.8);
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Ornate corner decorations */
+    .ticket-wrap::before,
+    .ticket-wrap::after {
+      content: '◈';
+      position: absolute;
+      font-size: 16px;
+      color: var(--sz-gold);
+      opacity: 0.7;
+    }
+    .ticket-wrap::before { top: 4px; left: 8px; }
+    .ticket-wrap::after  { bottom: 4px; right: 8px; }
+
+    .ticket-inner-border {
+      border: 1px solid rgba(200,90,90,0.4);
+      padding: 6mm 8mm;
+    }
+
+    .ticket-org {
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.25em;
+      margin-bottom: 6px;
+    }
+
+    .ticket-title {
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--sz-red);
+      letter-spacing: 0.5em;
+      margin-bottom: 4px;
+    }
+
+    .ticket-subtitle {
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.2em;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(200,90,90,0.3);
+    }
+
+    .ticket-field-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .ticket-field-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      min-width: 48px;
+    }
+
+    .ticket-field-blank {
+      flex: 1;
+      border-bottom: 1px solid rgba(58,50,38,0.35);
+      min-height: 20px;
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 13px;
+      color: var(--sz-text);
+      padding-bottom: 2px;
+    }
+
+    .ticket-divider {
+      border: none;
+      border-top: 1.5px dashed rgba(200,90,90,0.45);
+      margin: 10px 0;
+      position: relative;
+    }
+
+    .ticket-divider::before {
+      content: '◆';
+      position: absolute;
+      left: -6px;
+      top: -9px;
+      font-size: 10px;
+      color: var(--sz-red);
+      opacity: 0.5;
+    }
+
+    .ticket-divider::after {
+      content: '◆';
+      position: absolute;
+      right: -6px;
+      top: -9px;
+      font-size: 10px;
+      color: var(--sz-red);
+      opacity: 0.5;
+    }
+
+    .ticket-role-field {
+      text-align: center;
+      margin: 8px 0;
+    }
+
+    .ticket-role-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: var(--sz-secondary);
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+    }
+
+    .ticket-role-value {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      color: var(--sz-text);
+      letter-spacing: 0.25em;
+      border-bottom: 1px solid rgba(58,50,38,0.35);
+      padding-bottom: 4px;
+    }
+
+    .ticket-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 10px;
+    }
+
+    .ticket-footer-note {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(139,126,106,0.7);
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+
+    .ticket-seal {
+      display: inline-block;
+      border: 1.5px solid rgba(200,90,90,0.55);
+      color: rgba(200,90,90,0.65);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      transform: rotate(5deg);
+      letter-spacing: 0.1em;
+    }
+
+    .ticket-page-note {
+      margin-top: 16px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: var(--sz-secondary);
+      text-align: center;
+      letter-spacing: 0.15em;
+      font-style: italic;
+      line-height: 2;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     Page 1 — 沈云筝的最后一封信
+     ════════════════════════════════════════════════════════ -->
+<div class="page letter-page">
+
+  <div class="jiejing-seal-corner">通关后<br>拆封</div>
+
+  <div class="letter-header">
+    <div class="letter-title">沈云筝的最后一封信</div>
+    <div class="letter-note">通关后拆开信封内第一张纸 · 仿手写体 · 泛黄纸张质感</div>
+  </div>
+
+  <div class="letter-body">
+    <p>你走完了我走过的路。</p>
+    <p>我必须对你坦白——没有什么散佚的戏本。从来没有。</p>
+    <p>那七张戏票上印的唱词都是真的。但背面的字不属于任何剧本。那些是我自己的话。我一辈子只会用别人的台词说话，最后还是没出息——把真心话藏在了角色的缝隙里。</p>
+    <p>你在盘门看到的水，是我散场后一个人蹲在桥头看的。文庙的柏树，是我背台词背累了靠着歇过的。双塔的影子，是我化妆时在铜镜里看见的自己。耦园的漏窗，是我隔着墙听见一个声音的地方。平江路的颜色，是我走了一百遍还是觉得好看的路。桃花坞的红绿，是我觉得自己这辈子该有但没有的热闹。山塘街的尽头，是我决定不再演了的地方。</p>
+    <p>那座园你已经看到蓝图了。窗是偷的，石是借的，水是梦里的。但你走进来了——就算有人来过。</p>
+    <p>如果你走完这条路饿了，去平江路买一块桂花糕。替我吃的。我当年在账册上记过价钱，但没舍得买。</p>
+  </div>
+
+  <div class="letter-signature">
+    ——沈云筝
+  </div>
+
+</div><!-- /page 1 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     Page 2 — 不可能的园（园林蓝图）
+     ════════════════════════════════════════════════════════ -->
+<div class="page blueprint-page">
+
+  <div class="jiejing-seal-corner">不可能<br>的园</div>
+
+  <div class="blueprint-header">
+    <div class="blueprint-title">不可能的园</div>
+    <div class="blueprint-subtitle">信封内第二张纸 · 手绘风格园林平面图 · 七件借来的东西</div>
+  </div>
+
+  <!-- Hand-drawn style garden map (SVG) -->
+  <div class="garden-map-wrap">
+    <svg viewBox="0 0 500 300" width="420" height="252"
+         style="-webkit-print-color-adjust:exact;print-color-adjust:exact;">
+      <!-- Garden outer wall -->
+      <rect x="20" y="20" width="460" height="260" rx="8"
+            fill="none" stroke="#C85A5A" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <!-- Inner paths (dotted lines connecting elements) -->
+      <!-- 入口水池 (top-left) to 碑石 (top-center) -->
+      <line x1="95" y1="75" x2="195" y2="75" stroke="#8B7E6A" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <!-- 碑石 to 花窗 (right) -->
+      <line x1="245" y1="75" x2="345" y2="75" stroke="#8B7E6A" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <!-- 入口水池 to 漏窗 (left-center) -->
+      <line x1="75" y1="100" x2="75" y2="175" stroke="#8B7E6A" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <!-- 花窗 to 无名亭 (bottom-right) -->
+      <line x1="370" y1="100" x2="390" y2="200" stroke="#8B7E6A" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <!-- 漏窗 to 桂花树 (bottom-center) -->
+      <line x1="100" y1="195" x2="220" y2="215" stroke="#8B7E6A" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <!-- 桂花树 to 太湖石 (right) -->
+      <line x1="290" y1="220" x2="355" y2="210" stroke="#8B7E6A" stroke-width="0.8" stroke-dasharray="4,3"/>
+      <!-- 太湖石 to 无名亭 -->
+      <line x1="380" y1="195" x2="390" y2="215" stroke="#8B7E6A" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+      <!-- 入口·水池 -->
+      <ellipse cx="75" cy="72" rx="32" ry="22" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      <ellipse cx="75" cy="72" rx="18" ry="12" fill="none" stroke="#C85A5A" stroke-width="0.6" stroke-dasharray="2,2"/>
+      <text x="75" y="68" text-anchor="middle" font-family="serif" font-size="9" fill="#3A3226">水池</text>
+      <text x="75" y="80" text-anchor="middle" font-family="serif" font-size="7" fill="#8B7E6A">入口</text>
+
+      <!-- 正厅·碑石 -->
+      <rect x="195" y="52" width="50" height="44" rx="4" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      <rect x="202" y="58" width="36" height="32" fill="none" stroke="#C85A5A" stroke-width="0.6"/>
+      <text x="220" y="74" text-anchor="middle" font-family="serif" font-size="9" fill="#3A3226">碑石</text>
+      <text x="220" y="86" text-anchor="middle" font-family="serif" font-size="7" fill="#8B7E6A">正厅</text>
+
+      <!-- 东廊·花窗 -->
+      <rect x="340" y="52" width="50" height="44" rx="2" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      <line x1="365" y1="52" x2="365" y2="96" stroke="#C85A5A" stroke-width="0.6"/>
+      <line x1="340" y1="74" x2="390" y2="74" stroke="#C85A5A" stroke-width="0.6"/>
+      <circle cx="365" cy="74" r="6" fill="none" stroke="#C85A5A" stroke-width="0.8"/>
+      <text x="365" y="70" text-anchor="middle" font-family="serif" font-size="9" fill="#3A3226">花窗</text>
+      <text x="365" y="105" text-anchor="middle" font-family="serif" font-size="7" fill="#8B7E6A">东廊</text>
+
+      <!-- 西墙·漏窗 -->
+      <rect x="40" y="168" width="50" height="40" rx="2" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      <line x1="53" y1="168" x2="53" y2="208" stroke="#C85A5A" stroke-width="0.5"/>
+      <line x1="66" y1="168" x2="66" y2="208" stroke="#C85A5A" stroke-width="0.5"/>
+      <line x1="79" y1="168" x2="79" y2="208" stroke="#C85A5A" stroke-width="0.5"/>
+      <line x1="40" y1="182" x2="90" y2="182" stroke="#C85A5A" stroke-width="0.5"/>
+      <line x1="40" y1="196" x2="90" y2="196" stroke="#C85A5A" stroke-width="0.5"/>
+      <text x="65" y="180" text-anchor="middle" font-family="serif" font-size="9" fill="#3A3226">漏窗</text>
+      <text x="65" y="220" text-anchor="middle" font-family="serif" font-size="7" fill="#8B7E6A">西墙</text>
+
+      <!-- 中庭·桂花树 -->
+      <circle cx="248" cy="218" r="22" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      <circle cx="248" cy="218" r="12" fill="none" stroke="#C85A5A" stroke-width="0.6" stroke-dasharray="2,2"/>
+      <circle cx="248" cy="218" r="4" fill="#D4A574" opacity="0.4"/>
+      <text x="248" y="215" text-anchor="middle" font-family="serif" font-size="9" fill="#3A3226">桂花</text>
+      <text x="248" y="225" text-anchor="middle" font-family="serif" font-size="7" fill="#8B7E6A">中庭</text>
+
+      <!-- 后院·太湖石 -->
+      <ellipse cx="368" cy="202" rx="20" ry="14" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      <ellipse cx="364" cy="197" rx="12" ry="9" fill="none" stroke="#C85A5A" stroke-width="0.7"/>
+      <ellipse cx="374" cy="207" rx="10" ry="7" fill="none" stroke="#C85A5A" stroke-width="0.7"/>
+      <text x="368" y="200" text-anchor="middle" font-family="serif" font-size="9" fill="#3A3226">太湖石</text>
+      <text x="368" y="224" text-anchor="middle" font-family="serif" font-size="7" fill="#8B7E6A">后院</text>
+
+      <!-- 尽头·无名亭 -->
+      <polygon points="422,235 395,255 449,255" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      <rect x="400" y="255" width="44" height="18" fill="none" stroke="#C85A5A" stroke-width="1"/>
+      <text x="422" y="249" text-anchor="middle" font-family="serif" font-size="9" fill="#3A3226">无名亭</text>
+      <text x="422" y="278" text-anchor="middle" font-family="serif" font-size="7" fill="#8B7E6A">尽头</text>
+
+      <!-- Legend label -->
+      <text x="250" y="16" text-anchor="middle" font-family="serif" font-size="10" fill="#8B7E6A" letter-spacing="3">七件借来的东西 · 手绘草图</text>
+    </svg>
+  </div>
+
+  <!-- Element list -->
+  <div class="garden-elements-list">
+
+    <div class="garden-el">
+      <div class="garden-el-name">入口·水池</div>
+      <div class="garden-el-origin">借自盘门护城河</div>
+      <div class="garden-el-quote">「够映一个人的影子就行。」</div>
+    </div>
+
+    <div class="garden-el">
+      <div class="garden-el-name">正厅·碑石</div>
+      <div class="garden-el-origin">借自苏州文庙</div>
+      <div class="garden-el-quote">「不刻功名，只刻一个人站过的位置。」</div>
+    </div>
+
+    <div class="garden-el">
+      <div class="garden-el-name">东廊·花窗</div>
+      <div class="garden-el-origin">借自双塔旁某户人家</div>
+      <div class="garden-el-quote">「从这边看是真的，从那边看是梦里的。分不出来最好。」</div>
+    </div>
+
+    <div class="garden-el">
+      <div class="garden-el-name">西墙·漏窗</div>
+      <div class="garden-el-origin">借自耦园</div>
+      <div class="garden-el-quote">「看得见又够不着，像隔着一堵墙听见有人念书。」</div>
+    </div>
+
+    <div class="garden-el">
+      <div class="garden-el-name">中庭·桂花树</div>
+      <div class="garden-el-origin">借自平江路某户院墙内</div>
+      <div class="garden-el-quote">「秋天的时候满园都是甜的。」</div>
+    </div>
+
+    <div class="garden-el">
+      <div class="garden-el-name">后院·太湖石</div>
+      <div class="garden-el-origin">借自桃花坞某石桥旁</div>
+      <div class="garden-el-quote">「丑的那种。像人终于站起来了。」</div>
+    </div>
+
+  </div>
+
+  <!-- Seventh element (full width) -->
+  <div class="garden-el" style="margin-top:10px;grid-column:1/-1;">
+    <div class="garden-el-name">尽头·无名亭</div>
+    <div class="garden-el-origin">借自山塘街星桥桥头</div>
+    <div class="garden-el-quote">「没有匾。谁来了就坐坐。走了也不必说。」</div>
+  </div>
+
+  <div class="blueprint-coda">
+    这不是一座园。这是她的一生。
+  </div>
+
+</div><!-- /page 2 -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     Page 3 — 空白戏票
+     ════════════════════════════════════════════════════════ -->
+<div class="page ticket-page">
+
+  <div class="jiejing-seal-corner">戏散后<br>拆封</div>
+
+  <div class="ticket-wrap">
+
+    <div class="ticket-inner-border">
+
+      <div class="ticket-org">姑苏·昆曲演出</div>
+
+      <div class="ticket-title">折子戏</div>
+      <div class="ticket-subtitle">ZHEZIJU · Suzhou Kunqu · 仿旧戏票格式</div>
+
+      <div class="ticket-field-row">
+        <span class="ticket-field-label">日期：</span>
+        <span class="ticket-field-blank">某年某月某日</span>
+      </div>
+
+      <div class="ticket-field-row">
+        <span class="ticket-field-label">地点：</span>
+        <span class="ticket-field-blank">姑苏·某处</span>
+      </div>
+
+      <hr class="ticket-divider">
+
+      <div class="ticket-field-row">
+        <span class="ticket-field-label">今日演出：</span>
+        <span class="ticket-field-blank" style="border-bottom:2px solid rgba(200,90,90,0.5);"></span>
+      </div>
+
+      <div class="ticket-role-field">
+        <div class="ticket-role-label">角色</div>
+        <div class="ticket-role-value">你自己。</div>
+      </div>
+
+      <hr class="ticket-divider">
+
+      <div class="ticket-field-row">
+        <span class="ticket-field-label">座位：</span>
+        <span class="ticket-field-blank" style="font-style:italic;color:#8B7E6A;font-size:12px;">无固定座位 · 随意坐</span>
+      </div>
+
+      <div class="ticket-footer">
+        <div class="ticket-footer-note">此票不记名 · 不可退换<br>姑苏折子 · 第七站入场凭证</div>
+        <div class="ticket-seal">借景<br>入梦</div>
+      </div>
+
+    </div><!-- /inner-border -->
+
+  </div><!-- /ticket-wrap -->
+
+  <div class="ticket-page-note">
+    信封内第三张纸 · 半页大小 · 仿旧戏票格式<br>
+    台上的人散了，台下那个人也散了。<br>
+    但这座园是我的——你走进来，就算有人来过。
+  </div>
+
+</div><!-- /page 3 -->
+
+</body>
+</html>

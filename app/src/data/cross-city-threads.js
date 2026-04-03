@@ -22,10 +22,17 @@ export const CROSS_CITY_THREADS = [
   },
   {
     from: 'xian',
-    to: 'shanghai',
-    quote: '有人说东海尽头有个渔港，将来也许会变成大城。我到不了那么远。',
+    to: 'suzhou',
+    quote: '东边有个地方叫姑苏，听说那里的人把戏唱进了园子里，连石头假山都会听戏。',
     source: '康安旅记·第七站·大雁塔',
     character: '康安'
+  },
+  {
+    from: 'suzhou',
+    to: 'shanghai',
+    quote: '听说松江那边在修港口，洋人带来了一种会动的皮影。不知道还需不需要唱戏的人。',
+    source: '沈云筝账册·第五站·平江路',
+    character: '沈云筝'
   }
 ]
 

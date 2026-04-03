@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>戏衫色卡 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    body {
+      background: #D8CFC0;
+    }
+
+    .cards-page {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-intro {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #5A3A30;
+      text-align: center;
+      letter-spacing: 0.12em;
+      line-height: 1.8;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border: 1px solid rgba(200,90,90,0.30);
+      background: rgba(200,90,90,0.05);
+    }
+
+    /* ── Card grid — 2 per row, business card size ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 90mm 90mm;
+      grid-template-rows: repeat(4, 54mm);
+      gap: 4mm;
+      justify-content: center;
+    }
+
+    /* ── Card front face ── */
+    .card-front {
+      width: 90mm;
+      height: 54mm;
+      border: 1.5px solid rgba(58,50,38,0.35);
+      border-radius: 2px;
+      background-color: #F5F0E8;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .card-front .card-header {
+      padding: 3mm 4mm 2mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .card-front .role-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #3A3226;
+      letter-spacing: 0.1em;
+    }
+
+    .card-front .opera-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8A7060;
+      letter-spacing: 0.1em;
+    }
+
+    .card-front .color-block {
+      flex: 1;
+      margin: 0 4mm 2mm;
+      border-radius: 1px;
+      position: relative;
+    }
+
+    .card-front .traditional-name {
+      position: absolute;
+      bottom: 3px;
+      right: 5px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(58,50,38,0.55);
+      letter-spacing: 0.15em;
+      background: rgba(245,240,232,0.6);
+      padding: 1px 4px;
+      border-radius: 1px;
+    }
+
+    /* ── Card back face ── */
+    .card-back {
+      width: 90mm;
+      height: 54mm;
+      border: 1.5px solid rgba(200,90,90,0.45);
+      border-radius: 2px;
+      background-color: #F5F0E8;
+      background-image:
+        radial-gradient(ellipse at 30% 30%, rgba(200,90,90,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 70%, rgba(180,160,120,0.06) 0%, transparent 60%);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 4mm 6mm;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .card-back .sequence-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #C85A5A;
+      opacity: 0.85;
+      line-height: 1;
+      min-width: 16mm;
+      text-align: center;
+    }
+
+    .card-back .back-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3mm;
+    }
+
+    .card-back .acrostic-char {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 28px;
+      color: #3A3226;
+      letter-spacing: 0;
+      line-height: 1;
+      border-bottom: 1.5px solid rgba(200,90,90,0.5);
+      padding-bottom: 2px;
+      min-width: 12mm;
+      text-align: center;
+    }
+
+    .card-back .acrostic-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: #8A7060;
+      letter-spacing: 0.2em;
+    }
+
+    .card-back .garden-keyword {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #5A3A30;
+      letter-spacing: 0.2em;
+      text-align: center;
+      min-width: 16mm;
+    }
+
+    .card-back .garden-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 7px;
+      color: #8A7060;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .card-back .back-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1mm;
+    }
+
+    /* ── Section separator between fronts and backs ── */
+    .section-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #8A7060;
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin: 8mm 0 5mm;
+      padding: 4px 0;
+      border-top: 1px solid rgba(200,90,90,0.25);
+      border-bottom: 1px solid rgba(200,90,90,0.25);
+    }
+
+    /* ── Print note ── */
+    .print-note {
+      margin-top: 10mm;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #5A3A30;
+      line-height: 1.9;
+      letter-spacing: 0.05em;
+      padding: 7px 12px;
+      border-left: 3px solid #C85A5A;
+      background: rgba(200,90,90,0.05);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page cards-page">
+
+  <div class="page-corner-stamp">
+    <div class="stamp">道具卡<br>PROP</div>
+  </div>
+
+  <div class="title">戏衫色卡</div>
+  <div class="subtitle">COSTUME COLOUR CARDS · 姑苏折子 · 七折折子戏</div>
+
+  <hr class="divider">
+
+  <div class="page-intro">
+    昆曲行头以色论身份——青衣之净，花旦之艳，末角之朴。<br>
+    七位角色，七种戏衫，各有传统色名。持卡比对碑文，方知入梦之序。
+  </div>
+
+  <div class="section-label">正面（Front） — 角色 · 剧目 · 服色</div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Front: 赵五娘 -->
+    <div class="card-front">
+      <div class="card-header">
+        <span class="role-name">赵五娘</span>
+        <span class="opera-name">《琵琶记》</span>
+      </div>
+      <div class="color-block" style="background-color:#7D8B8A;">
+        <span class="traditional-name">石青</span>
+      </div>
+    </div>
+
+    <!-- Card 2 Front: 李香君 -->
+    <div class="card-front">
+      <div class="card-header">
+        <span class="role-name">李香君</span>
+        <span class="opera-name">《桃花扇》</span>
+      </div>
+      <div class="color-block" style="background-color:#E8788A;">
+        <span class="traditional-name">桃夭</span>
+      </div>
+    </div>
+
+    <!-- Card 3 Front: 杜丽娘 -->
+    <div class="card-front">
+      <div class="card-header">
+        <span class="role-name">杜丽娘</span>
+        <span class="opera-name">《牡丹亭》</span>
+      </div>
+      <div class="color-block" style="background-color:#F2E4E1; border: 1px solid rgba(58,50,38,0.15);">
+        <span class="traditional-name" style="color:rgba(58,50,38,0.5);">退红</span>
+      </div>
+    </div>
+
+    <!-- Card 4 Front: 崔莺莺 -->
+    <div class="card-front">
+      <div class="card-header">
+        <span class="role-name">崔莺莺</span>
+        <span class="opera-name">《西厢记》</span>
+      </div>
+      <div class="color-block" style="background-color:#F0E68C;">
+        <span class="traditional-name">缃叶</span>
+      </div>
+    </div>
+
+    <!-- Card 5 Front: 杨玉环 -->
+    <div class="card-front">
+      <div class="card-header">
+        <span class="role-name">杨玉环</span>
+        <span class="opera-name">《长生殿》</span>
+      </div>
+      <div class="color-block" style="background-color:#F5C542;">
+        <span class="traditional-name">明黄</span>
+      </div>
+    </div>
+
+    <!-- Card 6 Front: 陈妙常 -->
+    <div class="card-front">
+      <div class="card-header">
+        <span class="role-name">陈妙常</span>
+        <span class="opera-name">《玉簪记》</span>
+      </div>
+      <div class="color-block" style="background-color:#C85A5A;">
+        <span class="traditional-name" style="color:rgba(245,240,232,0.85);">朱砂</span>
+      </div>
+    </div>
+
+    <!-- Card 7 Front: 沈云筝 -->
+    <div class="card-front">
+      <div class="card-header">
+        <span class="role-name">沈云筝</span>
+        <span class="opera-name">— 自撰折 —</span>
+      </div>
+      <div class="color-block" style="background-color:#E8ECF0; border: 1px solid rgba(58,50,38,0.15);">
+        <span class="traditional-name" style="color:rgba(58,50,38,0.5);">月白</span>
+      </div>
+    </div>
+
+    <!-- Card 7 — placeholder slot (empty, for layout) -->
+    <div style="width:90mm;height:54mm;"></div>
+
+  </div><!-- /cards-grid fronts -->
+
+  <div class="section-label">背面（Back） — 出场序 · 藏头字 · 园林要素</div>
+
+  <div class="cards-grid">
+
+    <!-- Card 1 Back -->
+    <div class="card-back">
+      <div class="sequence-num">一</div>
+      <div class="back-center">
+        <div class="acrostic-char">借</div>
+        <div class="acrostic-label">藏头字</div>
+      </div>
+      <div class="back-right">
+        <div class="garden-keyword">水</div>
+        <div class="garden-label">园林要素</div>
+      </div>
+    </div>
+
+    <!-- Card 2 Back -->
+    <div class="card-back">
+      <div class="sequence-num">二</div>
+      <div class="back-center">
+        <div class="acrostic-char">景</div>
+        <div class="acrostic-label">藏头字</div>
+      </div>
+      <div class="back-right">
+        <div class="garden-keyword">石</div>
+        <div class="garden-label">园林要素</div>
+      </div>
+    </div>
+
+    <!-- Card 3 Back -->
+    <div class="card-back">
+      <div class="sequence-num">三</div>
+      <div class="back-center">
+        <div class="acrostic-char">入</div>
+        <div class="acrostic-label">藏头字</div>
+      </div>
+      <div class="back-right">
+        <div class="garden-keyword">窗</div>
+        <div class="garden-label">园林要素</div>
+      </div>
+    </div>
+
+    <!-- Card 4 Back -->
+    <div class="card-back">
+      <div class="sequence-num">四</div>
+      <div class="back-center">
+        <div class="acrostic-char">梦</div>
+        <div class="acrostic-label">藏头字</div>
+      </div>
+      <div class="back-right">
+        <div class="garden-keyword">漏窗</div>
+        <div class="garden-label">园林要素</div>
+      </div>
+    </div>
+
+    <!-- Card 5 Back -->
+    <div class="card-back">
+      <div class="sequence-num">五</div>
+      <div class="back-center">
+        <div class="acrostic-char">戏</div>
+        <div class="acrostic-label">藏头字</div>
+      </div>
+      <div class="back-right">
+        <div class="garden-keyword">花木</div>
+        <div class="garden-label">园林要素</div>
+      </div>
+    </div>
+
+    <!-- Card 6 Back -->
+    <div class="card-back">
+      <div class="sequence-num">六</div>
+      <div class="back-center">
+        <div class="acrostic-char">如</div>
+        <div class="acrostic-label">藏头字</div>
+      </div>
+      <div class="back-right">
+        <div class="garden-keyword">叠石</div>
+        <div class="garden-label">园林要素</div>
+      </div>
+    </div>
+
+    <!-- Card 7 Back -->
+    <div class="card-back">
+      <div class="sequence-num">七</div>
+      <div class="back-center">
+        <div class="acrostic-char">真</div>
+        <div class="acrostic-label">藏头字</div>
+      </div>
+      <div class="back-right">
+        <div class="garden-keyword">亭</div>
+        <div class="garden-label">园林要素</div>
+      </div>
+    </div>
+
+    <!-- Placeholder -->
+    <div style="width:90mm;height:54mm;"></div>
+
+  </div><!-- /cards-grid backs -->
+
+  <div class="print-note">
+    <strong>注：</strong>卡片2（桃红）建议打印在透明胶片上，用于站2碑文拓片解密。
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

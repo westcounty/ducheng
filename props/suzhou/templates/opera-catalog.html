@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折子戏目录 — 姑苏折子</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* A4 landscape accordion booklet — 3 panels */
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+
+    html, body {
+      background: #C8B8A0;
+    }
+
+    .accordion-page {
+      width: 277mm; /* A4 landscape width minus margins */
+      min-height: 190mm;
+      margin: 0 auto 20px;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      background: transparent;
+      box-shadow: 2px 3px 10px rgba(0,0,0,0.15);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── ACCORDION PANEL ─────────────────────── */
+    .panel {
+      flex: 1;
+      min-height: 190mm;
+      padding: 10mm 8mm;
+      background-color: #F5F0E8;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(200,90,90,0.05) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(180,160,120,0.06) 0%, transparent 50%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(200,90,90,0.20);
+    }
+
+    /* Fold markers between panels */
+    .panel-divider {
+      width: 0;
+      min-height: 190mm;
+      border-left: 2px dashed rgba(200,90,90,0.50);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .panel-divider::before {
+      content: '折';
+      position: absolute;
+      top: 6mm;
+      left: -7px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(200,90,90,0.60);
+      background: #F5F0E8;
+      padding: 1px 1px;
+      letter-spacing: 0.05em;
+    }
+    .panel-divider::after {
+      content: '折';
+      position: absolute;
+      bottom: 6mm;
+      left: -7px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: rgba(200,90,90,0.60);
+      background: #F5F0E8;
+      padding: 1px 1px;
+    }
+
+    /* ── ORNATE BORDER FRAME (inner rule) ──── */
+    .panel-inner-border {
+      position: absolute;
+      inset: 5mm;
+      border: 1px solid rgba(200,90,90,0.25);
+      pointer-events: none;
+    }
+
+    /* ── PANEL HEADER ───────────────────────── */
+    .panel-header {
+      text-align: center;
+      padding-bottom: 5px;
+      margin-bottom: 8px;
+      border-bottom: 1.5px solid rgba(200,90,90,0.35);
+    }
+
+    .panel-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #C85A5A;
+      letter-spacing: 0.3em;
+    }
+
+    .panel-subtitle {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8B7E6A;
+      letter-spacing: 0.15em;
+      margin-top: 2px;
+    }
+
+    /* ── OPERA ENTRY LIST ───────────────────── */
+    .opera-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .opera-entry {
+      display: grid;
+      grid-template-columns: 10mm 1fr 18mm;
+      gap: 4px;
+      align-items: start;
+      padding: 4px 3px;
+      border-bottom: 1px solid rgba(200,90,90,0.15);
+    }
+
+    .opera-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #C85A5A;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .opera-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .opera-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #3A3226;
+      letter-spacing: 0.08em;
+    }
+
+    .opera-source {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8B7E6A;
+      letter-spacing: 0.06em;
+    }
+
+    .opera-desc {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #5A4A38;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+
+    .opera-icon {
+      font-size: 16px;
+      text-align: center;
+      opacity: 0.55;
+      line-height: 1.2;
+    }
+
+    /* ── COVER PANEL DECORATION ─────────────── */
+    .cover-ornament {
+      text-align: center;
+      font-size: 28px;
+      color: rgba(200,90,90,0.25);
+      margin: 4mm 0 3mm;
+      line-height: 1;
+    }
+
+    .cover-main-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #C85A5A;
+      text-align: center;
+      letter-spacing: 0.4em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 3mm;
+    }
+
+    .cover-divider {
+      border: none;
+      border-top: 1.5px solid rgba(200,90,90,0.40);
+      margin: 3mm 0;
+    }
+
+    .cover-sub {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #8B7E6A;
+      text-align: center;
+      letter-spacing: 0.2em;
+      line-height: 2;
+    }
+
+    .cover-stamp {
+      display: inline-block;
+      border: 2px double #C85A5A;
+      color: #C85A5A;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      padding: 6px 12px;
+      transform: rotate(-5deg);
+      opacity: 0.70;
+      margin-top: 6mm;
+    }
+
+    .cover-footer {
+      margin-top: auto;
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 9px;
+      color: #8B7E6A;
+      letter-spacing: 0.12em;
+      border-top: 1px solid rgba(200,90,90,0.20);
+      padding-top: 4px;
+    }
+
+    .panel-footer {
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: rgba(139,126,106,0.65);
+      letter-spacing: 0.12em;
+      border-top: 1px solid rgba(200,90,90,0.20);
+      padding-top: 4px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="accordion-page">
+
+  <!-- ══ PANEL 1: COVER ════════════════════════════════════ -->
+  <div class="panel">
+    <div class="panel-inner-border"></div>
+
+    <div class="cover-ornament">☯</div>
+    <div class="cover-main-title">折子戏目录</div>
+    <hr class="cover-divider">
+    <div class="cover-sub">
+      KUNQU OPERA EXCERPT CATALOG<br>
+      昆曲十二折 · 姑苏折子<br>
+      ——<br>
+      戏文是借来的镜<br>
+      照出的是此刻这个人
+    </div>
+
+    <div style="text-align:center;margin-top:6mm;">
+      <div class="cover-stamp">借 景</div>
+    </div>
+
+    <!-- Decorative opera mask (simplified CSS circle face) -->
+    <div style="text-align:center;margin-top:8mm;">
+      <svg viewBox="0 0 80 80" width="60" height="60" style="opacity:0.22;">
+        <ellipse cx="40" cy="42" rx="28" ry="32" fill="none" stroke="#C85A5A" stroke-width="2"/>
+        <ellipse cx="40" cy="36" rx="22" ry="20" fill="none" stroke="#C85A5A" stroke-width="1.5"/>
+        <!-- Eyes -->
+        <ellipse cx="31" cy="33" rx="5" ry="4" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+        <ellipse cx="49" cy="33" rx="5" ry="4" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+        <!-- Eyebrows stylized -->
+        <path d="M25,27 Q31,22 37,27" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+        <path d="M43,27 Q49,22 55,27" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+        <!-- Nose -->
+        <path d="M38,38 Q40,42 42,38" fill="none" stroke="#C85A5A" stroke-width="1"/>
+        <!-- Mouth -->
+        <path d="M30,47 Q40,54 50,47" fill="none" stroke="#C85A5A" stroke-width="1.2"/>
+      </svg>
+    </div>
+
+    <div class="cover-footer">
+      苏州昆曲院藏本 · 内部使用 · 勿外传
+    </div>
+  </div>
+
+  <div class="panel-divider"></div>
+
+  <!-- ══ PANEL 2: OPERA ENTRIES 1–6 ════════════════════════ -->
+  <div class="panel">
+    <div class="panel-inner-border"></div>
+
+    <div class="panel-header">
+      <div class="panel-title">折子戏 一至六</div>
+      <div class="panel-subtitle">EXCERPTS I – VI · 牡丹亭 · 西厢记 · 桃花扇 · 琵琶记</div>
+    </div>
+
+    <div class="opera-list">
+
+      <div class="opera-entry">
+        <div class="opera-num">①</div>
+        <div class="opera-body">
+          <div class="opera-name">游园</div>
+          <div class="opera-source">《牡丹亭》</div>
+          <div class="opera-desc">杜丽娘初入后花园，见春色良辰，感叹青春虚度</div>
+        </div>
+        <div class="opera-icon">🌸</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">②</div>
+        <div class="opera-body">
+          <div class="opera-name">惊梦</div>
+          <div class="opera-source">《牡丹亭》</div>
+          <div class="opera-desc">梦中遇柳梦梅，于花园幽会，醒后幽思难忘</div>
+        </div>
+        <div class="opera-icon">🌙</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">③</div>
+        <div class="opera-body">
+          <div class="opera-name">听琴</div>
+          <div class="opera-source">《西厢记》</div>
+          <div class="opera-desc">崔莺莺隔墙听张生琴声，情愫暗生</div>
+        </div>
+        <div class="opera-icon">🎵</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">④</div>
+        <div class="opera-body">
+          <div class="opera-name">佳期</div>
+          <div class="opera-source">《西厢记》</div>
+          <div class="opera-desc">莺莺与张生月下相会，情深缘定</div>
+        </div>
+        <div class="opera-icon">✨</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">⑤</div>
+        <div class="opera-body">
+          <div class="opera-name">题扇</div>
+          <div class="opera-source">《桃花扇》</div>
+          <div class="opera-desc">李香君以血溅诗扇，成就一段忠贞之情</div>
+        </div>
+        <div class="opera-icon">🪭</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">⑥</div>
+        <div class="opera-body">
+          <div class="opera-name">吃糠</div>
+          <div class="opera-source">《琵琶记》</div>
+          <div class="opera-desc">赵五娘独守空闺，糟糠自咽，节义感人</div>
+        </div>
+        <div class="opera-icon">🎋</div>
+      </div>
+
+    </div><!-- /opera-list -->
+
+    <div class="panel-footer">折子戏目录 — 姑苏折子 · 第一页</div>
+  </div>
+
+  <div class="panel-divider"></div>
+
+  <!-- ══ PANEL 3: OPERA ENTRIES 7–12 ══════════════════════ -->
+  <div class="panel">
+    <div class="panel-inner-border"></div>
+
+    <div class="panel-header">
+      <div class="panel-title">折子戏 七至十二</div>
+      <div class="panel-subtitle">EXCERPTS VII – XII · 玉簪记 · 长生殿 · 琵琶记 · 水浒记</div>
+    </div>
+
+    <div class="opera-list">
+
+      <div class="opera-entry">
+        <div class="opera-num">⑦</div>
+        <div class="opera-body">
+          <div class="opera-name">琴挑</div>
+          <div class="opera-source">《玉簪记》</div>
+          <div class="opera-desc">潘必正月下抚琴，以曲传情，陈妙常心乱</div>
+        </div>
+        <div class="opera-icon">🎼</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">⑧</div>
+        <div class="opera-body">
+          <div class="opera-name">秋江</div>
+          <div class="opera-source">《玉簪记》</div>
+          <div class="opera-desc">陈妙常追舟送别，江上情深，挥泪相隔</div>
+        </div>
+        <div class="opera-icon">🍂</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">⑨</div>
+        <div class="opera-body">
+          <div class="opera-name">惊变</div>
+          <div class="opera-source">《长生殿》</div>
+          <div class="opera-desc">安史之乱爆发，盛世骤然倾覆</div>
+        </div>
+        <div class="opera-icon">⚡</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">⑩</div>
+        <div class="opera-body">
+          <div class="opera-name">埋玉</div>
+          <div class="opera-source">《长生殿》</div>
+          <div class="opera-desc">贵妃马嵬坡赐死，玉殒香消，情断长恨</div>
+        </div>
+        <div class="opera-icon">💎</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">⑪</div>
+        <div class="opera-body">
+          <div class="opera-name">寄子</div>
+          <div class="opera-source">《琵琶记》</div>
+          <div class="opera-desc">赵五娘千里寻夫，母子生死别情令人动容</div>
+        </div>
+        <div class="opera-icon">📜</div>
+      </div>
+
+      <div class="opera-entry">
+        <div class="opera-num">⑫</div>
+        <div class="opera-body">
+          <div class="opera-name">扈家庄</div>
+          <div class="opera-source">《水浒记》</div>
+          <div class="opera-desc">一丈青大战矮脚虎，巾帼英雄气贯长虹</div>
+        </div>
+        <div class="opera-icon">⚔️</div>
+      </div>
+
+    </div><!-- /opera-list -->
+
+    <div class="panel-footer">折子戏目录 — 姑苏折子 · 第二页</div>
+  </div>
+
+</div><!-- /accordion-page -->
+
+</body>
+</html>

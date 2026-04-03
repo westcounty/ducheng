@@ -34,6 +34,15 @@ export const CITIES = [
     themeClass: 'theme-xian',
     available: true,
     totalStages: 7
+  },
+  {
+    id: 'suzhou',
+    name: '苏州',
+    scriptName: '姑苏折子',
+    tagline: '她演了一辈子别人的戏，只有苏州记得她自己的台词',
+    themeClass: 'theme-suzhou',
+    available: true,
+    totalStages: 7
   }
 ]
 
