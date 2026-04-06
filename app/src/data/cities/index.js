@@ -9,6 +9,15 @@ export const CITIES = [
     totalStages: 7
   },
   {
+    id: 'shanghai2',
+    name: '上海·福州路',
+    scriptName: '墨迹',
+    tagline: '一个编辑在一条街上藏了一本书',
+    themeClass: 'theme-shanghai2',
+    available: true,
+    totalStages: 7
+  },
+  {
     id: 'nanjing',
     name: '南京',
     scriptName: '金陵刻痕',
