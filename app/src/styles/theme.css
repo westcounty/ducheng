@@ -464,6 +464,22 @@ body {
   --shadow-lg: 0 8px 24px rgba(45, 41, 38, 0.15);
 }
 
+.theme-shanghai2 {
+  --bg-primary: #f5f2eb;
+  --bg-secondary: #eae5db;
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a6a;
+  --accent: #2c3e7a;
+  --border: #b8b0a0;
+  --success: #3a6b4a;
+  --error: #8b2500;
+  --font-display: 'Noto Serif SC', serif;
+  --paper-texture:
+    radial-gradient(ellipse at 30% 20%, rgba(44, 62, 122, 0.03) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(74, 74, 106, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(184, 176, 160, 0.05) 0%, transparent 70%);
+}
+
 .theme-default {
   --bg-primary: #1a1a1a;
   --bg-secondary: #2c2c2c;
