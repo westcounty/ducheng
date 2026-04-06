@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>烧毁纸条 + 日记便签 — 第七封密电（V3新增）</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .burned-note-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .page-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+      margin-bottom: 14px;
+    }
+
+    /* ── Burned note ────────────────────────────── */
+    .burned-note {
+      width: 120mm;
+      min-height: 60mm;
+      padding: 16px 20px;
+      background: #e8dfc5;
+      border: 2px solid #6b4c2a;
+      position: relative;
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 18px;
+      line-height: 2.4;
+      color: #2a1505;
+      letter-spacing: 0.15em;
+    }
+
+    /* Simulate burned edges */
+    .burned-note::before {
+      content: '';
+      position: absolute;
+      top: -4px; right: -4px; bottom: -4px; left: -4px;
+      border: 6px solid transparent;
+      border-image: repeating-linear-gradient(
+        45deg,
+        #3a2010 0px, #3a2010 3px,
+        transparent 3px, transparent 6px
+      ) 6;
+      opacity: 0.6;
+    }
+
+    .burned-note .fragment-line {
+      margin: 0;
+    }
+
+    .burned-char {
+      background: #2a1505;
+      color: #2a1505;
+      padding: 0 3px;
+      border-radius: 1px;
+      user-select: none;
+    }
+
+    .burned-note-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    /* ── Note back side (encrypted text) ───────── */
+    .note-back {
+      width: 120mm;
+      min-height: 40mm;
+      padding: 16px 20px;
+      background: #e8dfc5;
+      border: 2px solid #6b4c2a;
+      text-align: center;
+    }
+
+    .note-back-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+      margin-bottom: 12px;
+    }
+
+    .encrypted-text {
+      font-family: 'Courier New', monospace;
+      font-size: 22px;
+      letter-spacing: 0.4em;
+      color: #1a0c05;
+      font-weight: 700;
+    }
+
+    /* ── Diary cover sticky note ───────────────── */
+    .sticky-note {
+      width: 70mm;
+      min-height: 35mm;
+      padding: 14px 16px;
+      background: #f5edc8;
+      border: 1px solid #c0a870;
+      transform: rotate(-2deg);
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
+    }
+
+    .sticky-note-text {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 16px;
+      line-height: 2;
+      color: #4a3825;
+      letter-spacing: 0.08em;
+    }
+
+    .sticky-note-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    /* ── Print instructions ───────────────────── */
+    .print-instructions {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      border: 1px dashed #a08060;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #6b4c2a;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page burned-note-page">
+
+  <div class="page-header">
+    <div class="title-zh" style="font-size:16px;letter-spacing:0.3em;">序章道具 · 烧毁纸条 + 便签</div>
+    <div class="subtitle" style="font-size:10px;margin-top:4px;">Stage 0 Props — Burned Note + Diary Sticky Note</div>
+  </div>
+
+  <!-- 烧毁纸条正面 -->
+  <div>
+    <div class="burned-note-label">◆ 烧毁纸条 · 正面 ◆</div>
+    <div class="burned-note">
+      <p class="fragment-line"><span class="burned-char">██</span>路<span class="burned-char">██</span>号</p>
+      <p class="fragment-line"><span class="burned-char">███</span>的绿<span class="burned-char">█</span></p>
+      <p class="fragment-line"><span class="burned-char">█</span>饭<span class="burned-char">██</span></p>
+    </div>
+  </div>
+
+  <!-- 烧毁纸条背面 -->
+  <div>
+    <div class="note-back-label">◆ 烧毁纸条 · 背面 ◆</div>
+    <div class="note-back">
+      <div class="encrypted-text">KHSLQJIDQGLDQ</div>
+    </div>
+  </div>
+
+  <!-- 日记封面便签 -->
+  <div>
+    <div class="sticky-note-label">◆ 日记封面便签（夹在日记封面内页）◆</div>
+    <div class="sticky-note">
+      <div class="sticky-note-text">同志：年份尾数，老规矩。</div>
+    </div>
+  </div>
+
+  <!-- 制作说明 -->
+  <div class="print-instructions">
+    <strong>制作说明：</strong><br>
+    1. 烧毁纸条：打印后用打火机/蜡烛烧掉纸条边缘和大部分文字区域，只保留"路""绿""饭"等碎片字可见。可先做旧（茶水浸泡晾干）再烧。<br>
+    2. 便签：打印后裁剪，夹在日记残页封面内侧。铅笔字效果可用浅灰色打印模拟。<br>
+    3. 加密文字 KHSLQJIDQGLDQ 用密码转盘偏移3位解密 = HEPINGFANDIAN（和平饭店拼音）。
+  </div>
+
+</div>
+
+</body>
+</html>

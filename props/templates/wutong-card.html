@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>梧桐卡 — 第七封密电（V3新增）</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .wutong-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .page-header {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #8b6540;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      width: 85mm;
+      height: 55mm;
+      border: 2px solid #4a6030;
+      padding: 12px 14px;
+      background: #f0eed8;
+      position: relative;
+    }
+
+    .card-label {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 8px;
+      color: #4a6030;
+      letter-spacing: 0.15em;
+    }
+
+    .card-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2a3a10;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #4a6030;
+      padding-bottom: 4px;
+    }
+
+    .card-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 12px;
+      line-height: 2;
+      color: #2a1505;
+      letter-spacing: 0.04em;
+    }
+
+    .card-back {
+      width: 85mm;
+      height: 55mm;
+      border: 2px solid #4a6030;
+      padding: 12px 14px;
+      background: #f0eed8;
+    }
+
+    .card-back-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #4a6030;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #4a6030;
+      padding-bottom: 4px;
+    }
+
+    .card-back-body {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      line-height: 1.8;
+      color: #2a1505;
+    }
+
+    .side-label {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      color: #6b4c2a;
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .print-instructions {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      border: 1px dashed #a08060;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11px;
+      color: #6b4c2a;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page wutong-page">
+
+  <div class="page-header">
+    <div class="title-zh" style="font-size:16px;letter-spacing:0.3em;">梧桐卡 · 第六站道具</div>
+    <div class="subtitle" style="font-size:10px;margin-top:4px;">Wutong Card — Stage 6 Prop</div>
+  </div>
+
+  <!-- 正面：选树规则 -->
+  <div class="side-label">◆ 正 面 ◆</div>
+  <div class="card">
+    <div class="card-label">梧桐卡</div>
+    <div class="card-title">选树规则</div>
+    <div class="card-body">
+      从周公馆向南走。<br>
+      第一棵不算——"门口的树总有人盯着"。<br>
+      从第三棵开始，只看单数位。<br>
+      数到第十三棵为止。<br>
+      每棵树干上铁牌的末两位，就是密码。
+    </div>
+  </div>
+
+  <!-- 背面：运算规则 -->
+  <div class="side-label" style="margin-top: 16px;">◆ 背 面 ◆</div>
+  <div class="card-back">
+    <div class="card-back-title">运算规则</div>
+    <div class="card-back-body">
+      <!--
+        V3 NOTE: 具体运算规则需踩���后根据实际编号牌数字设计。
+        需要保证运算结果唯一且不会因记错一个数字导致完全错误。
+        候选规则：
+        A) 六个数相加，取末三位
+        B) 奇数位相加 - 偶数位相加
+        C) 首尾两数之差 × 中间四数之和的个位
+      -->
+      六个两位数（第3/5/7/9/11/13棵的编号末两位）：<br><br>
+      <strong>__FIELD__</strong>（踩线后填入运算规则）<br><br>
+      得到的结果就是本站密码。
+    </div>
+  </div>
+
+  <div class="print-instructions">
+    <strong>制作说明：</strong><br>
+    1. 双面打印，正面朝上放入道具袋。<br>
+    2. 正面的"选树规则"用间谍口吻写成，玩家需要解读出"第3/5/7/9/11/13棵"。<br>
+    3. 背面运算规则需踩线后根据实际编号确定。要确保答案唯��。<br>
+    4. 如果��线发现编号牌不存在，此卡需重新设计（改为其他树干特征）。
+  </div>
+
+</div>
+
+</body>
+</html>
