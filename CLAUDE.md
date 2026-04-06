@@ -28,24 +28,27 @@ scp -i ~/.ssh/photozen_nju_top_ed25519 -o IdentitiesOnly=yes \
 
 ## 代码规范与约定
 
-- **数据结构**：每个城市有 `puzzles.js`（7 站谜题数据）和 `narrative.js`（叙事、藏头诗、终章）
+- **数据结构**：每个城市有 `puzzles.js`（序章 + 7 站谜题数据）和 `narrative.js`（叙事、藏头诗、终章）
+- **PROLOGUE**：可选的序章谜题（在家完成），上海已有，其他城市可选。export 自 `puzzles.js`
 - **STAGES 数组**：1-indexed，`STAGES[0] = null`，`STAGES[1]`–`STAGES[7]` 为 7 站数据
 - **答案占位符**：`__FIELD__` 标记需要实地踩点后填入的答案
 - **状态隔离**：每个城市有独立的 Pinia store（`game-${cityId}`）和 localStorage key（`ducheng_${cityId}_state`）
 - **主题系统**：CSS 变量换肤，每个城市有独立的 `.theme-${cityId}` 类
-- **路由格式**：`/#/city/:cityId/stage/:id`
+- **路由格式**：`/#/city/:cityId/stage/:id`，序章为 `/#/city/:cityId/prologue`
 - **藏头诗机制**：每城 `PHOTO_DIARY_PAIRS` 的 `diaryExcerpt` 字段首字连读组成隐藏信息
 - **碎片拼合**：通过 `cardBackNumber` 排序，非获取顺序
+- **谜题设计原则（V3）**：不直接告诉玩家观察什么，用隐喻引导推理；日记残页是谜题组件而非装饰
 
 ## 目录结构要点
 
 ```
 app/src/
 ├── data/cities/
-│   ├── index.js          # 城市注册表（5 城元数据）
+│   ├── index.js          # 城市注册表（6 城元数据）
 │   ├── useCityData.js    # 按需加载城市数据的 composable
 │   ├── cross-city-threads.js  # 跨城暗线数据
-│   ├── shanghai/         # puzzles.js + narrative.js
+│   ├── shanghai/         # puzzles.js + narrative.js (第七封密电·外滩)
+│   ├── shanghai2/        # puzzles.js + narrative.js (墨迹·福州路)
 │   ├── nanjing/
 │   ├── hangzhou/
 │   ├── xian/
@@ -53,6 +56,7 @@ app/src/
 ├── pages/
 │   ├── PlatformHome.vue  # 城市选择首页
 │   ├── Home.vue          # 单城剧本首页
+│   ├── Prologue.vue      # 序章解谜页（在家完成，可选）
 │   ├── Stage.vue         # 解谜关卡页
 │   ├── Transit.vue       # 站间过渡页
 │   ├── Finale.vue        # 终章（藏头诗→信封→心愿清单+照片）
@@ -61,15 +65,18 @@ app/src/
 ├── stores/
 │   ├── game.js           # 单城游戏状态（动态注册，按 cityId 隔离）
 │   └── platform.js       # 平台级状态（已通关城市、徽章）
-└── styles/theme.css      # 6 套主题变量（5 城 + 默认暗色）
+└── styles/theme.css      # 7 套主题变量（6 城 + 默认暗色）
 ```
 
 ## 当前状态与注意事项
 
-- **五城内容骨架已完成**，所有 `puzzles.js` 和 `narrative.js` 数据就位
+- **上海第一剧本「第七封密电」V3 redesign 已完成**：新增序章（Stage 0）、7站指令全部重写为推理型设计
+- **上海第二剧本「墨迹」骨架已完成**：福州路文艺主题，cityId=`shanghai2`，7站+序章数据就位，大量 `__FIELD__` 答案待踩线填入。设计文档：`docs/superpowers/specs/2026-04-06-shanghai-script2-fuzhou-road-design.md`
+- **其他四城内容骨架已完成**，`puzzles.js` 和 `narrative.js` 数据就位（未做 V3 改造）
 - **`__FIELD__` 答案**：大量谜题答案需要实地踩点后填入，目前标记为占位符
 - **道具 PDF**：HTML 模板已就绪，需安装 Puppeteer 后运行 `npm run props` 生成
 - **事实核查已完成两轮**：14 处错误已修正（地址、历史事实、藏头诗一致性等）
 - **收费景点**：杭州（岳王庙/净慈寺/雷峰塔 ~75 元）和西安（碑林 85 元）需提前告知玩家
 - **微信浏览器兼容性**：尚未测试
 - **部分谜题设计依赖不确定的实地元素**（如上海梧桐编号牌、南京秦淮河石栏文字），踩点后可能需要调整
+- **设计文档**：`docs/puzzle-redesign-v3.md`（设计原则+对比）、`docs/shanghai-fieldwork-playbook.md`（踩线剧本）
