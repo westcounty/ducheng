@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>气味选项卡 — 墨迹（上海第二剧本）</title>
+  <!-- 正确答案需踩线确认 -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page { size: A6 landscape; margin: 10mm; }
+
+    html, body {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #e8e4dc;
+    }
+
+    .card {
+      width: 105mm;
+      min-height: 68mm;
+      margin: 0 auto 16px;
+      padding: 10mm 12mm;
+      background-color: #f5f2eb;
+      border: 1px solid rgba(44, 62, 122, 0.15);
+      box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2c3e7a;
+      letter-spacing: 0.25em;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .card-subtitle {
+      font-size: 10px;
+      color: #5a6a9a;
+      text-align: center;
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(44, 62, 122, 0.15);
+    }
+
+    .card-instruction {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 12px;
+      color: #5a6a9a;
+      text-align: center;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .option {
+      border: 1.5px solid rgba(44, 62, 122, 0.2);
+      border-radius: 4px;
+      padding: 8px 10px;
+      background: rgba(44, 62, 122, 0.02);
+    }
+
+    .option-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2c3e7a;
+      margin-bottom: 2px;
+    }
+
+    .option-name {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #1a1a2e;
+      letter-spacing: 0.05em;
+    }
+
+    .option-desc {
+      font-size: 10px;
+      color: #5a6a9a;
+      margin-top: 2px;
+    }
+
+    .checkbox-area {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 1.5px solid #2c3e7a;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    @media print {
+      html, body { background: white; }
+      .card {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     气味选项卡 — 站1（杏花楼）道具
+     玩家站在杏花楼门口闻气味，从4个选项中选出正确的。
+     正确答案需踩线确认。
+     ════════════════════════════════════════════════════════ -->
+<div class="card">
+
+  <div class="card-title">气 味 鉴 定</div>
+  <div class="card-subtitle">第一站 · 杏花楼 · 福州路343号</div>
+
+  <div class="card-instruction">
+    "这条街最甜的坐标。闭上眼，深吸一口气——你闻到的是哪一种？"
+  </div>
+
+  <div class="options">
+    <div class="option">
+      <div class="option-label"><span class="checkbox-area"></span> A</div>
+      <div class="option-name">杏仁甜香 · 烘焙暖意</div>
+      <div class="option-desc">仿佛有人刚从烤箱里端出一盘点心，空气里是温热的坚果和焦糖</div>
+    </div>
+    <div class="option">
+      <div class="option-label"><span class="checkbox-area"></span> B</div>
+      <div class="option-name">陈旧纸张 · 油墨酸味</div>
+      <div class="option-desc">老书店里的味道，纸张氧化的酸涩混着印刷油墨的刺鼻</div>
+    </div>
+    <div class="option">
+      <div class="option-label"><span class="checkbox-area"></span> C</div>
+      <div class="option-name">桂花清甜 · 秋日花香</div>
+      <div class="option-desc">路边行道树飘来的花香，像一层薄薄的蜜水洒在空气里</div>
+    </div>
+    <div class="option">
+      <div class="option-label"><span class="checkbox-area"></span> D</div>
+      <div class="option-name">浓郁咖啡 · 焦糖苦味</div>
+      <div class="option-desc">街角咖啡馆传来的深烘味道，苦中带着一丝甜</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

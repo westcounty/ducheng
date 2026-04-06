@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日记残页 — 墨迹（上海第二剧本）</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page { size: A6 portrait; margin: 10mm; }
+
+    html, body {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #e8e4dc;
+    }
+
+    /* ── Base diary page ───────────────────────────────── */
+    .diary-page {
+      width: 105mm;
+      min-height: 140mm;
+      margin: 0 auto 20px;
+      padding: 12mm 14mm;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      background-color: #f5f2eb;
+      border: 1px solid rgba(44, 62, 122, 0.12);
+      box-shadow:
+        inset 0 0 20px rgba(44, 62, 122, 0.03),
+        1px 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .diary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #2c3e7a;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+
+    .station-badge {
+      font-size: 10px;
+      color: #5a6a9a;
+      border: 1px solid #5a6a9a;
+      padding: 2px 6px;
+      letter-spacing: 0.1em;
+    }
+
+    .location-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2c3e7a;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .location-sub {
+      font-size: 10px;
+      font-weight: 400;
+      color: #5a6a9a;
+      letter-spacing: 0.1em;
+    }
+
+    .diary-date {
+      font-size: 10px;
+      color: #5a6a9a;
+      text-align: right;
+    }
+
+    .diary-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 14px;
+      line-height: 2.2;
+      color: #1a1a2e;
+      letter-spacing: 0.05em;
+      flex: 1;
+    }
+
+    .diary-body p {
+      margin-bottom: 0.3em;
+    }
+
+    .diary-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(44, 62, 122, 0.15);
+    }
+
+    .acrostic-hint {
+      font-size: 9px;
+      color: rgba(44, 62, 122, 0.35);
+      letter-spacing: 0.1em;
+    }
+
+    .first-char {
+      font-size: 1.1em;
+      font-weight: 700;
+      color: #2c3e7a;
+    }
+
+    .ink-damaged {
+      background: #1a1a2e;
+      color: #1a1a2e;
+      padding: 0 4px;
+      border-radius: 2px;
+      user-select: none;
+    }
+
+    /* ── Page 1: Ledger / account book style ──────────── */
+    .style-ledger {
+      background-image:
+        linear-gradient(rgba(44, 62, 122, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(44, 62, 122, 0.06) 1px, transparent 1px);
+      background-size: 100% 2.2em, 50% 100%;
+    }
+
+    .style-ledger .diary-body {
+      font-size: 13px;
+    }
+
+    .ledger-entry {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dotted rgba(44, 62, 122, 0.15);
+      padding: 2px 0;
+      font-size: 12px;
+    }
+
+    /* ── Page 2: Editorial marginalia style ────────────── */
+    .style-editorial {
+      border-left: 3px solid #c0392b;
+      padding-left: 16mm;
+    }
+
+    .style-editorial .diary-body {
+      position: relative;
+    }
+
+    .margin-note {
+      position: absolute;
+      left: -14mm;
+      width: 12mm;
+      font-size: 9px;
+      color: #c0392b;
+      text-align: right;
+      line-height: 1.4;
+      font-family: 'ZCOOL XiaoWei', cursive;
+    }
+
+    /* ── Page 3: Classical Chinese style ──────────────── */
+    .style-classical {
+      background-image:
+        repeating-linear-gradient(
+          transparent,
+          transparent calc(2.2em - 1px),
+          rgba(44, 62, 122, 0.06) calc(2.2em - 1px),
+          rgba(44, 62, 122, 0.06) 2.2em
+        );
+    }
+
+    .style-classical .diary-body {
+      font-size: 14px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Page 4: Letter style ─────────────────────────── */
+    .style-letter .diary-body {
+      padding: 8px 0;
+    }
+
+    .letter-greeting {
+      font-size: 13px;
+      color: #2c3e7a;
+      margin-bottom: 8px;
+    }
+
+    .letter-closing {
+      text-align: right;
+      font-size: 12px;
+      color: #5a6a9a;
+      margin-top: 8px;
+    }
+
+    /* ── Page 5: News report style ────────────────────── */
+    .style-news {
+      border: 2px solid #2c3e7a;
+      padding: 10mm 12mm;
+    }
+
+    .news-headline {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #2c3e7a;
+      text-align: center;
+      letter-spacing: 0.2em;
+      border-bottom: 2px solid #2c3e7a;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .news-dateline {
+      font-size: 10px;
+      color: #5a6a9a;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    /* ── Page 6: Casual gossip style ──────────────────── */
+    .style-gossip {
+      background-color: #faf7f0;
+    }
+
+    .style-gossip .diary-body {
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    /* ── Page 7: Final editorial note / farewell ──────── */
+    .style-farewell {
+      background-color: #f0eee8;
+      border: 1px solid rgba(44, 62, 122, 0.2);
+    }
+
+    .style-farewell .diary-body {
+      font-size: 14px;
+      line-height: 2.4;
+    }
+
+    .farewell-date {
+      font-size: 11px;
+      color: #c0392b;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .acrostic-reveal {
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      color: #2c3e7a;
+      margin-top: 12px;
+      padding: 8px;
+      border: 1px solid rgba(44, 62, 122, 0.2);
+    }
+
+    @media print {
+      html, body { background: white; }
+      .diary-page {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     日记残页 第一页 — 杏花楼（味觉站）
+     文体：私人账本（记账式）
+     藏头字：字
+     ════════════════════════════════════════════════════════ -->
+<div class="diary-page style-ledger">
+
+  <div class="diary-header">
+    <div class="station-badge">第一站</div>
+    <div class="location-name">杏花楼<br><span class="location-sub">福州路343号 · 味觉</span></div>
+    <div class="diary-date">一九三六年<br>十一月</div>
+  </div>
+
+  <div class="diary-body">
+    <p><span class="first-char">字</span>写在账本上就是数字，写在匾上就是历史。十一月十五，月饼二盒，三元四角。给赵先生寄一盒，剩一盒留编辑室。被主编骂"公款私用"。我说这是"读者关怀经费"。楼下那块匾的字比我编的任何一本书都老。这条街还叫四马路的时候，它就挂在那里了。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：字</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     日记残页 第二页 — 外文书店（视觉站）
+     文体：编辑旁批（批注体）
+     藏头字：里
+     ════════════════════════════════════════════════════════ -->
+<div class="diary-page style-editorial">
+
+  <div class="diary-header">
+    <div class="station-badge">第二站</div>
+    <div class="location-name">外文书店<br><span class="location-sub">福州路390号 · 视觉</span></div>
+    <div class="diary-date">一九三六年<br>某日午后</div>
+  </div>
+
+  <div class="diary-body" style="position:relative;">
+    <div class="margin-note" style="top: 0;">批：好句</div>
+    <div class="margin-note" style="top: 4.4em;">批：存疑</div>
+    <p><span class="first-char">里</span>弄里的人叫它"红房子"。我每天上班经过，数过那些砖的颜色——晨光里是琥珀，午后是铁锈，黄昏是干掉的玫瑰。三种红，看你什么时候来。墙上有几位先生一直站在那里，从不下班。比我们任何一个编辑都敬业。底楼的拱门有<span class="ink-damaged">██</span>个（墨水洇了），我最喜欢从东边那个进。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：里</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     日记残页 第三页 — 古籍书店（嗅觉站）
+     文体：仿笔记小说（古文体）
+     藏头字：行
+     ════════════════════════════════════════════════════════ -->
+<div class="diary-page style-classical">
+
+  <div class="diary-header">
+    <div class="station-badge">第三站</div>
+    <div class="location-name">古籍书店<br><span class="location-sub">福州路401号 · 嗅觉</span></div>
+    <div class="diary-date">丙子年<br>仲秋</div>
+  </div>
+
+  <div class="diary-body">
+    <p><span class="first-char">行</span>至古籍铺，入则墨香袭人，如坠旧梦。架上之书循四部之法：经、史、子、集，各有其所。余常于子部中寻得妙文——彼处多为诸子百家之言，最是不守规矩，恰合吾意。铺中有琴音若断若续，又有一香，名曰"博雅"，闻之心定。余每至此处，必先闻香，再触书脊，最后方开卷。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：行</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     日记残页 第四页 — 笔墨博物馆（触觉站）
+     文体：书信体（致某位作者）
+     藏头字：间
+     ════════════════════════════════════════════════════════ -->
+<div class="diary-page style-letter">
+
+  <div class="diary-header">
+    <div class="station-badge">第四站</div>
+    <div class="location-name">笔墨博物馆<br><span class="location-sub">福州路429号 · 触觉</span></div>
+    <div class="diary-date">一九三六年<br>深秋</div>
+  </div>
+
+  <div class="diary-body">
+    <div class="letter-greeting">赵先生惠鉴：</div>
+    <p><span class="first-char">间</span>或去笔墨店逛逛，给赵先生回一封信。你上次来稿写到"墨分五色"，我查了——确实是焦、浓、重、淡、清。但你漏了最重要的一色：人的手温渗进墨锭的那种黑。博物馆里有两位老先生：一位姓周，生于康熙年间；一位姓曹，更老，比整个清朝都老。把那个墨模上的纹样数清楚。我赌你数不对。</p>
+    <div class="letter-closing">蕊 草</div>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：间</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     日记残页 第五页 — 商务印书馆旧址（听觉站）
+     文体：新闻报道体（仿1930年代采访稿）
+     藏头字：都
+     ════════════════════════════════════════════════════════ -->
+<div class="diary-page style-news">
+
+  <div class="diary-header">
+    <div class="station-badge">第五站</div>
+    <div class="location-name">商务印书馆旧址<br><span class="location-sub">河南中路221号 · 听觉</span></div>
+    <div class="diary-date">一九三六年<br>采访手记</div>
+  </div>
+
+  <div class="news-headline">福州路出版业巡礼</div>
+  <div class="news-dateline">本报特约编辑 苏蕊 撰</div>
+
+  <div class="diary-body">
+    <p><span class="first-char">都</span>说商务印书馆是中国现代出版的起点。我今天特地拐到河南路去看了一眼。1897年，几个排字工人在这个拐角开了一间小小的印刷作坊，谁知道后来印出了整套《四库全书》。铅字碰撞的声音——啪嗒啪嗒——像下了一场金属的雨。我录了一张声音清单，怕以后忘了。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：都</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     日记残页 第六页 — 百新书局（综合站）
+     文体：口语体（编辑室闲聊/八卦）
+     藏头字：是
+     ════════════════════════════════════════════════════════ -->
+<div class="diary-page style-gossip">
+
+  <div class="diary-header">
+    <div class="station-badge">第六站</div>
+    <div class="location-name">百新书局<br><span class="location-sub">福州路620号 · 综合</span></div>
+    <div class="diary-date">一九三六年<br>某晚</div>
+  </div>
+
+  <div class="diary-body">
+    <p><span class="first-char">是</span>夜，编辑室闲聊。百新书局的老板又来炫耀——说张恨水先生的新书又加印了。那本书名字起得好，又哭又笑的，跟我们编辑室一模一样。百新最早是租书摊起家的，现在居然有好几间不同的屋子。这条街上的店，活下来的都有本事。活不下来的——连名字都没人记得了。</p>
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：是</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     日记残页 第七页 — 永安百货（仪式站）
+     文体：最后一页编辑手记 / 遗书体
+     藏头字：你
+     ════════════════════════════════════════════════════════ -->
+<div class="diary-page style-farewell">
+
+  <div class="diary-header">
+    <div class="station-badge">第七站</div>
+    <div class="location-name">永安百货<br><span class="location-sub">南京东路635号 · 仪式</span></div>
+    <div class="diary-date">一九三七年<br>八月十二日</div>
+  </div>
+
+  <div class="farewell-date">一九三七年八月十二日 · 最后一页</div>
+
+  <div class="diary-body">
+    <p><span class="first-char">你</span>好。如果你读到这里，说明有人替我走完了福州路。一九三七年八月十二日，炮声已经能从虹口那边听到。我把最后一份目录藏在永安公司——不是因为那里安全，是因为从绮云阁望下去，能看到整条福州路。一笔是杏花楼的甜，一画是红房子的砖，一笔是旧书铺的香，一画是笔墨店的黑。书不会消失。它只是在等。</p>
+  </div>
+
+  <div class="acrostic-reveal">
+    七页首字连读：字 · 里 · 行 · 间 · 都 · 是 · 你
+  </div>
+
+  <div class="diary-footer">
+    <span class="acrostic-hint">首字：你</span>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>退稿信 — 墨迹（上海第二剧本）</title>
+  <!-- V3: 校对符号位置和退稿信文字需要根据密码表最终设计调整 -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page { size: A5 portrait; margin: 12mm; }
+
+    html, body {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #1a1a2e;
+      background: #e8e4dc;
+    }
+
+    .page {
+      width: 148mm;
+      min-height: 200mm;
+      margin: 0 auto 20px;
+      padding: 16mm 18mm;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      background-color: #f5f2eb;
+      background-image:
+        radial-gradient(ellipse at 20% 30%, rgba(44, 62, 122, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(44, 62, 122, 0.03) 0%, transparent 50%);
+      border: 1px solid rgba(44, 62, 122, 0.15);
+      box-shadow:
+        inset 0 0 30px rgba(44, 62, 122, 0.04),
+        2px 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .letterhead {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #2c3e7a;
+    }
+
+    .letterhead-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      color: #2c3e7a;
+    }
+
+    .letterhead-sub {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: #5a6a9a;
+      margin-top: 4px;
+    }
+
+    .letter-date {
+      text-align: right;
+      font-size: 12px;
+      color: #5a6a9a;
+      margin-bottom: 16px;
+      letter-spacing: 0.08em;
+    }
+
+    .letter-body {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      line-height: 2.4;
+      color: #1a1a2e;
+      letter-spacing: 0.06em;
+    }
+
+    .letter-body p {
+      text-indent: 2em;
+      margin-bottom: 0.3em;
+    }
+
+    /* Proofreading marks — red ink annotations */
+    .mark {
+      position: relative;
+      display: inline;
+    }
+
+    .mark::after {
+      position: absolute;
+      top: -0.9em;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: #c0392b;
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700;
+    }
+
+    .mark-circle::after  { content: '○'; }
+    .mark-up::after      { content: '△'; }
+    .mark-down::after    { content: '▽'; }
+    .mark-diamond::after { content: '◇'; }
+    .mark-star::after    { content: '☆'; }
+
+    .letter-signature {
+      text-align: right;
+      margin-top: 24px;
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 14px;
+      color: #2c3e7a;
+      letter-spacing: 0.1em;
+    }
+
+    .letter-signature .name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .editorial-stamp {
+      position: absolute;
+      bottom: 18mm;
+      right: 18mm;
+      display: inline-block;
+      border: 3px double #c0392b;
+      color: #c0392b;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 4px 10px;
+      transform: rotate(-6deg);
+      opacity: 0.6;
+    }
+
+    @media print {
+      html, body { background: white; }
+      .page {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        box-shadow: none;
+        border: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     退稿信 — 序章道具
+     苏蕊写给某位无名作者的退稿信。
+     某些字上方有校对符号（○△▽◇☆），用密码表解码后得出"福州路"。
+     V3: 校对符号位置和退稿信文字需要根据密码表最终设计调整
+     ════════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="letterhead">
+    <div class="letterhead-title">世 界 书 局</div>
+    <div class="letterhead-sub">WORLD BOOK COMPANY · 上海福州路三九〇号</div>
+  </div>
+
+  <div class="letter-date">民国二十五年 · 秋</div>
+
+  <div class="letter-body">
+    <p>先生大鉴：</p>
+
+    <p>来稿《秋声记》已由编辑部传阅。诸位同仁读后，皆以为先生笔力不俗，<span class="mark mark-circle">遣</span>词颇见功底，惜乎<span class="mark mark-up">通</span>篇立意仍在窠臼之中，未能出新。</p>
+
+    <p>恕我直言：好文章不是用漂亮的<span class="mark mark-down">句</span>子堆出来的。先生的每一段都像精心<span class="mark mark-circle">摆</span>好的盆景——修剪得当，却少了一股从<span class="mark mark-diamond">泥</span>土里钻出来的野气。读者要的不是盆景，是一棵能遮雨的树。</p>
+
+    <p>第三章写旧书铺那段尚可，<span class="mark mark-up">有</span>几句让人看见了真东西。但到了第五章便又缩回去了，像一个<span class="mark mark-star">人</span>刚探出头又立刻把门关上。</p>
+
+    <p>建议先生<span class="mark mark-circle">放</span>下笔，出门走走。去<span class="mark mark-down">福</span>州路逛一圈，闻闻油墨味，听听排字声，看看那些真正好的<span class="mark mark-diamond">文</span>字是什么样子。然后回来重写。</p>
+
+    <p>编辑部不收盆景，只收树。</p>
+
+    <p>退稿附原件。期待先生再投。</p>
+  </div>
+
+  <div class="letter-signature">
+    世界书局编辑部<br>
+    <span class="name">苏 蕊</span><br>
+    <span style="font-size:11px;">民国二十五年九月十二日</span>
+  </div>
+
+  <div class="editorial-stamp">退 稿</div>
+
+</div>
+
+</body>
+</html>

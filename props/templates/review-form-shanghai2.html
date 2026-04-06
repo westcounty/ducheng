@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>审稿单 — 墨迹（上海第二剧本）</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page { size: A6 portrait; margin: 10mm; }
+
+    html, body {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #e8e4dc;
+    }
+
+    .card {
+      width: 105mm;
+      min-height: 120mm;
+      margin: 0 auto 16px;
+      padding: 12mm 14mm;
+      background-color: #f5f2eb;
+      border: 1px solid rgba(44, 62, 122, 0.2);
+      box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #2c3e7a;
+    }
+
+    .form-publisher {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2c3e7a;
+      letter-spacing: 0.35em;
+    }
+
+    .form-type {
+      font-size: 12px;
+      color: #5a6a9a;
+      letter-spacing: 0.2em;
+      margin-top: 2px;
+    }
+
+    .form-body {
+      margin-bottom: 16px;
+    }
+
+    .form-row {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .form-label {
+      color: #2c3e7a;
+      font-weight: 600;
+      min-width: 3.5em;
+      letter-spacing: 0.1em;
+    }
+
+    .form-value {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      color: #1a1a2e;
+      letter-spacing: 0.05em;
+    }
+
+    .form-blank {
+      display: inline-block;
+      min-width: 35mm;
+      border-bottom: 1px solid #2c3e7a;
+      margin-left: 4px;
+    }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid rgba(44, 62, 122, 0.15);
+      margin: 12px 0;
+    }
+
+    .review-section-title {
+      font-size: 12px;
+      color: #2c3e7a;
+      letter-spacing: 0.15em;
+      margin-bottom: 10px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .checkbox-empty {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid #2c3e7a;
+      border-radius: 2px;
+      font-size: 12px;
+      text-align: center;
+      line-height: 14px;
+      color: transparent;
+    }
+
+    .checkbox-checked {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid #2c3e7a;
+      border-radius: 2px;
+      font-size: 14px;
+      text-align: center;
+      line-height: 14px;
+      color: #2c3e7a;
+      font-weight: 700;
+    }
+
+    .handwritten-note {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 15px;
+      color: #2c3e7a;
+      margin-top: 16px;
+      text-align: right;
+      letter-spacing: 0.1em;
+    }
+
+    .form-footer {
+      margin-top: 18px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(44, 62, 122, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .form-footer-label {
+      font-size: 10px;
+      color: #5a6a9a;
+      letter-spacing: 0.1em;
+    }
+
+    .form-footer-signature {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 14px;
+      color: #2c3e7a;
+    }
+
+    @media print {
+      html, body { background: white; }
+      .card {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     审稿单 — 终章信封内道具（meta反转）
+     玩家打开信封发现自己变成了苏蕊手下的"作者"。
+     设计上保持克制，不点破。
+     ════════════════════════════════════════════════════════ -->
+<div class="card">
+
+  <div class="form-header">
+    <div class="form-publisher">世 界 书 局</div>
+    <div class="form-type">稿 件 终 审 单</div>
+  </div>
+
+  <div class="form-body">
+    <div class="form-row">
+      <span class="form-label">书名：</span>
+      <span class="form-value">《墨迹集 · 下》</span>
+    </div>
+    <div class="form-row">
+      <span class="form-label">作者：</span>
+      <span class="form-blank"></span>
+    </div>
+    <div class="form-row">
+      <span class="form-label">编辑：</span>
+      <span class="form-value">苏蕊</span>
+    </div>
+  </div>
+
+  <hr class="form-divider">
+
+  <div class="review-section-title">终 审 意 见</div>
+
+  <div class="checkbox-row">
+    <div class="checkbox-item">
+      <span class="checkbox-empty">&nbsp;</span>
+      <span>退回修改</span>
+    </div>
+    <div class="checkbox-item">
+      <span class="checkbox-checked">&#10003;</span>
+      <span>通过</span>
+    </div>
+  </div>
+
+  <div class="handwritten-note">
+    七章齐了。
+  </div>
+
+  <div class="form-footer">
+    <div class="form-footer-label">世界书局编辑部</div>
+    <div class="form-footer-signature">苏蕊</div>
+  </div>
+
+</div>
+
+</body>
+</html>

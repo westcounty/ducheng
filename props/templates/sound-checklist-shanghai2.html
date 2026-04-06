@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>声音清单 — 墨迹（上海第二剧本）</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page { size: A6 portrait; margin: 10mm; }
+
+    html, body {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #e8e4dc;
+    }
+
+    .card {
+      width: 105mm;
+      min-height: 140mm;
+      margin: 0 auto 16px;
+      padding: 12mm 14mm;
+      background-color: #f5f2eb;
+      background-image:
+        repeating-linear-gradient(
+          transparent,
+          transparent calc(2em - 1px),
+          rgba(44, 62, 122, 0.06) calc(2em - 1px),
+          rgba(44, 62, 122, 0.06) 2em
+        );
+      border: 1px solid rgba(44, 62, 122, 0.15);
+      box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .card-title {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 16px;
+      color: #2c3e7a;
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .card-date {
+      font-size: 10px;
+      color: #5a6a9a;
+      text-align: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(44, 62, 122, 0.15);
+    }
+
+    .list-section {
+      margin-bottom: 16px;
+    }
+
+    .list-header {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 13px;
+      color: #2c3e7a;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .sound-item {
+      font-family: 'ZCOOL XiaoWei', 'KaiTi', cursive;
+      font-size: 14px;
+      line-height: 2.2;
+      color: #1a1a2e;
+      padding-left: 1.5em;
+      position: relative;
+    }
+
+    .sound-item::before {
+      content: '♪';
+      position: absolute;
+      left: 0;
+      color: #5a6a9a;
+      font-size: 12px;
+    }
+
+    .sound-item.circled {
+      position: relative;
+    }
+
+    .sound-item.circled::after {
+      content: '';
+      position: absolute;
+      top: 0.3em;
+      left: 1.2em;
+      right: 0;
+      bottom: 0.3em;
+      border: 2px solid #c0392b;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .annotation {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 10px;
+      color: #c0392b;
+      margin-left: 2em;
+      line-height: 1.6;
+    }
+
+    .divider-line {
+      border: none;
+      border-top: 1px dashed rgba(44, 62, 122, 0.2);
+      margin: 14px 0;
+    }
+
+    .player-section-header {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      color: #2c3e7a;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .blank-line {
+      border-bottom: 1px solid rgba(44, 62, 122, 0.15);
+      height: 2.2em;
+      margin-bottom: 2px;
+      position: relative;
+    }
+
+    .blank-line::before {
+      content: '♪';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      color: rgba(44, 62, 122, 0.2);
+      font-size: 12px;
+    }
+
+    .bottom-note {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 11px;
+      color: #5a6a9a;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    @media print {
+      html, body { background: white; }
+      .card {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     声音清单 — 站5（商务印书馆旧址）道具
+     苏蕊记录的1936年福州路5种声音。
+     玩家闭眼30秒听2026年的声音并记录对比。
+     ════════════════════════════════════════════════════════ -->
+<div class="card">
+
+  <div class="card-title">福州路声音清单</div>
+  <div class="card-date">苏蕊 · 一九三六年 · 记于商务印书馆门口</div>
+
+  <div class="list-section">
+    <div class="list-header">她听到的 ——</div>
+
+    <div class="sound-item">一、印刷机的节奏</div>
+
+    <div class="sound-item circled">二、铅字碰撞声</div>
+    <div class="annotation">↑ 这个声音消失了就真的没了</div>
+
+    <div class="sound-item">三、书店老板的吆喝</div>
+
+    <div class="sound-item">四、翻书声</div>
+
+    <div class="sound-item">五、黄包车铃</div>
+  </div>
+
+  <hr class="divider-line">
+
+  <div class="list-section">
+    <div class="player-section-header">你听到的 —— 2026年</div>
+    <div style="font-size:11px; color:#5a6a9a; margin-bottom:8px;">闭上眼，三十秒。把你听到的写下来。</div>
+
+    <div class="blank-line"></div>
+    <div class="blank-line"></div>
+    <div class="blank-line"></div>
+    <div class="blank-line"></div>
+    <div class="blank-line"></div>
+  </div>
+
+  <div class="bottom-note">
+    哪些声音留下来了？哪些消失了？哪些是新的？
+  </div>
+
+</div>
+
+</body>
+</html>

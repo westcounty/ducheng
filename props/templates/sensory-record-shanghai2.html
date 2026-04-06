@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>感官记录卡 — 墨迹（上海第二剧本）</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page { size: A6 portrait; margin: 10mm; }
+
+    html, body {
+      font-family: 'Noto Serif SC', 'SimSun', serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #e8e4dc;
+    }
+
+    .card {
+      width: 105mm;
+      min-height: 140mm;
+      margin: 0 auto 16px;
+      padding: 10mm 10mm;
+      background-color: #f5f2eb;
+      border: 1px solid rgba(44, 62, 122, 0.15);
+      box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2c3e7a;
+      letter-spacing: 0.25em;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+
+    .card-subtitle {
+      font-size: 10px;
+      color: #5a6a9a;
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(44, 62, 122, 0.15);
+    }
+
+    .sensory-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .sense-cell {
+      border: 1px solid rgba(44, 62, 122, 0.2);
+      border-radius: 3px;
+      padding: 6px 8px;
+      min-height: 36mm;
+      background: rgba(44, 62, 122, 0.015);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sense-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      padding-bottom: 3px;
+      border-bottom: 1px dotted rgba(44, 62, 122, 0.15);
+    }
+
+    .sense-char {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2c3e7a;
+      letter-spacing: 0;
+    }
+
+    .sense-station {
+      font-size: 9px;
+      color: #5a6a9a;
+      letter-spacing: 0.05em;
+    }
+
+    .sense-location {
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 10px;
+      color: #5a6a9a;
+      margin-bottom: 4px;
+    }
+
+    .write-lines {
+      flex: 1;
+    }
+
+    .write-line {
+      border-bottom: 1px solid rgba(44, 62, 122, 0.1);
+      height: 1.8em;
+    }
+
+    /* Last cell spans full width */
+    .sense-cell.full-width {
+      grid-column: 1 / -1;
+      min-height: 28mm;
+    }
+
+    .card-footer {
+      text-align: center;
+      font-family: 'ZCOOL XiaoWei', cursive;
+      font-size: 10px;
+      color: rgba(44, 62, 122, 0.4);
+      margin-top: 6px;
+      letter-spacing: 0.1em;
+    }
+
+    @media print {
+      html, body { background: white; }
+      .card {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     感官记录卡 — 全程道具
+     6格：味（站1）、视（站2）、嗅（站3）、触（站4）、听（站5）、综合（站6）
+     前5站各填一格，站6坐下来写综合感受。
+     ════════════════════════════════════════════════════════ -->
+<div class="card">
+
+  <div class="card-title">感 官 记 录</div>
+  <div class="card-subtitle">走完一站，填一格。这是你的后半本。</div>
+
+  <div class="sensory-grid">
+
+    <div class="sense-cell">
+      <div class="sense-header">
+        <span class="sense-char">味</span>
+        <span class="sense-station">第一站</span>
+      </div>
+      <div class="sense-location">杏花楼</div>
+      <div class="write-lines">
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+
+    <div class="sense-cell">
+      <div class="sense-header">
+        <span class="sense-char">视</span>
+        <span class="sense-station">第二站</span>
+      </div>
+      <div class="sense-location">外文书店</div>
+      <div class="write-lines">
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+
+    <div class="sense-cell">
+      <div class="sense-header">
+        <span class="sense-char">嗅</span>
+        <span class="sense-station">第三站</span>
+      </div>
+      <div class="sense-location">古籍书店</div>
+      <div class="write-lines">
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+
+    <div class="sense-cell">
+      <div class="sense-header">
+        <span class="sense-char">触</span>
+        <span class="sense-station">第四站</span>
+      </div>
+      <div class="sense-location">笔墨博物馆</div>
+      <div class="write-lines">
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+
+    <div class="sense-cell">
+      <div class="sense-header">
+        <span class="sense-char">听</span>
+        <span class="sense-station">第五站</span>
+      </div>
+      <div class="sense-location">商务印书馆旧址</div>
+      <div class="write-lines">
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+
+    <div class="sense-cell">
+      <div class="sense-header">
+        <span class="sense-char">综合</span>
+        <span class="sense-station">第六站</span>
+      </div>
+      <div class="sense-location">百新书局 · 坐下来写</div>
+      <div class="write-lines">
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+        <div class="write-line"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card-footer">她写了前半本，你写后半本。</div>
+
+</div>
+
+</body>
+</html>
