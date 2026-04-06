@@ -18,6 +18,12 @@ const routes = [
     props: true
   },
   {
+    path: '/city/:cityId/prologue',
+    name: 'Prologue',
+    component: () => import('./pages/Prologue.vue'),
+    props: true
+  },
+  {
     path: '/city/:cityId/stage/:id',
     name: 'Stage',
     component: () => import('./pages/Stage.vue'),
@@ -89,6 +95,11 @@ router.beforeEach((to) => {
   const game = useGameStore(cityId)
 
   if (to.name === 'CityHome') return true
+
+  if (to.name === 'Prologue') {
+    if (game.currentStage === 0) return true
+    return `/city/${cityId}`
+  }
 
   if (to.name === 'Stage') {
     const stageId = parseInt(to.params.id)

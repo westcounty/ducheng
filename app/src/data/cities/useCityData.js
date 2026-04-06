@@ -33,6 +33,7 @@ export function useCityData(cityIdRef) {
         stages: puzzlesMod.STAGES,
         totalStages: puzzlesMod.TOTAL_STAGES,
         getStage: puzzlesMod.getStage,
+        prologue: puzzlesMod.PROLOGUE ?? null,
         introStory: narrativeMod.INTRO_STORY,
         finale: narrativeMod.FINALE,
         photoDiaryPairs: narrativeMod.PHOTO_DIARY_PAIRS,

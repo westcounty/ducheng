@@ -97,13 +97,20 @@ const INTRO_STORY = computed(() => cityData.value?.introStory ?? '')
 const introComplete = ref(false)
 
 function acceptMission() {
-  game.startGame()
-  router.push(`/city/${props.cityId}/stage/1`)
+  const hasPrologue = !!cityData.value?.prologue
+  game.startGame(hasPrologue)
+  if (hasPrologue) {
+    router.push(`/city/${props.cityId}/prologue`)
+  } else {
+    router.push(`/city/${props.cityId}/stage/1`)
+  }
 }
 
 function continueGame() {
   if (game.currentStage >= 8) {
     router.push(`/city/${props.cityId}/finale`)
+  } else if (game.currentStage === 0) {
+    router.push(`/city/${props.cityId}/prologue`)
   } else {
     router.push(`/city/${props.cityId}/stage/${game.currentStage}`)
   }

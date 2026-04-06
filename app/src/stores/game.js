@@ -53,10 +53,18 @@ export function useGameStore(cityId) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
       }
 
-      function startGame() {
-        currentStage.value = 1
+      function startGame(hasPrologue = false) {
+        currentStage.value = hasPrologue ? 0 : 1
         currentStep.value = 0
         startTime.value = new Date().toISOString()
+        stageStartTimes[hasPrologue ? 0 : 1] = new Date().toISOString()
+        persist()
+      }
+
+      function completePrologue() {
+        stageClearTimes[0] = new Date().toISOString()
+        currentStage.value = 1
+        currentStep.value = 0
         stageStartTimes[1] = new Date().toISOString()
         persist()
       }
@@ -122,7 +130,7 @@ export function useGameStore(cityId) {
         currentStage, currentStep, cipherFragments, photosTaken,
         hintsUsed, startTime, stageStartTimes, stageClearTimes,
         isStarted, isFinished, collectedCount,
-        startGame, advanceStep, completeStage, goToNextStage,
+        startGame, completePrologue, advanceStep, completeStage, goToNextStage,
         enterFinale, completeGame, recordPhoto, useHint, resetGame
       }
     })
