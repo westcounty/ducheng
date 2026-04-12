@@ -32,7 +32,7 @@ export function verifyToken(token) {
  * Fastify preHandler hook that extracts userId from JWT.
  * Sets request.userId on success, returns 401 on failure.
  */
-export function authPreHandler(request, reply) {
+export async function authPreHandler(request, reply) {
   const authHeader = request.headers.authorization
   const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null
 
@@ -51,7 +51,7 @@ export function authPreHandler(request, reply) {
 /**
  * Optional auth: sets userId if token present, but doesn't block.
  */
-export function optionalAuthPreHandler(request, reply) {
+export async function optionalAuthPreHandler(request, reply) {
   const authHeader = request.headers.authorization
   const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null
 
