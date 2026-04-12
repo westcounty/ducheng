@@ -4,7 +4,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { useGameStore } from './stores/game.js'
 import { usePlatformStore } from './stores/platform.js'
 import { CITY_IDS } from './data/cities/index.js'
-import { isLoggedIn } from './services/explore-api.js'
+import { useAuthStore } from './stores/auth.js'
 
 const routes = [
   {
@@ -55,6 +55,11 @@ const routes = [
   },
 
   // ─── Explore module routes ──────────────────────────
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('./pages/Login.vue'),
+  },
   {
     path: '/explore',
     name: 'TaskList',
@@ -113,11 +118,14 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   // Auth guard for explore module
-  if (to.meta.requiresAuth && !isLoggedIn()) {
-    return { path: '/explore', query: { login: '1' } }
+  if (to.meta.requiresAuth) {
+    const auth = useAuthStore()
+    if (!auth.isAuthenticated) {
+      return { path: '/login', query: { redirect: to.fullPath } }
+    }
   }
 
-  if (to.path === '/') return true
+  if (to.path === '/' || to.path === '/login') return true
 
   if (to.name === 'CrossCityReveal') {
     const platform = usePlatformStore()

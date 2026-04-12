@@ -16,6 +16,11 @@ export default defineConfig({
         target: 'http://localhost:3100',
         changeOrigin: true,
       },
+      '/auth-api': {
+        target: 'https://admin.nju.top',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/auth-api/, ''),
+      },
     },
   }
 })

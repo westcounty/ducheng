@@ -5,10 +5,15 @@
       <h1 class="page-title">探索任务</h1>
     </header>
 
-    <!-- Auth prompt (shown when redirected with login=1) -->
-    <div v-if="showLoginPrompt" class="auth-prompt">
-      <p class="auth-prompt__text">请先登录后再开始任务</p>
-      <p class="auth-prompt__hint">登录后可开始探索、提交任务并收集徽章</p>
+    <!-- User bar -->
+    <div class="explore-user-bar">
+      <template v-if="auth.isAuthenticated">
+        <span class="explore-user-name">{{ auth.displayName }}</span>
+        <button class="explore-logout" @click="auth.logout()">退出</button>
+      </template>
+      <button v-else class="explore-login-btn" @click="goLogin">
+        登录 / 注册
+      </button>
     </div>
 
     <!-- City filter -->
@@ -67,8 +72,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useExploreStore } from '../stores/explore.js'
+import { useAuthStore } from '../stores/auth.js'
 import TaskCard from '../components/TaskCard.vue'
 
 const FILTER_CITIES = [
@@ -80,11 +86,10 @@ const FILTER_CITIES = [
 ]
 
 const router = useRouter()
-const route = useRoute()
 const store = useExploreStore()
+const auth = useAuthStore()
 
 const selectedCity = ref(null)
-const showLoginPrompt = ref(route.query.login === '1')
 
 const hasMore = computed(() =>
   store.taskList.length < store.taskListTotal
@@ -93,6 +98,10 @@ const hasMore = computed(() =>
 onMounted(() => {
   store.loadTasks({ reset: true })
 })
+
+function goLogin() {
+  router.push({ path: '/login', query: { redirect: '/explore' } })
+}
 
 function filterByCity(city) {
   selectedCity.value = city
@@ -117,5 +126,39 @@ function goToTask(slug) {
   flex-direction: column;
   gap: var(--spacing-md);
   padding: var(--spacing-sm) 0;
+}
+
+.explore-user-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.explore-user-name {
+  color: #8a7e6e;
+  font-size: 13px;
+}
+
+.explore-logout {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #8a7e6e;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.explore-login-btn {
+  background: linear-gradient(135deg, #e0c97f, #c9a84c);
+  color: #1a1a2e;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 14px;
+  cursor: pointer;
 }
 </style>

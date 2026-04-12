@@ -2,22 +2,16 @@
 // Thin fetch wrapper for all exploration task API endpoints.
 // JWT token is read from localStorage (set by tuchan-api login flow).
 
-const TOKEN_KEY = 'ducheng_explore_token'
+import { useAuthStore } from '../stores/auth.js'
 
 function getToken() {
-  return localStorage.getItem(TOKEN_KEY)
-}
-
-export function setToken(token) {
-  localStorage.setItem(TOKEN_KEY, token)
-}
-
-export function clearToken() {
-  localStorage.removeItem(TOKEN_KEY)
+  const auth = useAuthStore()
+  return auth.accessToken
 }
 
 export function isLoggedIn() {
-  return !!getToken()
+  const auth = useAuthStore()
+  return auth.isAuthenticated
 }
 
 async function request(path, options = {}) {
@@ -35,8 +29,23 @@ async function request(path, options = {}) {
   const res = await fetch(`/api${path}`, { ...options, headers })
 
   if (res.status === 401) {
-    clearToken()
-    throw new ApiError('请先登录', 401)
+    // Try to refresh the token
+    const auth = useAuthStore()
+    const refreshed = await auth.refreshAccessToken()
+    if (refreshed) {
+      // Retry the request with the new token
+      headers['Authorization'] = `Bearer ${auth.accessToken}`
+      const retryRes = await fetch(`/api${path}`, { ...options, headers })
+      if (!retryRes.ok) {
+        const err = await retryRes.json().catch(() => ({ error: `HTTP ${retryRes.status}` }))
+        throw new ApiError(err.error || err.message || `请求失败`, retryRes.status, err)
+      }
+      return retryRes.json()
+    }
+    // Refresh failed — force logout and redirect to login
+    auth.logout()
+    window.location.hash = '#/login'
+    throw new ApiError('登录已过期，请重新登录', 401)
   }
 
   const data = await res.json()
