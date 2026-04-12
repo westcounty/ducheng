@@ -1,0 +1,26 @@
+{
+  "name": "ducheng-api",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "fastify": "^4.28.0",
+    "@fastify/cors": "^9.0.0",
+    "@fastify/multipart": "^8.3.0",
+    "drizzle-orm": "^0.36.0",
+    "@fastify/static": "^7.0.0",
+    "pg": "^8.13.0",
+    "jsonwebtoken": "^9.0.0",
+    "dotenv": "^16.4.0",
+    "nanoid": "^5.0.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.28.0"
+  }
+}
