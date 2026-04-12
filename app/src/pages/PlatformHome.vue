@@ -46,6 +46,18 @@
       </div>
     </div>
 
+    <hr class="divider" />
+
+    <!-- Explore tasks entry -->
+    <div class="explore-entry" @click="router.push('/explore')">
+      <div class="explore-entry__icon">&#x1F9ED;</div>
+      <div class="explore-entry__body">
+        <h3 class="explore-entry__title">探索任务</h3>
+        <p class="explore-entry__desc">实地探索、拍照打卡、收集城市徽章</p>
+      </div>
+      <span class="explore-entry__arrow">&#x203A;</span>
+    </div>
+
     <!-- Badge collection -->
     <BadgeDisplay title="城市徽章" :show-ultimate="true" />
 
@@ -189,6 +201,51 @@ function enterCity(city) {
 .city-accent--hangzhou { border-left: 4px solid #7a9e7e; }
 .city-accent--xian { border-left: 4px solid #d4a020; }
 .city-accent--suzhou { border-left: 4px solid #4a6fa5; }
+
+/* Explore entry card */
+.explore-entry {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: #2c2c2c;
+  border: 1px solid #3a3a3a;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.explore-entry:active {
+  transform: scale(0.98);
+}
+
+.explore-entry__icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.explore-entry__body {
+  flex: 1;
+}
+
+.explore-entry__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e8e0d4;
+  margin-bottom: 2px;
+}
+
+.explore-entry__desc {
+  font-size: 0.8rem;
+  color: #8a7e6e;
+}
+
+.explore-entry__arrow {
+  font-size: 1.5rem;
+  color: #5a5a5a;
+  flex-shrink: 0;
+}
 
 .platform-footer {
   text-align: center;

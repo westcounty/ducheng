@@ -4,6 +4,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { useGameStore } from './stores/game.js'
 import { usePlatformStore } from './stores/platform.js'
 import { CITY_IDS } from './data/cities/index.js'
+import { isLoggedIn } from './services/explore-api.js'
 
 const routes = [
   {
@@ -52,6 +53,40 @@ const routes = [
     name: 'CrossCityReveal',
     component: () => import('./pages/CrossCityReveal.vue')
   },
+
+  // ─── Explore module routes ──────────────────────────
+  {
+    path: '/explore',
+    name: 'TaskList',
+    component: () => import('./pages/TaskList.vue'),
+  },
+  {
+    path: '/explore/:slug',
+    name: 'TaskDetail',
+    component: () => import('./pages/TaskDetail.vue'),
+    props: true,
+  },
+  {
+    path: '/explore/:slug/play',
+    name: 'TaskPlay',
+    component: () => import('./pages/TaskPlay.vue'),
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/explore/:slug/poster',
+    name: 'PosterView',
+    component: () => import('./pages/PosterView.vue'),
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/badges',
+    name: 'BadgeCollection',
+    component: () => import('./pages/BadgeCollection.vue'),
+    meta: { requiresAuth: true },
+  },
+
   // Backward compatibility redirects (old Shanghai URLs)
   {
     path: '/stage/:id',
@@ -77,6 +112,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
+  // Auth guard for explore module
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    return { path: '/explore', query: { login: '1' } }
+  }
+
   if (to.path === '/') return true
 
   if (to.name === 'CrossCityReveal') {
@@ -84,6 +124,9 @@ router.beforeEach((to) => {
     if (!platform.allCitiesCompleted) return '/'
     return true
   }
+
+  // Explore routes don't need city validation
+  if (to.path.startsWith('/explore') || to.path === '/badges') return true
 
   const cityId = to.params.cityId
   if (!cityId) return true
