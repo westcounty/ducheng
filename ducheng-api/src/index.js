@@ -8,6 +8,9 @@ import { registerRoutes } from './routes/tasks.js'
 import { registerProgressRoutes } from './routes/progress.js'
 import { registerSubmissionRoutes } from './routes/submissions.js'
 import { registerUploadRoutes } from './routes/upload.js'
+import { registerBadgeRoutes } from './routes/badges.js'
+import { registerPosterRoutes } from './routes/posters.js'
+import { registerUserRoutes } from './routes/me.js'
 
 const app = Fastify({ logger: true })
 
@@ -28,6 +31,9 @@ registerRoutes(app)
 registerProgressRoutes(app)
 registerSubmissionRoutes(app)
 registerUploadRoutes(app)
+registerBadgeRoutes(app)
+registerPosterRoutes(app)
+registerUserRoutes(app)
 
 // Start server
 try {
