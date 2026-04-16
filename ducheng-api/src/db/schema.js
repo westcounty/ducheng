@@ -1,14 +1,15 @@
 import {
   pgTable, uuid, varchar, text, integer, decimal,
-  timestamp, jsonb, pgEnum
+  timestamp, jsonb, pgEnum, uniqueIndex
 } from 'drizzle-orm/pg-core'
 
 // Enums
 export const difficultyEnum = pgEnum('difficulty', ['easy', 'medium', 'hard'])
-export const taskStatusEnum = pgEnum('task_status', ['draft', 'published', 'archived'])
+export const taskStatusEnum = pgEnum('task_status', ['draft', 'pending_review', 'published', 'rejected', 'archived'])
 export const subTaskTypeEnum = pgEnum('sub_task_type', ['photo', 'arrival', 'puzzle', 'quiz'])
 export const submissionStatusEnum = pgEnum('submission_status', ['pending', 'approved', 'rejected'])
 export const progressStatusEnum = pgEnum('progress_status', ['not_started', 'in_progress', 'completed'])
+export const reviewActionEnum = pgEnum('review_action', ['approved', 'rejected'])
 
 // Tasks
 export const tasks = pgTable('tasks', {
@@ -27,6 +28,8 @@ export const tasks = pgTable('tasks', {
   status: taskStatusEnum('status').default('published'),
   completionCount: integer('completion_count').default(0),
   createdBy: uuid('created_by'),
+  avgRating: decimal('avg_rating', { precision: 3, scale: 2 }),
+  ratingCount: integer('rating_count').default(0),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })
@@ -94,3 +97,33 @@ export const userPosters = pgTable('user_posters', {
   photos: jsonb('photos'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 })
+
+// Task reviews (admin review log)
+export const taskReviews = pgTable('task_reviews', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  taskId: uuid('task_id').notNull().references(() => tasks.id),
+  reviewerId: uuid('reviewer_id'),
+  action: reviewActionEnum('action').notNull(),
+  comment: text('comment'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
+
+// Task comments
+export const taskComments = pgTable('task_comments', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  taskId: uuid('task_id').notNull().references(() => tasks.id),
+  userId: uuid('user_id').notNull(),
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
+
+// Task ratings
+export const taskRatings = pgTable('task_ratings', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  taskId: uuid('task_id').notNull().references(() => tasks.id),
+  userId: uuid('user_id').notNull(),
+  rating: integer('rating').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => [
+  uniqueIndex('task_ratings_task_user_idx').on(table.taskId, table.userId),
+])

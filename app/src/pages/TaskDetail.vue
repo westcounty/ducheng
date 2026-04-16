@@ -88,6 +88,20 @@
           >
             {{ startLoading ? '加载中...' : '开始探索' }}
           </button>
+
+          <!-- Rating section (after completion) -->
+          <div v-if="progressStatus === 'completed' && isLoggedIn()" class="task-rating-section">
+            <h3 class="section-title">评价任务</h3>
+            <StarRating v-model="myRating" :interactive="true" @update:model-value="handleRate" />
+            <p v-if="ratingMsg" class="rating-msg">{{ ratingMsg }}</p>
+          </div>
+
+          <!-- Comments section -->
+          <div class="task-comments-section">
+            <h3 class="section-title">评论 ({{ commentsTotal }})</h3>
+            <CommentList :comments="comments" :loading="commentsLoading" :has-more="comments.length < commentsTotal" @load-more="loadMoreComments" />
+            <CommentInput v-if="isLoggedIn()" :submitting="commentSubmitting" @submit="handleComment" />
+          </div>
         </div>
       </div>
     </template>
@@ -104,7 +118,10 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useExploreStore } from '../stores/explore.js'
-import { isLoggedIn } from '../services/explore-api.js'
+import { isLoggedIn, fetchComments, postComment, rateTask } from '../services/explore-api.js'
+import StarRating from '../components/StarRating.vue'
+import CommentList from '../components/CommentList.vue'
+import CommentInput from '../components/CommentInput.vue'
 
 const props = defineProps({
   slug: {
@@ -126,6 +143,17 @@ const difficultyLabel = computed(() =>
   DIFFICULTY_MAP[task.value?.difficulty] || task.value?.difficulty || ''
 )
 
+// Rating state
+const myRating = ref(0)
+const ratingMsg = ref('')
+
+// Comment state
+const comments = ref([])
+const commentsTotal = ref(0)
+const commentsLoading = ref(false)
+const commentSubmitting = ref(false)
+let commentsPage = 1
+
 onMounted(async () => {
   store.resetTaskState()
   await store.loadTaskDetail(props.slug)
@@ -138,7 +166,52 @@ onMounted(async () => {
       // Not started — that's fine
     }
   }
+
+  // Load comments
+  loadComments()
 })
+
+async function loadComments() {
+  commentsLoading.value = true
+  try {
+    const data = await fetchComments(props.slug)
+    comments.value = data.items || []
+    commentsTotal.value = data.total || 0
+  } finally {
+    commentsLoading.value = false
+  }
+}
+
+async function loadMoreComments() {
+  commentsPage++
+  try {
+    const data = await fetchComments(props.slug, { page: commentsPage })
+    comments.value = [...comments.value, ...(data.items || [])]
+  } catch { /* ignore */ }
+}
+
+async function handleComment(content) {
+  commentSubmitting.value = true
+  try {
+    await postComment(props.slug, content)
+    await loadComments()
+  } catch (err) {
+    console.error('Comment failed:', err)
+  } finally {
+    commentSubmitting.value = false
+  }
+}
+
+async function handleRate(rating) {
+  try {
+    const result = await rateTask(props.slug, rating)
+    myRating.value = rating
+    ratingMsg.value = `评分 ${rating} 星`
+  } catch (err) {
+    ratingMsg.value = err.message || '评分失败'
+    myRating.value = 0
+  }
+}
 
 async function handleStart() {
   if (!isLoggedIn()) {

@@ -144,7 +144,19 @@ export const useExploreStore = defineStore('explore', () => {
   async function loadPoster(slug) {
     posterLoading.value = true
     try {
-      poster.value = await fetchPoster(slug)
+      const data = await fetchPoster(slug)
+      // Transform API response into PosterCanvas-compatible shape
+      poster.value = {
+        taskTitle: data.task?.title,
+        photos: (data.poster?.photos || []).map(p => p.url || p),
+        completionRank: data.task?.completionRank,
+        subTaskCount: data.task?.totalSubTasks,
+        durationMinutes: data.task?.durationMinutes,
+        badgeName: data.task?.badge?.name,
+        badgeIcon: data.task?.badge?.icon,
+        badgeColor: data.task?.badge?.color,
+        imageUrl: data.poster?.imageUrl || null,
+      }
     } finally {
       posterLoading.value = false
     }

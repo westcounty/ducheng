@@ -11,6 +11,11 @@ import { registerUploadRoutes } from './routes/upload.js'
 import { registerBadgeRoutes } from './routes/badges.js'
 import { registerPosterRoutes } from './routes/posters.js'
 import { registerUserRoutes } from './routes/me.js'
+import { registerAdminRoutes } from './routes/admin.js'
+import { registerUgcRoutes } from './routes/ugc.js'
+import { registerLeaderboardRoutes } from './routes/leaderboard.js'
+import { registerCommentRoutes } from './routes/comments.js'
+import { registerRatingRoutes } from './routes/ratings.js'
 
 const app = Fastify({ logger: true })
 
@@ -34,6 +39,11 @@ registerUploadRoutes(app)
 registerBadgeRoutes(app)
 registerPosterRoutes(app)
 registerUserRoutes(app)
+registerAdminRoutes(app)
+registerUgcRoutes(app)
+registerLeaderboardRoutes(app)
+registerCommentRoutes(app)
+registerRatingRoutes(app)
 
 // Start server
 try {

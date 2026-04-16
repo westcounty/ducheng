@@ -1,0 +1,113 @@
+<h2>探索任务 — 修正后的用户流程</h2>
+<p class="subtitle">以「任务」为核心维度，任务包含多个地点和子任务</p>
+
+<div class="mockup">
+  <div class="mockup-header">数据结构</div>
+  <div class="mockup-body" style="padding: 24px;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;">
+
+      <div style="background: #2a2a3a; border: 2px solid #6a7ad4; border-radius: 10px; padding: 16px; min-width: 140px; text-align: center;">
+        <div style="color: #6a7ad4; font-weight: bold; font-size: 15px;">任务</div>
+        <div style="color: #888; font-size: 12px; margin-top: 4px;">如「武康路文艺漫步」</div>
+      </div>
+
+      <div style="color: #555; font-size: 20px;">→ 包含</div>
+
+      <div style="background: #2a2a2a; border: 1px solid #c9a96e55; border-radius: 10px; padding: 16px; min-width: 160px;">
+        <div style="color: #c9a96e; font-weight: bold; font-size: 15px; text-align: center;">地点 × 子任务</div>
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="background: #1a2a3a; color: #60a0c0; padding: 3px 8px; border-radius: 10px; font-size: 11px; white-space: nowrap;">📍 地点A</span>
+            <span style="color: #888; font-size: 12px;">→</span>
+            <span style="background: #2a3a1a; color: #a0c060; padding: 3px 8px; border-radius: 10px; font-size: 11px;">📸 拍照</span>
+            <span style="background: #3a1a2a; color: #c06090; padding: 3px 8px; border-radius: 10px; font-size: 11px;">🧩 解谜</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="background: #1a2a3a; color: #60a0c0; padding: 3px 8px; border-radius: 10px; font-size: 11px; white-space: nowrap;">📍 地点B</span>
+            <span style="color: #888; font-size: 12px;">→</span>
+            <span style="background: #1a3a2a; color: #60c0a0; padding: 3px 8px; border-radius: 10px; font-size: 11px;">🎯 抵达</span>
+            <span style="background: #2a3a1a; color: #a0c060; padding: 3px 8px; border-radius: 10px; font-size: 11px;">📸 拍照</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="background: #1a2a3a; color: #60a0c0; padding: 3px 8px; border-radius: 10px; font-size: 11px; white-space: nowrap;">📍 地点C</span>
+            <span style="color: #888; font-size: 12px;">→</span>
+            <span style="background: #3a1a2a; color: #c06090; padding: 3px 8px; border-radius: 10px; font-size: 11px;">🧩 解谜</span>
+            <span style="background: #2a3a1a; color: #a0c060; padding: 3px 8px; border-radius: 10px; font-size: 11px;">📸 拍照</span>
+          </div>
+        </div>
+        <div style="margin-top: 12px; text-align: center; font-size: 12px; color: #666;">子任务按顺序串联，逐步解锁</div>
+      </div>
+
+      <div style="color: #555; font-size: 20px;">→ 完成奖励</div>
+
+      <div style="background: #2a2a1a; border: 1px solid #c9a96e33; border-radius: 10px; padding: 16px; min-width: 120px; text-align: center;">
+        <div style="font-size: 22px;">🖼️🏅</div>
+        <div style="color: #c9a96e; font-weight: bold; font-size: 13px; margin-top: 4px;">海报 + 徽章</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px;"></div>
+
+<div class="mockup">
+  <div class="mockup-header">用户流程</div>
+  <div class="mockup-body" style="padding: 24px;">
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+
+      <!-- Step 1 -->
+      <div style="display: flex; align-items: flex-start; gap: 14px;">
+        <div style="width: 36px; height: 36px; border-radius: 50%; background: #4a6fa5; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 14px;">1</div>
+        <div style="flex: 1;">
+          <div style="color: #e8e0d4; font-weight: bold;">任务列表</div>
+          <div style="color: #888; font-size: 13px; margin-top: 2px;">浏览所有任务卡片——标题、封面、难度、预计时长、完成人数</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; color: #444; font-size: 16px; padding-left: 50px;">↓ 选择任务</div>
+
+      <!-- Step 2 -->
+      <div style="display: flex; align-items: flex-start; gap: 14px;">
+        <div style="width: 36px; height: 36px; border-radius: 50%; background: #4a6fa5; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 14px;">2</div>
+        <div style="flex: 1;">
+          <div style="color: #e8e0d4; font-weight: bold;">任务详情</div>
+          <div style="color: #888; font-size: 13px; margin-top: 2px;">查看任务介绍、包含的地点列表和子任务概览。点击「开始探索」</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; color: #444; font-size: 16px; padding-left: 50px;">↓ 进入任务</div>
+
+      <!-- Step 3 -->
+      <div style="display: flex; align-items: flex-start; gap: 14px;">
+        <div style="width: 36px; height: 36px; border-radius: 50%; background: #4a6fa5; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-sh-shrink: 0; font-size: 14px;">3</div>
+        <div style="flex: 1;">
+          <div style="color: #e8e0d4; font-weight: bold;">逐个完成子任务（串联解锁）</div>
+          <div style="color: #888; font-size: 13px; margin-top: 2px;">
+            子任务1 → 子任务2 → 子任务3 → ...（按顺序，前一个完成才解锁下一个）
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+            <span style="background: #2a3a1a; color: #a0c060; padding: 3px 10px; border-radius: 12px; font-size: 12px;">📸 拍照 → AI验证</span>
+            <span style="background: #1a3a2a; color: #60c0a0; padding: 3px 10px; border-radius: 12px; font-size: 12px;">🎯 抵达 → GPS验证</span>
+            <span style="background: #3a1a2a; color: #c06090; padding: 3px 10px; border-radius: 12px; font-size: 12px;">🧩 解谜 → 答案验证</span>
+            <span style="background: #3a3a1a; color: #c0c060; padding: 3px 10px; border-radius: 12px; font-size: 12px;">❓ 问答 → 答案验证</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; color: #444; font-size: 16px; padding-left: 50px;">↓ 全部完成</div>
+
+      <!-- Step 4 -->
+      <div style="display: flex; align-items: flex-start; gap: 14px;">
+        <div style="width: 36px; height: 36px; border-radius: 50%; background: #c9a96e; color: #1a1a1a; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 14px;">4</div>
+        <div style="flex: 1;">
+          <div style="color: #c9a96e; font-weight: bold;">获得奖励</div>
+          <div style="color: #888; font-size: 13px; margin-top: 2px;">自动生成任务海报（用任务中的照片）+ 专属徽章 + 探索记录存档</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -80,3 +80,42 @@ app/src/
 - **微信浏览器兼容性**：尚未测试
 - **部分谜题设计依赖不确定的实地元素**（如上海梧桐编号牌、南京秦淮河石栏文字），踩点后可能需要调整
 - **设计文档**：`docs/puzzle-redesign-v3.md`（设计原则+对比）、`docs/shanghai-fieldwork-playbook.md`（踩线剧本）
+
+## 探索任务系统（开发中）
+
+### 概览
+
+在现有解谜平台基础上新增「探索任务」模块：用户实地完成拍照/抵达/解谜子任务，AI 验证后获得海报+徽章。
+
+- **设计文档**: `docs/superpowers/specs/2026-04-12-exploration-task-system-design.md`
+- **后端项目**: `ducheng-api/`（Fastify + Drizzle + PostgreSQL，端口 3100）
+- **认证**: 复用 tuchan-api JWT（`https://admin.nju.top/v1/auth/*`），同 nannaricher 模式
+
+### 实施计划（按顺序执行）
+
+| # | 计划文件 | 内容 | 任务数 |
+|---|---------|------|--------|
+| 1A | `docs/superpowers/plans/2026-04-13-exploration-task-phase1a-backend-core.md` | 后端骨架：Fastify + DB schema + auth + CRUD 路由 | 10 |
+| 1B | `docs/superpowers/plans/2026-04-13-exploration-task-phase1b-verification-submission.md` | 验证服务 + 提交处理 + 徽章/海报/用户路由 | 10 |
+| 1C | `docs/superpowers/plans/2026-04-13-exploration-task-phase1c-frontend.md` | 前端 5 页面 + 8 组件 + Store + API | 21 |
+| 1C-Auth | `docs/superpowers/plans/2026-04-13-exploration-task-phase1c-auth-supplement.md` | 登录页 + Auth Store + Token 刷新 | 7 |
+| 1D | `docs/superpowers/plans/2026-04-13-exploration-task-phase1d-poster-seed-deploy.md` | 种子数据 + 海报下载 + 部署 | 5 |
+
+### 执行协议
+
+1. **严格按顺序**: 1A → 1B → 1C → 1C-Auth → 1D
+2. **每个 plan 完成后必须 review**: 检查所有文件是否按 plan 创建、代码能否运行、curl 验证是否通过
+3. **review 通过后再进入下一个 plan**: 不要跳过
+4. **全部完成后整体 review**: 对照 spec 文档检查功能完整性
+5. **每个 task 完成后 commit**: 遵循 plan 中的 commit message
+
+### 关键约定
+
+- 后端用 **ESM**（`"type": "module"`），不用 TypeScript
+- 前端用 **Vue 3 Composition API**（`<script setup>`），不用 TypeScript
+- API 调用用原生 **`fetch`**，不装 axios
+- 数据库字段用 **snake_case**（`validation_config`, `radius_meters`, `correct_index`, `answer_variants`）
+- 前端提交到后端的字段名: `gpsLat`, `gpsLng`, `answerText`, `selectedIndex`, `photoUrl`
+- JWT token 存储 key: `ducheng_access_token`（由 auth store 管理）
+- Auth API base: 开发用 Vite proxy `/auth-api`，生产直连 `https://admin.nju.top`
+- 照片上传: `POST /api/upload/photo`（multipart），本地存储到 `uploads/`

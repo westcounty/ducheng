@@ -91,6 +91,23 @@ const routes = [
     component: () => import('./pages/BadgeCollection.vue'),
     meta: { requiresAuth: true },
   },
+  {
+    path: '/create',
+    name: 'TaskCreate',
+    component: () => import('./pages/TaskCreate.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/my-tasks',
+    name: 'CreatorDashboard',
+    component: () => import('./pages/CreatorDashboard.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/leaderboard',
+    name: 'Leaderboard',
+    component: () => import('./pages/Leaderboard.vue'),
+  },
 
   // Backward compatibility redirects (old Shanghai URLs)
   {
@@ -134,7 +151,8 @@ router.beforeEach((to) => {
   }
 
   // Explore routes don't need city validation
-  if (to.path.startsWith('/explore') || to.path === '/badges') return true
+  if (to.path.startsWith('/explore') || to.path === '/badges' ||
+      to.path === '/create' || to.path === '/my-tasks' || to.path === '/leaderboard') return true
 
   const cityId = to.params.cityId
   if (!cityId) return true

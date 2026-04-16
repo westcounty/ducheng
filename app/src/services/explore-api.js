@@ -133,3 +133,45 @@ export function fetchMyStats() {
 export function fetchMyHistory() {
   return request('/me/history')
 }
+
+// ─── UGC (User-generated content) ──────────────────────
+
+export function createUserTask(payload) {
+  return request('/ugc/tasks', { method: 'POST', body: payload })
+}
+
+export function fetchMyCreatedTasks({ page = 1, pageSize = 20 } = {}) {
+  const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) })
+  return request(`/ugc/tasks?${params}`)
+}
+
+export function fetchMyTaskStats(taskId) {
+  return request(`/ugc/tasks/${taskId}/stats`)
+}
+
+// ─── Leaderboard ───────────────────────────────────────
+
+export function fetchTaskLeaderboard(slug) {
+  return request(`/leaderboard/${slug}`)
+}
+
+export function fetchGlobalLeaderboard({ limit = 50 } = {}) {
+  return request(`/leaderboard/global?limit=${limit}`)
+}
+
+// ─── Comments ──────────────────────────────────────────
+
+export function fetchComments(slug, { page = 1, pageSize = 20 } = {}) {
+  const params = new URLSearchParams({ page: String(page), pageSize: String(pageSize) })
+  return request(`/tasks/${slug}/comments?${params}`)
+}
+
+export function postComment(slug, content) {
+  return request(`/tasks/${slug}/comments`, { method: 'POST', body: { content } })
+}
+
+// ─── Ratings ───────────────────────────────────────────
+
+export function rateTask(slug, rating) {
+  return request(`/tasks/${slug}/rate`, { method: 'POST', body: { rating } })
+}

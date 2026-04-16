@@ -1,0 +1,123 @@
+<h2>任务列表页 — UI 方案</h2>
+<p class="subtitle">用户浏览和选择任务的首页</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>卡片流 — Instagram 风格</h3>
+      <p>大图卡片，纵向滚动，每张卡片展示任务封面图、标题、标签、进度</p>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>列表流 — 简洁信息密度</h3>
+      <p>紧凑的列表项，左图右文，适合任务量大时快速浏览</p>
+    </div>
+  </div>
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>地图+列表 — 位置驱动</h3>
+      <p>上半屏地图标注任务地点，下半屏任务卡片列表，位置感强</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px;"></div>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">A — 卡片流</div>
+    <div class="mockup-body" style="padding: 12px; background: #1a1a1a;">
+      <!-- Card 1 -->
+      <div style="background: #2a2a2a; border-radius: 10px; overflow: hidden; margin-bottom: 10px;">
+        <div style="height: 100px; background: linear-gradient(135deg, #2a3a4a, #1a2a3a); display: flex; align-items: center; justify-content: center; position: relative;">
+          <span style="font-size: 32px;">🏛️</span>
+          <div style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: #c9a96e;">⏱ 约2小时</div>
+        </div>
+        <div style="padding: 10px;">
+          <div style="color: #e8e0d4; font-weight: bold; font-size: 14px;">武康路文艺漫步</div>
+          <div style="color: #888; font-size: 12px; margin-top: 2px;">3个地点 · 8个子任务</div>
+          <div style="display: flex; gap: 6px; margin-top: 6px;">
+            <span style="background: #2a3a1a; color: #a0c060; padding: 2px 6px; border-radius: 8px; font-size: 10px;">拍照×3</span>
+            <span style="background: #1a3a2a; color: #60c0a0; padding: 2px 6px; border-radius: 8px; font-size: 10px;">打卡×2</span>
+            <span style="background: #3a1a2a; color: #c06090; padding: 2px 6px; border-radius: 8px; font-size: 10px;">解谜×3</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 8px; align-items: center;">
+            <span style="color: #666; font-size: 11px;">128人完成</span>
+            <span style="background: #c9a96e; color: #1a1a1a; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: bold;">开始探索</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 (partial) -->
+      <div style="background: #2a2a2a; border-radius: 10px; overflow: hidden;">
+        <div style="height: 60px; background: linear-gradient(135deg, #3a2a1a, #2a1a1a); display: flex; align-items: center; justify-content: center;">
+          <span style="font-size: 24px;">🏮</span>
+        </div>
+        <div style="padding: 10px;">
+          <div style="color: #e8e0d4; font-weight: bold; font-size: 14px;">豫园寻宝记</div>
+          <div style="color: #888; font-size: 12px;">2个地点 · 5个子任务</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">B — 列表流</div>
+    <div class="mockup-body" style="padding: 12px; background: #1a1a1a;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- List Item 1 -->
+        <div style="display: flex; gap: 10px; background: #2a2a2a; border-radius: 8px; padding: 10px; align-items: center;">
+          <div style="width: 56px; height: 56px; background: #2a3a4a; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">🏛️</div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="color: #e8e0d4; font-weight: bold; font-size: 13px;">武康路文艺漫步</div>
+            <div style="color: #888; font-size: 11px; margin-top: 2px;">3地点 · 8子任务 · 约2h</div>
+            <div style="display: flex; gap: 4px; margin-top: 4px;">
+              <span style="background: #2a3a1a; color: #a0c060; padding: 1px 5px; border-radius: 6px; font-size: 9px;">📸×3</span>
+              <span style="background: #1a3a2a; color: #60c0a0; padding: 1px 5px; border-radius: 6px; font-size: 9px;">🎯×2</span>
+              <span style="background: #3a1a2a; color: #c06090; padding: 1px 5px; border-radius: 6px; font-size: 9px;">🧩×3</span>
+            </div>
+          </div>
+          <div style="color: #c9a96e; font-size: 18px;">›</div>
+        </div>
+        <!-- List Item 2 -->
+        <div style="display: flex; gap: 10px; background: #2a2a2a; border-radius: 8px; padding: 10px; align-items: center;">
+          <div style="width: 56px; height: 56px; background: #3a2a1a; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">🏮</div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="color: #e8e0d4; font-weight: bold; font-size: 13px;">豫园寻宝记</div>
+            <div style="color: #888; font-size: 11px; margin-top: 2px;">2地点 · 5子任务 · 约1.5h</div>
+            <div style="display: flex; gap: 4px; margin-top: 4px;">
+              <span style="background: #2a3a1a; color: #a0c060; padding: 1px 5px; border-radius: 6px; font-size: 9px;">📸×2</span>
+              <span style="background: #3a1a2a; color: #c06090; padding: 1px 5px; border-radius: 6px; font-size: 9px;">🧩×3</span>
+            </div>
+          </div>
+          <div style="color: #c9a96e; font-size: 18px;">›</div>
+        </div>
+        <!-- List Item 3 -->
+        <div style="display: flex; gap: 10px; background: #2a2a2a; border-radius: 8px; padding: 10px; align-items: center;">
+          <div style="width: 56px; height: 56px; background: #1a3a2a; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">🌳</div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="color: #e8e0d4; font-weight: bold; font-size: 13px;">静安寺周边探秘</div>
+            <div style="color: #888; font-size: 11px; margin-top: 2px;">4地点 · 10子任务 · 约3h</div>
+            <div style="display: flex; gap: 4px; margin-top: 4px;">
+              <span style="background: #2a3a1a; color: #a0c060; padding: 1px 5px; border-radius: 6px; font-size: 9px;">📸×4</span>
+              <span style="background: #1a3a2a; color: #60c0a0; padding: 1px 5px; border-radius: 6px; font-size: 9px;">🎯×3</span>
+              <span style="background: #3a1a2a; color: #c06090; padding: 1px 5px; border-radius: 6px; font-size: 9px;">🧩×3</span>
+            </div>
+          </div>
+          <div style="color: #c9a96e; font-size: 18px;">›</div>
+        </div>
+        <!-- List Item 4 (partial) -->
+        <div style="display: flex; gap: 10px; background: #2a2a2a; border-radius: 8px; padding: 10px; align-items: center; opacity: 0.5;">
+          <div style="width: 56px; height: 56px; background: #3a3a1a; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;">☕</div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="color: #e8e0d4; font-weight: bold; font-size: 13px;">法租界咖啡路线</div>
+            <div style="color: #888; font-size: 11px;">3地点 · 6子任务 · 约2h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

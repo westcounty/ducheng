@@ -67,6 +67,13 @@
       <div class="empty-state__icon">&#x1F30D;</div>
       <p class="empty-state__text">暂无探索任务</p>
     </div>
+
+    <!-- Create task FAB (logged in only) -->
+    <button
+      v-if="auth.isAuthenticated"
+      class="fab-btn"
+      @click="router.push('/create')"
+    >+</button>
   </div>
 </template>
 

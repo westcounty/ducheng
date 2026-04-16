@@ -1,0 +1,62 @@
+<h2>徽章收集 — 修正：锁定显示解锁条件</h2>
+<p class="subtitle">锁定徽章透露对应任务名，激励用户去完成</p>
+
+<div class="mockup">
+  <div class="mockup-header">徽章收集页</div>
+  <div class="mockup-body" style="padding: 16px; background: #1a1a1a;">
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <!-- Badge 1: Earned -->
+      <div style="background: #2a2a2a; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #c9a96e33;">
+        <div style="width: 48px; height: 48px; margin: 0 auto 6px; background: linear-gradient(135deg, #c9a96e, #a08040); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">🏛️</div>
+        <div style="color: #c9a96e; font-weight: bold; font-size: 12px;">武康漫步者</div>
+        <div style="color: #666; font-size: 10px; margin-top: 2px;">武康路文艺漫步</div>
+      </div>
+
+      <!-- Badge 2: Earned -->
+      <div style="background: #2a2a2a; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #7a9e7e33;">
+        <div style="width: 48px; height: 48px; margin: 0 auto 6px; background: linear-gradient(135deg, #7a9e7e, #4a7a5e); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">🏮</div>
+        <div style="color: #7a9e7e; font-weight: bold; font-size: 12px;">豫园探秘者</div>
+        <div style="color: #666; font-size: 10px; margin-top: 2px;">豫园寻宝记</div>
+      </div>
+
+      <!-- Badge 3: Locked but shows condition -->
+      <div style="background: #1a1a1a; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #333;">
+        <div style="width: 48px; height: 48px; margin: 0 auto 6px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #444;">🔒</div>
+        <div style="color: #555; font-size: 12px;">???</div>
+        <div style="color: #6a8aaa; font-size: 10px; margin-top: 2px;">静安寺周边探秘</div>
+        <div style="color: #444; font-size: 9px; margin-top: 1px;">完成任务即可解锁</div>
+      </div>
+
+      <!-- Badge 4: Locked but shows condition -->
+      <div style="background: #1a1a1a; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #333;">
+        <div style="width: 48px; height: 48px; margin: 0 auto 6px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #444;">🔒</div>
+        <div style="color: #555; font-size: 12px;">???</div>
+        <div style="color: #6a8aaa; font-size: 10px; margin-top: 2px;">法租界咖啡路线</div>
+        <div style="color: #444; font-size: 9px; margin-top: 1px;">完成任务即可解锁</div>
+      </div>
+
+      <!-- Badge 5: Locked -->
+      <div style="background: #1a1a1a; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #333;">
+        <div style="width: 48px; height: 48px; margin: 0 auto 6px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #444;">🔒</div>
+        <div style="color: #555; font-size: 12px;">???</div>
+        <div style="color: #6a8aaa; font-size: 10px; margin-top: 2px;">苏州河畔漫步</div>
+        <div style="color: #444; font-size: 9px; margin-top: 1px;">完成任务即可解锁</div>
+      </div>
+
+      <!-- Badge 6: Locked -->
+      <div style="background: #1a1a1a; border-radius: 10px; padding: 14px; text-align: center; border: 1px solid #333;">
+        <div style="width: 48px; height: 48px; margin: 0 auto 6px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #444;">🔒</div>
+        <div style="color: #555; font-size: 12px;">???</div>
+        <div style="color: #6a8aaa; font-size: 10px; margin-top: 2px;">外滩光影猎人</div>
+        <div style="color: #444; font-size: 9px; margin-top: 1px;">完成任务即可解锁</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="margin-top: 16px; padding: 12px 16px; background: #1a2a1a; border-radius: 8px; border-left: 3px solid #7a9e7e;">
+  <strong style="color: #7a9e7e;">规则：</strong>
+  <span style="color: #ccc;">✓ 已解锁 → 显示图案 + 名称 + 任务名 &nbsp;&nbsp;|&nbsp;&nbsp;🔒 未解锁 → 显示锁头 + 对应任务名 +「完成任务即可解锁」，徽章图案和名称隐藏</span>
+</div>

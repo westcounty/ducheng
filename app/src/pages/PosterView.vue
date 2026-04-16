@@ -11,7 +11,13 @@
     </div>
 
     <template v-else-if="posterData">
-      <PosterCanvas ref="posterRef" :poster="posterData" />
+      <!-- Server-generated image takes priority -->
+      <div v-if="posterData.imageUrl" class="poster-image-wrapper">
+        <img :src="posterData.imageUrl" class="poster-image" crossorigin="anonymous" />
+      </div>
+
+      <!-- Fallback: client-side rendered poster -->
+      <PosterCanvas v-else ref="posterRef" :poster="posterData" />
 
       <div class="poster-actions">
         <button
@@ -63,13 +69,27 @@ onMounted(async () => {
 })
 
 async function saveImage() {
-  if (!posterRef.value) return
   saving.value = true
 
   try {
-    const dataUrl = await posterRef.value.toDataUrl()
+    // If server-generated image exists, download it directly
+    if (posterData.value?.imageUrl) {
+      const resp = await fetch(posterData.value.imageUrl)
+      const blob = await resp.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.download = `ducheng-explore-${props.slug}.png`
+      link.href = url
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+      return
+    }
 
-    // Create download link
+    // Fallback: client-side html2canvas
+    if (!posterRef.value) return
+    const dataUrl = await posterRef.value.toDataUrl()
     const link = document.createElement('a')
     link.download = `ducheng-explore-${props.slug}.png`
     link.href = dataUrl

@@ -1,0 +1,105 @@
+<h2>任务执行页 — 核心体验</h2>
+<p class="subtitle">用户在实地逐个完成子任务的交互流程</p>
+
+<div class="mockup">
+  <div class="mockup-header">整体布局 — 上方进度 + 下方当前子任务</div>
+  <div class="mockup-body" style="padding: 16px; background: #1a1a1a;">
+
+    <!-- Header: Task title + progress -->
+    <div style="background: #2a2a2a; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: #e8e0d4; font-weight: bold; font-size: 14px;">武康路文艺漫步</span>
+        <span style="color: #c9a96e; font-size: 12px;">2/8 子任务</span>
+      </div>
+      <!-- Progress bar -->
+      <div style="background: #3a3a3a; border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden;">
+        <div style="background: linear-gradient(90deg, #c9a96e, #d4b87e); height: 100%; width: 25%; border-radius: 4px;"></div>
+      </div>
+    </div>
+
+    <!-- Location indicator -->
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 8px 12px; background: #1a2a3a; border-radius: 6px;">
+      <span style="font-size: 14px;">📍</span>
+      <span style="color: #60a0c0; font-size: 13px; font-weight: bold;">武康大楼</span>
+      <span style="color: #555; font-size: 12px;">— 第1个地点</span>
+    </div>
+
+    <!-- Current sub-task card -->
+    <div style="background: #2a2a2a; border-radius: 10px; padding: 16px; border: 1px solid #3a3a3a;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+        <span style="background: #2a3a1a; color: #a0c060; padding: 2px 8px; border-radius: 8px; font-size: 11px;">📸 拍照任务</span>
+        <span style="color: #555; font-size: 11px;">第3步</span>
+      </div>
+
+      <div style="color: #e8e0d4; font-size: 15px; font-weight: bold; margin-bottom: 8px;">拍下武康大楼的最佳角度</div>
+      <div style="color: #888; font-size: 13px; line-height: 1.6; margin-bottom: 16px;">
+        站在武康路淮海中路口，拍一张能同时看到大楼尖顶和梧桐树的照片。
+      </div>
+
+      <!-- Photo capture area -->
+      <div style="background: #1a1a1a; border: 2px dashed #3a3a3a; border-radius: 8px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 12px;">
+        <span style="font-size: 28px; margin-bottom: 4px;">📷</span>
+        <span style="color: #666; font-size: 12px;">点击拍照或上传照片</span>
+      </div>
+
+      <!-- Submit button -->
+      <div style="background: #c9a96e; color: #1a1a1a; text-align: center; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 14px;">
+        提交验证
+      </div>
+    </div>
+
+    <!-- Sub-task chain preview -->
+    <div style="margin-top: 12px; padding: 10px 12px;">
+      <div style="color: #666; font-size: 11px; margin-bottom: 6px;">任务链</div>
+      <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+        <span style="background: #2a3a1a; color: #a0c060; padding: 3px 8px; border-radius: 10px; font-size: 10px; text-decoration: line-through; opacity: 0.6;">✓ 抵达</span>
+        <span style="color: #444;">→</span>
+        <span style="background: #2a3a1a; color: #a0c060; padding: 3px 8px; border-radius: 10px; font-size: 10px; text-decoration: line-through; opacity: 0.6;">✓ 拍门牌</span>
+        <span style="color: #444;">→</span>
+        <span style="background: #c9a96e33; color: #c9a96e; padding: 3px 8px; border-radius: 10px; font-size: 10px; font-weight: bold; border: 1px solid #c9a96e55;">▸ 拍全景</span>
+        <span style="color: #444;">→</span>
+        <span style="background: #2a2a2a; color: #555; padding: 3px 8px; border-radius: 10px; font-size: 10px;">🔒 解谜</span>
+        <span style="color: #444;">→</span>
+        <span style="background: #2a2a2a; color: #555; padding: 3px 8px; border-radius: 10px; font-size: 10px;">🔒 拍倒影</span>
+        <span style="color: #333;">...</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="margin-top: 20px;"></div>
+
+<div class="mockup">
+  <div class="mockup-header">AI 验证反馈 — 拍照通过/失败</div>
+  <div class="mockup-body" style="padding: 16px; background: #1a1a1a;">
+
+    <div class="split">
+      <!-- Success -->
+      <div>
+        <div style="color: #7a9e7e; font-weight: bold; font-size: 13px; margin-bottom: 8px;">✅ 验证通过</div>
+        <div style="background: #1a2a1a; border: 1px solid #7a9e7e33; border-radius: 8px; padding: 12px;">
+          <div style="color: #a0c060; font-size: 13px; font-weight: bold;">AI 判定：照片符合要求</div>
+          <div style="color: #888; font-size: 12px; margin-top: 4px;">识别到：武康大楼建筑主体、梧桐树</div>
+          <div style="display: flex; justify-content: space-between; margin-top: 10px; align-items: center;">
+            <span style="color: #666; font-size: 11px;">下一个子任务已解锁</span>
+            <span style="background: #7a9e7e; color: #1a1a1a; padding: 4px 12px; border-radius: 10px; font-size: 12px; font-weight: bold;">继续 →</span>
+          </div>
+        </div>
+      </div>
+      <!-- Fail -->
+      <div>
+        <div style="color: #d46a6a; font-weight: bold; font-size: 13px; margin-bottom: 8px;">❌ 验证未通过</div>
+        <div style="background: #2a1a1a; border: 1px solid #d46a6a33; border-radius: 8px; padding: 12px;">
+          <div style="color: #d46a6a; font-size: 13px; font-weight: bold;">AI 判定：照片不太对</div>
+          <div style="color: #888; font-size: 12px; margin-top: 4px;">提示：需要同时拍到建筑尖顶和梧桐树</div>
+          <div style="display: flex; justify-content: space-between; margin-top: 10px; align-items: center;">
+            <span style="color: #666; font-size: 11px;">可以重新拍照</span>
+            <span style="background: #3a3a3a; color: #e8e0d4; padding: 4px 12px; border-radius: 10px; font-size: 12px;">重拍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
